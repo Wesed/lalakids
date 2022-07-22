@@ -7,9 +7,11 @@ import {ReactComponent as BagIcon} from "../Assets/bagIcon.svg";
 import {ReactComponent as Hamburguer} from "../Assets/hamburguer.svg";
 import UseMedia from './Useful/UseMedia';
 
+import { Link } from 'react-router-dom';
+
 const HeaderContainer = styled.header`
+  background: white;
   width: 100%;
-  height: 6.8rem;
 
   a {
     :link,
@@ -45,11 +47,8 @@ const HeaderContent = styled.div`
     width: 100%;
   }
 
-  
-`;
-
-const LoginLink = styled.a`
-  color: rgba(0, 0, 0, 1);
+  a:first-of-type {
+    color: rgba(0, 0, 0, 1);
 
   svg {
     width: 24px;
@@ -60,7 +59,11 @@ const LoginLink = styled.a`
   @media (max-width: 30rem) {
     order: -1;
   }
+  }
+
+  
 `;
+
 
 const BagLink = styled.a``;
 
@@ -165,9 +168,9 @@ export const Header = () => {
 
         <Input type="type" placeholder="O que você procura?" icon="Search"/>
 
-        {media ? <LoginLink href="#" > <Hamburguer/> </LoginLink>
+        {media ? <Link to="#" > <Hamburguer/> </Link>
         : 
-        <LoginLink href="#" >Entre ou cadastre-se</LoginLink>}
+        <Link to="/login" >Entre ou cadastre-se</Link>}
 
         <BagLink href="#"><BagIcon/></BagLink>
 

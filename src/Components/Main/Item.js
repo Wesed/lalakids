@@ -18,6 +18,7 @@ const Card = styled.div`
     width: initial;
     height: initial;
 
+
     img {
       width: 100%;
       height: 197px;

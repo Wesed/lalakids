@@ -19,6 +19,7 @@ import prod11 from '../../Assets/prod11.png';
 // responsavel por exibir todos os produtos principais 
 
 const Container = styled.main`
+  /* background: ${props => props.theme} */
   width: 63.125rem;
   margin: 2.5rem auto;
   display: grid;
@@ -29,7 +30,6 @@ const Container = styled.main`
     width: calc(100% - 2rem);
     margin: 2.5rem 1rem;
     gap: 2rem 1rem;
-    /* border: 1px solid red; */
   }
 
 `;
