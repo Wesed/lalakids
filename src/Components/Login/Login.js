@@ -42,11 +42,23 @@ const InfoLogin = styled.div`
       top: 15%;
       transform: translateY(-15%);
   }
+`;
+
+const DivPassword = styled.div`
+  position: relative;
 
   a {
-    border: 1px solid red;
     position: absolute;
-    top: 1rem;
+    top: 2.5rem;
+    right: 0;
+    font-size: .8rem;
+    text-decoration: none;
+    color: ${props => props.theme.colors.text};
+    padding: .5rem;
+
+    :hover {
+      font-weight: 700;
+    }
   }
 `;
 
@@ -61,8 +73,10 @@ const Login = () => {
       <InfoLogin>
         <h2>Faça login ou crie uma nova conta!</h2>
         <Input type="text" placeholder="Informe o usuário" />
-          <Input type="text" placeholder="Informe a senha" icon="ShowPassword"/>
-          <Link to="#"> Esqueci minha senha </Link>
+          <DivPassword>
+            <Input type="text" placeholder="Informe a senha" icon="ShowPassword"/>
+            <Link to="#"> Esqueci minha senha </Link>
+          </DivPassword>
         <Button>Entrar</Button>
       </InfoLogin>
 
