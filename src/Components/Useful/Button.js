@@ -14,6 +14,11 @@ const Btn = styled.button`
   border: none;
   background-image: ${props => props.theme.colors.degrade};
   opacity: .7;
+  transition: ease-in .1s;
+
+  :hover {
+    opacity: 1;
+  }
 `;
 
 const Button = ({children}) => {

@@ -9,3 +9,17 @@ body {
   background: #EFF2F7;
 }
 
+
+.animeFade {
+  opacity: 0;
+  transform: transformeX(-20px);
+  animation: animeFade .3s forwards;
+}
+
+@keyframes animeFade {
+  to {
+    opacity: 1;
+    transform: initial;
+  }
+}
+

@@ -14,7 +14,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" end element={<Main/>}> </Route>
-          <Route path="login" element={<Login/>}> </Route>
+          <Route path="login/*" element={<Login/>}> </Route>
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
