@@ -13,9 +13,13 @@ const LoginContainer = styled.div`
   justify-content: space-between;
   width: 63.125rem;
   margin: 5rem auto;
-  border: 1px solid red;
 
   border-radius: 10px;
+
+  @media (max-width: 30rem) {
+    margin: 2rem auto;
+    max-width: 100%;
+  }
 `;
 
 const InfoLogin = styled.div`
@@ -23,9 +27,7 @@ const InfoLogin = styled.div`
   flex: 1;
   padding: 2rem;
   text-align: center;
-  border: 1px solid blue;
   column-gap: 1rem;
-
 
   h2 {
     margin-bottom: 2.5rem;
@@ -58,7 +60,20 @@ const InfoLogin = styled.div`
 `;
 
 
-const BackgroundLogin = styled.div``;
+const BackgroundLogin = styled.div`
+  /* border: 1px solid red; */
+  padding: 0;
+  
+  img  {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 30rem) {
+    display: none;
+  }
+`;
 
 const Login = () => {
 

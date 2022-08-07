@@ -19,16 +19,17 @@ import prod11 from '../../Assets/prod11.png';
 // responsavel por exibir todos os produtos principais 
 
 const Container = styled.main`
-  /* background: ${props => props.theme} */
-  width: 63.125rem;
+  background: white;
+  max-width: 80%;
   margin: 2.5rem auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, auto));
   gap: 4rem 5rem;
+  padding: 1rem;
+  border-radius: 10px;
 
   @media (max-width: 30rem) {
-    width: calc(100% - 2rem);
-    margin: 2.5rem 1rem;
+    max-width: 100%;
     gap: 2rem 1rem;
   }
 
@@ -40,9 +41,9 @@ const Main = () => {
 
 
   return (
-    <Container>
-      {prods.map((prod, index) => <Item key={index} prod={prod} />)}; 
-    </Container>
+      <Container>
+        {prods.map((prod, index) => <Item key={index} prod={prod} />)}; 
+      </Container>
   )
 }
 

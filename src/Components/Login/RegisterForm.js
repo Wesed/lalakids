@@ -41,6 +41,7 @@ const GoLogin = styled.div`
 const NameField = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 0 1rem;
 `;
 
 const Register = () => {

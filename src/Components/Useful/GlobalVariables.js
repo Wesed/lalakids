@@ -2,6 +2,7 @@
 const GlobalVariables = {
   colors: {
     border: 'rgba(0, 0, 0, 0.2)',
+    cardOverlay: 'rgba(0, 0, 0, 0.4)',
     text: '#555555',
     textDark: '#3F3F3F',
     blueBackground: '#0ED6E5',

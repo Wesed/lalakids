@@ -47,8 +47,13 @@ const HeaderContent = styled.div`
     width: 100%;
   }
 
-  a:first-of-type {
-    color: rgba(0, 0, 0, 1);
+  a:nth-child(3) {
+    color: ${props => props.theme.colors.text};
+    transition: ease .3s;
+
+    :hover {
+      color: black;
+    }
 
   svg {
     width: 24px;
@@ -63,7 +68,6 @@ const HeaderContent = styled.div`
 
   
 `;
-
 
 const BagLink = styled.a``;
 
@@ -106,8 +110,6 @@ const Navbar = styled.nav`
 export const Header = () => {
 
   const media = UseMedia('(max-width: 30rem)');
-
-  console.log();
 
   const menuSuperior = [
     {
@@ -164,7 +166,7 @@ export const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <img src={logo} alt="logo" />
+        <Link to="/"> <img src={logo} alt="logo" /> </Link>
 
         <Input type="type" placeholder="O que você procura?" icon="Search"/>
 
@@ -178,7 +180,7 @@ export const Header = () => {
 
       <Navbar>
         
-        {menuSuperior.map((menu, index) => <a key={index} href={menu.href}> {menu.description} </a>)}
+        {menuSuperior.map((menu, index) => <Link key={index} to={'categoria/' + menu.description}> {menu.description} </Link>)}
 
       </Navbar>
     </HeaderContainer>
