@@ -24,6 +24,7 @@ const ImgContainer = styled.div`
   img {
     max-width: 100%;
     object-fit: cover;
+    border-radius: 4px;
   }
 
   div {
@@ -31,6 +32,8 @@ const ImgContainer = styled.div`
     justify-content: space-between;
     flex-direction: column;
     grid-column: 1;
+    gap: 1rem;
+    border-radius: 4px;
   }
 
   img:nth-child(1) {
@@ -51,10 +54,10 @@ const Ptitle = styled.p`
   margin-bottom: 1rem;
 `;
 const Pprice = styled.p`
-  font-size: 18px;
+  font-size: 2rem;
   font-weight: 900;
-  margin-bottom: 0.5rem;
   color: ${(props) => props.theme.colors.blueBackground};
+  margin-bottom: 1rem;
 
   span {
     font-weight: normal;
@@ -63,26 +66,73 @@ const Pprice = styled.p`
   }
 `;
 
-const DivColor = styled.div``;
+const DivColors = styled.div`
+  margin-bottom: 2rem;
 
-const DivSize = styled.div`
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  p {
+    margin: 1rem 0;
+    text-align: start;
+  }
+  
   div {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
+    gap: 1rem;
+    
+    div {
+      max-width: 58px;
+      max-height: 58px;
+      display: flex;
+      justify-content: center;
+      border: 1px solid rgba(0, 0, 0, .4);
+      border-radius: 4px;
+      cursor: pointer;
+
+      img {
+        max-width: 100%;
+        border-radius: 4px;
+      }
+    }
+  }
+`;
+
+const DivSizes = styled.div`
+  /* border: 1px solid rgba(0, 0, 0, 0.5); */
+  margin-bottom: 2rem;
+
+
+  p {
+    margin: 1rem 0;
+    text-align: start;
+  }
+
+  div {
+    display: flex;
+    justify-content: start;
+    gap: 1rem;
 
     button {
-      padding: 1rem;
+      padding: .8rem;
       text-decoration: none;
-      border: 1px solid black;
+      /* border: 1px solid ${props => props.theme.colors.text}; */
+      border: 2px solid transparent;
+      box-shadow: 1px 1px 5px 0.2px rgba(0, 0, 0, 0.4);
+      border-radius: 4px;
       background: transparent;
       cursor: pointer;
+      transition: .1s;
+
+      :hover {
+        border: 2px solid #222;
+     }
+
     }
   }
 `;
 
 const Pcard = styled.p`
   font-size: 12px;
+  margin-bottom: 2rem;
 
   span {
     font-weight: 900;
@@ -96,8 +146,11 @@ const Pcard = styled.p`
 */
 
 const Categoria = () => {
-  //qd for true, e pq o produto tem outras cores ou tamanhos (roupa)
-  const [hasOption] = React.useState(true);
+  //qd for true, e pq o produto tem outras cores
+  const [hasColors] = React.useState(true);
+
+  //qd for true, e pq o produto tem outros tamanhos
+  const [hasSizes] = React.useState(true);
 
   return (
     <Container>
@@ -119,10 +172,8 @@ const Categoria = () => {
             R$ 129,90 <span> à vista </span>
         </Pprice>
 
-        {hasOption ? 
-        <div>
-
-          <DivSize>
+        {hasSizes ? 
+          <DivSizes>
             <p>Tamanho:</p>
             <div>
               <button> 08 </button>
@@ -134,13 +185,21 @@ const Categoria = () => {
               <button> 20 </button>
               <button> 22 </button>
             </div>
-          </DivSize>
+          </DivSizes>
+        :
+        <div> </div>}
 
-          <DivColor>
-            <p>Cor:</p>
-          </DivColor>
-        
-        </div>
+        {hasColors ? 
+          <DivColors>
+            <p>Cores:</p>
+            <div>
+              {/* aq aparece miniaturas das outras cores, q vira pelo graphQL */}
+              <div> <img src={prod1} alt='img produto' /> </div>
+              <div> <img src={prod2} alt='img produto' /> </div>
+              <div> <img src={prod1} alt='img produto' /> </div>
+              <div> <img src={prod2} alt='img produto' /> </div>
+            </div>
+          </DivColors>
         :
         <div> </div>}
 
