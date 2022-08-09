@@ -8,6 +8,7 @@ const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
   max-width: 80%;
+  /* height: 33.45rem; */
   background: white;
   padding: 1rem;
   margin: 2.5rem auto;
@@ -20,7 +21,7 @@ const ImgContainer = styled.div`
   grid-template-columns: 20% 80%;
   gap: 1rem;
   overflow: hidden;
-  border: 1px solid red;
+  height: 100%;
 
   img {
     max-width: 100%;
@@ -35,11 +36,14 @@ const ImgContainer = styled.div`
     grid-column: 1;
     gap: 1rem;
     border-radius: 4px;
+    
   }
 
   img:nth-child(1) {
     grid-column: 2;
     grid-row: 1 / 3;
+    max-height: 30.81rem;
+    width: 100%;
   }
 `;
 
