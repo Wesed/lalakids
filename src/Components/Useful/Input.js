@@ -74,8 +74,6 @@ export const Input = ({type, placeholder, icon}) => {
     default: 
       iconSvg = ''
   }
-
-  console.log(iconSvg);
   
   return (
     <InputField>

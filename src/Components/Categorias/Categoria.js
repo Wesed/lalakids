@@ -20,6 +20,7 @@ const ImgContainer = styled.div`
   grid-template-columns: 20% 80%;
   gap: 1rem;
   overflow: hidden;
+  border: 1px solid red;
 
   img {
     max-width: 100%;
@@ -152,16 +153,31 @@ const Categoria = () => {
   //qd for true, e pq o produto tem outros tamanhos
   const [hasSizes] = React.useState(true);
 
+  const [imgProd, setImgProd] = React.useState(prod1);
+
+  React.useEffect(() => {
+    const getImgProd = document.querySelectorAll("#previewProd img");
+
+    getImgProd.forEach( (item) => {
+      item.addEventListener('mouseenter', (e) => {
+        setImgProd(e.target.src);
+  });
+    });
+
+  });
+
+
   return (
     <Container>
 
       <ImgContainer>
-        <img src={prod1} alt='img produto' />
+        <img src={imgProd} alt='imagem do produto' 
+        onMouseLeave={() => {setImgProd(prod1)}}/>
 
-        <div>
-          <img src={prod2} alt='img produto' />
-          <img src={prod2} alt='img produto' />
-          <img src={prod2} alt='img produto' />
+        <div id="previewProd">
+          <img src={prod2} alt='produto 1' />
+          <img src={prod1} alt='produto 2' />
+          <img src={prod2} alt='produto 3' />
         </div>
       </ImgContainer>
 
