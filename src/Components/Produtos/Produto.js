@@ -5,15 +5,20 @@ import prod2 from '../../Assets/prod2.webp';
 import Button from './../Useful/Button';
 
 const Container = styled.section`
+  border: 1px solid red;
   display: grid;
   grid-template-columns: 1fr 1fr;
   max-width: 80%;
-  /* height: 33.45rem; */
   background: white;
   padding: 1rem;
   margin: 2.5rem auto;
   border-radius: 10px;
   gap: 1rem;
+
+  @media (max-width: 30rem) {
+    grid-template-columns: 1fr;
+    max-width: 100%;
+  }
 `;
 
 const ImgContainer = styled.div`
@@ -22,6 +27,8 @@ const ImgContainer = styled.div`
   gap: 1rem;
   overflow: hidden;
   height: 100%;
+  border: 1px solid lime;
+  max-width: 100%;
 
   img {
     max-width: 100%;
@@ -36,7 +43,6 @@ const ImgContainer = styled.div`
     grid-column: 1;
     gap: 1rem;
     border-radius: 4px;
-    
   }
 
   img:nth-child(1) {
@@ -45,6 +51,11 @@ const ImgContainer = styled.div`
     max-height: 30.81rem;
     width: 100%;
   }
+
+  @media (max-width: 30rem) {
+    max-width: 100%;
+  }
+
 `;
 
 const ProdInfo = styled.div`
@@ -137,6 +148,7 @@ const DivSizes = styled.div`
 
 const Pcard = styled.p`
   font-size: 12px;
+  text-align: start;
   margin-bottom: 2rem;
 
   span {
@@ -150,7 +162,7 @@ const Pcard = styled.p`
   quando for configurar com os dados do cms
 */
 
-const Categoria = () => {
+const Produto = () => {
   //qd for true, e pq o produto tem outras cores
   const [hasColors] = React.useState(true);
 
@@ -168,14 +180,19 @@ const Categoria = () => {
   });
     });
 
-  });
+  }); 
+
+    /* 
+    
+      NOTA DE MELHORIA: Estudar use effect e entender como ele funciona
+    */
 
 
   return (
-    <Container>
+    <Container className="animeFade">
 
       <ImgContainer>
-        <img src={imgProd} alt='imagem do produto' 
+        <img className="animeFade" src={imgProd} alt='imagem do produto' 
         onMouseLeave={() => {setImgProd(prod1)}}/>
 
         <div id="previewProd">
@@ -234,4 +251,4 @@ const Categoria = () => {
   )
 }
 
-export default Categoria;
+export default Produto;

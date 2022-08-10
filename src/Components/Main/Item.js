@@ -102,7 +102,13 @@ const Pcard = styled.p`
 const Item = ({ prod }) => {
   return (
     <Card>
-      <Link to="google.com">
+      {/* 
+        o nome do produto vem do GraphQL e seta aq, no component categoria: 
+        1. pega o nome do produto usando useParams
+        2. faz uma busca no GrapQL
+        3. seta as infos 
+      */}
+      <Link to="/produto/Calça Moletom jogger masculina summer">
 
         <ImgProd>
           <button> <Like /> </button>
