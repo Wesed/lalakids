@@ -43,8 +43,7 @@ const ImgContainer = styled.div`
   gap: 1rem;
   overflow: hidden;
   height: 100%;
-  border: 1px solid lime;
-  width: 90%; /* 100% extrapola*/
+  width: 100%;
 
   img {
     max-width: 100%;
@@ -59,7 +58,6 @@ const ImgContainer = styled.div`
     grid-column: 1;
     gap: 1rem;
     border-radius: 4px;
-    border: 1px solid blue;
   }
 
   img:nth-child(1) {
@@ -93,6 +91,40 @@ const Pprice = styled.p`
   }
 `;
 
+const DivSizes = styled.div`
+  margin-bottom: 2rem;
+
+
+  p {
+    margin: 1rem 0;
+    text-align: start;
+  }
+
+  div {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 1rem;
+
+    button {
+      padding: .8rem;
+      text-decoration: none;
+      /* border: 1px solid ${props => props.theme.colors.text}; */
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      /* box-shadow: 1px 1px 5px 0.2px rgba(0, 0, 0, 0.4); */
+      border-radius: 4px;
+      background: transparent;
+      color: black;
+      cursor: pointer;
+      transition: .1s;
+
+      /* 
+        Ao clicar nesse elemento, mudara o background pro azul bebe somente no item selecionado (add class active, por ex)
+      */
+    }
+  }
+`;
+
 const DivColors = styled.div`
   margin-bottom: 2rem;
 
@@ -119,40 +151,6 @@ const DivColors = styled.div`
         max-width: 100%;
         border-radius: 4px;
       }
-    }
-  }
-`;
-
-const DivSizes = styled.div`
-  margin-bottom: 2rem;
-
-
-  p {
-    margin: 1rem 0;
-    text-align: start;
-  }
-
-  div {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: start;
-    gap: 1rem;
-
-    button {
-      padding: .8rem;
-      text-decoration: none;
-      /* border: 1px solid ${props => props.theme.colors.text}; */
-      border: 2px solid transparent;
-      box-shadow: 1px 1px 5px 0.2px rgba(0, 0, 0, 0.4);
-      border-radius: 4px;
-      background: transparent;
-      cursor: pointer;
-      transition: .1s;
-
-      :hover {
-        border: 2px solid #222;
-     }
-
     }
   }
 `;
@@ -259,19 +257,19 @@ const Produto = () => {
             <p>Cores:</p>
             <div>
               {/* aq aparece miniaturas das outras cores, q vira pelo graphQL */}
-              <div>
+              <div onClick={ ()=> {setImgProd(prod1)}}>
                 {" "}
                 <img src={prod1} alt="img produto" />{" "}
               </div>
-              <div>
+              <div onClick={ ()=> {setImgProd(prod2)}}>
                 {" "}
                 <img src={prod2} alt="img produto" />{" "}
               </div>
-              <div>
+              <div onClick={ ()=> {setImgProd(prod1)}}>
                 {" "}
                 <img src={prod1} alt="img produto" />{" "}
               </div>
-              <div>
+              <div onClick={ ()=> {setImgProd(prod2)}}>
                 {" "}
                 <img src={prod2} alt="img produto" />{" "}
               </div>
