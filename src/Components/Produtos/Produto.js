@@ -3,9 +3,14 @@ import styled from 'styled-components';
 import prod1 from '../../Assets/prod1.webp';
 import prod2 from '../../Assets/prod2.webp';
 import Button from './../Useful/Button';
+import UseMedia from './../Useful/UseMedia';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+
+
 
 const Container = styled.section`
-  border: 1px solid red;
   display: grid;
   grid-template-columns: 1fr 1fr;
   max-width: 80%;
@@ -16,8 +21,19 @@ const Container = styled.section`
   gap: 1rem;
 
   @media (max-width: 30rem) {
-    grid-template-columns: 1fr;
+    grid-template-columns: 100%;
     max-width: 100%;
+  }
+
+`;
+
+const SwiperConfig = styled.div`
+
+  img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 4px;
   }
 `;
 
@@ -28,7 +44,7 @@ const ImgContainer = styled.div`
   overflow: hidden;
   height: 100%;
   border: 1px solid lime;
-  max-width: 100%;
+  width: 90%; /* 100% extrapola*/
 
   img {
     max-width: 100%;
@@ -43,19 +59,14 @@ const ImgContainer = styled.div`
     grid-column: 1;
     gap: 1rem;
     border-radius: 4px;
+    border: 1px solid blue;
   }
 
   img:nth-child(1) {
     grid-column: 2;
     grid-row: 1 / 3;
     max-height: 30.81rem;
-    width: 100%;
   }
-
-  @media (max-width: 30rem) {
-    max-width: 100%;
-  }
-
 `;
 
 const ProdInfo = styled.div`
@@ -113,7 +124,6 @@ const DivColors = styled.div`
 `;
 
 const DivSizes = styled.div`
-  /* border: 1px solid rgba(0, 0, 0, 0.5); */
   margin-bottom: 2rem;
 
 
@@ -124,6 +134,7 @@ const DivSizes = styled.div`
 
   div {
     display: flex;
+    flex-wrap: wrap;
     justify-content: start;
     gap: 1rem;
 
@@ -163,6 +174,8 @@ const Pcard = styled.p`
 */
 
 const Produto = () => {
+  const media = UseMedia('(max-width: 30rem)');
+
   //qd for true, e pq o produto tem outras cores
   const [hasColors] = React.useState(true);
 
@@ -190,26 +203,40 @@ const Produto = () => {
 
   return (
     <Container className="animeFade">
+      {media ? (
+        <SwiperConfig>
+          <Swiper
+            spaceBetween={1}
+            slidesPerView={1}
+            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => console.log(swiper)}
+          >
+            <SwiperSlide><img src={prod1} alt="produto 1" /></SwiperSlide>
+            <SwiperSlide><img src={prod2} alt="produto 1" /></SwiperSlide>
+            <SwiperSlide><img src={prod1} alt="produto 1" /></SwiperSlide>
+            <SwiperSlide><img src={prod2} alt="produto 1" /></SwiperSlide>
+          </Swiper>
+        </SwiperConfig>
+      ) : (
+        <ImgContainer>
+          <img src={imgProd} alt="imagem do produto" />
 
-      <ImgContainer>
-        <img className="animeFade" src={imgProd} alt='imagem do produto' 
-        onMouseLeave={() => {setImgProd(prod1)}}/>
-
-        <div id="previewProd">
-          <img src={prod2} alt='produto 1' />
-          <img src={prod1} alt='produto 2' />
-          <img src={prod2} alt='produto 3' />
-        </div>
-      </ImgContainer>
+          <div id="previewProd">
+            <img src={prod2} alt="produto 1" />
+            <img src={prod1} alt="produto 2" />
+            <img src={prod2} alt="produto 3" />
+          </div>
+        </ImgContainer>
+      )}
 
       <ProdInfo>
         <Ptitle>Calça Moletom jogger masculina summer</Ptitle>
-        
+
         <Pprice>
-            R$ 129,90 <span> à vista </span>
+          R$ 129,90 <span> à vista </span>
         </Pprice>
 
-        {hasSizes ? 
+        {hasSizes ? (
           <DivSizes>
             <p>Tamanho:</p>
             <div>
@@ -223,32 +250,45 @@ const Produto = () => {
               <button> 22 </button>
             </div>
           </DivSizes>
-        :
-        <div> </div>}
+        ) : (
+          <div> </div>
+        )}
 
-        {hasColors ? 
+        {hasColors ? (
           <DivColors>
             <p>Cores:</p>
             <div>
               {/* aq aparece miniaturas das outras cores, q vira pelo graphQL */}
-              <div> <img src={prod1} alt='img produto' /> </div>
-              <div> <img src={prod2} alt='img produto' /> </div>
-              <div> <img src={prod1} alt='img produto' /> </div>
-              <div> <img src={prod2} alt='img produto' /> </div>
+              <div>
+                {" "}
+                <img src={prod1} alt="img produto" />{" "}
+              </div>
+              <div>
+                {" "}
+                <img src={prod2} alt="img produto" />{" "}
+              </div>
+              <div>
+                {" "}
+                <img src={prod1} alt="img produto" />{" "}
+              </div>
+              <div>
+                {" "}
+                <img src={prod2} alt="img produto" />{" "}
+              </div>
             </div>
           </DivColors>
-        :
-        <div> </div>}
+        ) : (
+          <div> </div>
+        )}
 
         <Pcard>
-            ou 3x de <span> R$ 43,30 </span> s/ juros
+          ou 3x de <span> R$ 43,30 </span> s/ juros
         </Pcard>
 
         <Button> comprar </Button>
       </ProdInfo>
-
     </Container>
-  )
+  );
 }
 
 export default Produto;
