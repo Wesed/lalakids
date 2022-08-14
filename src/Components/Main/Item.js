@@ -2,12 +2,16 @@ import React from "react";
 import styled from "styled-components";
 
 import { ReactComponent as Like } from "../../Assets/heart.svg";
+
+import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
+
 // import {ReactComponent as Liked} from '../../Assets/heartLiked.svg';
 import { Link } from 'react-router-dom';
 
 // responsavel por cada item (produto) )
 
 const Card = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -26,29 +30,40 @@ const Card = styled.div`
   a {
     text-decoration: none;
   }
-`;
-
-const ImgProd = styled.div`
-  position: relative;
-  height: 15.31rem;
-  margin-bottom: 1rem;
-  border-radius: 10px;
-  overflow: hidden;
-  text-align: center;
 
   button {
     position: absolute;
+    z-index: 999;
     left: 0.8rem;
     top: 0.8rem;
     border: 1px solid transparent;
     background: transparent;
     cursor: pointer;
+    /* background branco */
+    display: flex;
+    padding: .2rem;
+    background: white;
+    border-radius: 50%;
   }
 
+`;
+
+const ImgProd = styled.div`
+  position: relative;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+  height: 250px;
+
+
   img {
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    border-radius: 10px;
   }
+
 
   :hover {
     :before {
@@ -100,6 +115,18 @@ const Pcard = styled.p`
 `;
 
 const Item = ({ prod }) => {
+  const [favorite, setFavorite] = React.useState(false);
+
+  const [likeBtn, setLikeBtn] = React.useState(<Like />);
+
+  React.useEffect( () => {
+    if(favorite === true) {
+      setLikeBtn(<Liked />);
+    } else {
+      setLikeBtn(<Like />);
+    }
+  }, [favorite]);
+
   return (
     <Card>
       {/* 
@@ -108,10 +135,11 @@ const Item = ({ prod }) => {
         2. faz uma busca no GrapQL
         3. seta as infos 
       */}
+      <button onClick={() => {setFavorite(!favorite)}}> {likeBtn} </button>
+
       <Link to="/produto/Calça Moletom jogger masculina summer">
 
         <ImgProd>
-          <button> <Like /> </button>
           <img src={prod} alt="foto do produto" />
         </ImgProd>
 

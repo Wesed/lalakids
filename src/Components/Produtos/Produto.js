@@ -23,6 +23,7 @@ const Container = styled.section`
   @media (max-width: 30rem) {
     grid-template-columns: 100%;
     max-width: 100%;
+    margin: auto;
   }
 
 `;
@@ -205,10 +206,7 @@ const Produto = () => {
         <SwiperConfig>
           <Swiper
             spaceBetween={1}
-            slidesPerView={1}
-            onSlideChange={() => console.log("slide change")}
-            onSwiper={(swiper) => console.log(swiper)}
-          >
+            slidesPerView={1}>
             <SwiperSlide><img src={prod1} alt="produto 1" /></SwiperSlide>
             <SwiperSlide><img src={prod2} alt="produto 1" /></SwiperSlide>
             <SwiperSlide><img src={prod1} alt="produto 1" /></SwiperSlide>

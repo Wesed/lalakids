@@ -31,6 +31,7 @@ const Container = styled.main`
   @media (max-width: 30rem) {
     max-width: 100%;
     gap: 2rem 1rem;
+    margin: auto;
   }
 
 `;
