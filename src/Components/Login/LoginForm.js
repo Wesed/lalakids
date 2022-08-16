@@ -31,7 +31,7 @@ const LoginForm = () => {
           <Input type="text" placeholder="Informe o usuário" />
           <DivPassword>
             <Input type="password" placeholder="Informe a senha" icon="ShowPassword"/>
-            <Link to="#"> Esqueci minha senha </Link>
+            <Link to="/login/forgot"> Esqueci minha senha </Link>
           </DivPassword>
 
           <Button>Entrar</Button>

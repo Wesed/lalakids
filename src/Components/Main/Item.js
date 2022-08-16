@@ -39,11 +39,6 @@ const Card = styled.div`
     border: 1px solid transparent;
     background: transparent;
     cursor: pointer;
-    /* background branco */
-    display: flex;
-    padding: .2rem;
-    background: white;
-    border-radius: 50%;
   }
 
 `;
@@ -135,6 +130,8 @@ const Item = ({ prod }) => {
         2. faz uma busca no GrapQL
         3. seta as infos 
       */}
+
+      {/* Ao recarregar a pagina, a informacao sobre quais produtos foram curtidos devem permanecer, pra isso e necessario que essa informacao seja carregada junto aos produtos, talvez uma especie INNER JOIN entre os produtos e os favoritos */}
       <button onClick={() => {setFavorite(!favorite)}}> {likeBtn} </button>
 
       <Link to="/produto/Calça Moletom jogger masculina summer">

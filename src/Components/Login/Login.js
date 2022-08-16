@@ -6,6 +6,7 @@ import Button from "./../Useful/Button";
 import { Link, Routes, Route} from "react-router-dom";
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
+import ForgotForm from './ForgotForm';
 
 const LoginContainer = styled.div`
   background: white;
@@ -83,6 +84,7 @@ const Login = () => {
         <Routes>
           <Route path="/" element={<LoginForm />}></Route>
           <Route path="register" element={<RegisterForm />}></Route>
+          <Route path="forgot" element={<ForgotForm />}></Route>
         </Routes>
 
       </InfoLogin>

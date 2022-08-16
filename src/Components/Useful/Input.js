@@ -17,17 +17,15 @@ const InputField = styled.div`
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     background: ${props => props.theme.colors.grayBackground}; 
+    transition: .1s;
 
     :focus {
       outline: 1px solid transparent;
     }
 
     :hover, :focus { 
-      border-image: ${props => props.theme.colors.degrade} 1;
-      border-bottom-width: 2px;
-      border-top-width: 0;
-      border-right-width: 0;
-      border-left-width: 0;
+      background: white;
+      box-shadow: 0 0 2px 1px ${props => props.theme.colors.blueBackground};
     }
 
   }
@@ -35,12 +33,9 @@ const InputField = styled.div`
 
   svg {
     position: absolute;
-    /* background: ${props => props.theme.colors.grayBackground}; */
     width: 24px;
     padding: .3rem;
     right: .8rem;
-    top: 50%;
-    transform: translateY(-50%);
 
 
     path {

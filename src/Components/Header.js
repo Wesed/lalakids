@@ -43,6 +43,11 @@ const HeaderContent = styled.div`
     flex: 1;
   }
 
+  svg {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   @media (max-width:30rem) {
     width: 100%;
   }
@@ -69,7 +74,12 @@ const HeaderContent = styled.div`
   
 `;
 
-const BagLink = styled.a``;
+const BagLink = styled.a`
+  svg {
+    top: auto;
+    transform: translateY(0);
+  }
+`;
 
 
 const Navbar = styled.nav`
