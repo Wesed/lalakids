@@ -124,52 +124,52 @@ export const Header = () => {
   const menuSuperior = [
     {
       description: 'Meninas', 
-      href: "#"
+      href: "meninas"
     }, 
 
     {
       description: 'Meninos', 
-      href: "#"
+      href: "meninos"
     }, 
 
     {
       description: 'Unissex', 
-      href: "#"
+      href: "unissex"
     }, 
 
     {
       description: 'Plus Size', 
-      href: "#"
+      href: "plus-size"
     }, 
 
     {
       description: 'Mona íntima', 
-      href: "#"
+      href: "moda-intima"
     }, 
 
     {
       description: 'Calçados', 
-      href: "#"
+      href: "calcados"
     }, 
 
     {
       description: 'Promoções', 
-      href: "#"
+      href: "promocoes"
     }, 
 
     {
       description: 'Conjuntos', 
-      href: "#"
+      href: "conjuntos"
     }, 
 
     {
       description: 'Acessórios', 
-      href: "#"
+      href: "acessorios"
     }, 
 
     {
       description: 'Me surpreenda!', 
-      href: "#"
+      href: "surpreenda"
     }, 
   ];
 
@@ -190,7 +190,7 @@ export const Header = () => {
 
       <Navbar>
         
-        {menuSuperior.map((menu, index) => <Link key={index} to="#"> {menu.description} </Link>)}
+        {menuSuperior.map((menu, index) => <Link key={index} to={'categoria/' + menu.href}> {menu.description} </Link>)}
 
       </Navbar>
     </HeaderContainer>

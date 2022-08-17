@@ -16,7 +16,7 @@ const InputField = styled.div`
     padding: 0 1rem;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
-    background: ${props => props.theme.colors.grayBackground}; 
+    background: ${props => props.theme.colors.grayBackground} !important; 
     transition: .1s;
 
     :focus {
@@ -24,7 +24,7 @@ const InputField = styled.div`
     }
 
     :hover, :focus { 
-      background: white;
+      background: white !important;
       box-shadow: 0 0 2px 1px ${props => props.theme.colors.blueBackground};
     }
 
