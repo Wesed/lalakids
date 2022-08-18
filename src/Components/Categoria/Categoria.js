@@ -15,7 +15,7 @@ import "swiper/css/navigation";
 SwiperCore.use([Navigation]);
 
 const Categories = styled.div`
-  background: white;
+  /* background: red; */
   max-width: 70%;
   margin: 2.5rem auto;
   border-radius: 10px;
@@ -59,6 +59,10 @@ const Container = styled.section`
   margin: 2.5rem auto;
   border-radius: 10px;
 `;
+
+// Crio uma 'tabela' chamada categoriaM e categoriaF, que terá todas as categorias (sapatos, bolsas, camisetas, etc)
+// Cada categoria vai ter uma 'imagem de capa'
+// assim, caso mude as categorias no cms, o site ja capta automaticamente.
 
 const Categoria = () => {
   return (
@@ -221,7 +225,7 @@ const Categoria = () => {
 
             </Swiper>
         </SwiperConfig>
-        
+
       </Categories>
 
       
