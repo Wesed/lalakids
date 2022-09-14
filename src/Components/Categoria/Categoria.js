@@ -2,17 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 import Item from './Item';
 
-import prod1 from '../../Assets/prod1.webp';
-import prod2 from '../../Assets/prod2.webp';
-import prod3 from '../../Assets/prod3.webp';
-import prod4 from '../../Assets/prod4.webp';
-import prod5 from '../../Assets/prod5.webp';
-import prod6 from '../../Assets/prod6.webp';
-import prod7 from '../../Assets/prod7.webp';
-import prod8 from '../../Assets/prod8.webp';
-import prod9 from '../../Assets/prod9.webp';
-import prod10 from '../../Assets/prod10.webp';
-import prod11 from '../../Assets/prod11.png';
+import prod1 from '../../Assets/prod1.jpeg';
+import prod2 from '../../Assets/prod2.jpeg';
+import prod3 from '../../Assets/prod3.jpeg';
+import prod4 from '../../Assets/prod4.jpeg';
+import prod5 from '../../Assets/prod5.jpeg';
+import prod6 from '../../Assets/prod6.jpeg';
+import prod7 from '../../Assets/prod7.jpeg';
+import prod8 from '../../Assets/prod8.jpeg';
+import prod9 from '../../Assets/prod9.jpeg';
+import prod10 from '../../Assets/prod10.jpeg';
+import prod11 from '../../Assets/prod11.jpeg';
+import prod12 from '../../Assets/prod12.jpeg';
+import prod13 from '../../Assets/prod13.jpeg';
+import prod14 from '../../Assets/prod14.jpeg';
+import prod15 from '../../Assets/prod15.jpeg';
+import prod16 from '../../Assets/prod16.jpeg';
+import prod17 from '../../Assets/prod17.jpeg';
+import prod18 from '../../Assets/prod18.jpeg';
+import prod19 from '../../Assets/prod19.jpeg';
+
+//graphql
+import { useQuery } from "graphql-hooks";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper/core";
@@ -81,7 +92,7 @@ const Container = styled.section`
 
 const Categoria = ({option}) => {
 
-  const prods = [prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9, prod10, prod11];
+  const prods = [prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9, prod10, prod11, prod12, prod13, prod14, prod15, prod16, prod17, prod18, prod19];
 
   const [categorie, setCategorie] = React.useState(true);
 

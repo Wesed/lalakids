@@ -47,9 +47,9 @@ const ImgProd = styled.div`
   position: relative;
   margin-bottom: 1rem;
   border-radius: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
   text-align: center;
-  height: 250px;
+  height: 330px;
 
 
   img {

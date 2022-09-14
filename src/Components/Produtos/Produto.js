@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import prod1 from '../../Assets/prod1.webp';
-import prod2 from '../../Assets/prod2.webp';
+import prod1 from '../../Assets/prod1.jpeg';
+import prod2 from '../../Assets/prod2.jpeg';
 import Button from './../Useful/Button';
 import UseMedia from './../Useful/UseMedia';
 

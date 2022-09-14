@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import Categoria from './../Categoria/Categoria';
 
 
+
+
 // responsavel por exibir todos os produtos principais 
 
 const Container = styled.main`
