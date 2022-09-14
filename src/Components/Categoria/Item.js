@@ -102,10 +102,12 @@ const Pprice = styled.p`
 
 const Pcard = styled.p`
   font-size: 12px;
+  color: black;
 
   span {
     font-weight: 900;
     font-size: 14px;
+    color: ${(props) => props.theme.colors.blueBackground};
   }
 `;
 
@@ -122,6 +124,8 @@ const Item = ({ prod }) => {
     }
   }, [favorite]);
 
+  console.log('produto: ', prod);
+
   return (
     <Card>
       {/* 
@@ -134,19 +138,19 @@ const Item = ({ prod }) => {
       {/* Ao recarregar a pagina, a informacao sobre quais produtos foram curtidos devem permanecer, pra isso e necessario que essa informacao seja carregada junto aos produtos, talvez uma especie INNER JOIN entre os produtos e os favoritos */}
       <button onClick={() => {setFavorite(!favorite)}}> {likeBtn} </button>
 
-      <Link to="/produto/Calça Moletom jogger masculina summer">
+      <Link to={`/${prod.titleProd}`}>
 
         <ImgProd>
-          <img src={prod} alt="foto do produto" />
+          <img src={prod.imgProd[0].url} alt="foto do produto" />
         </ImgProd>
 
         <ProdInfo>
-          <Ptitle>Calça Moletom jogger masculina summer</Ptitle>
+          <Ptitle>{prod.titleProd}</Ptitle>
           <Pprice>
-            R$ 129,90 <span> à vista </span>
+            R$ {prod.priceProd} <span> à vista </span>
           </Pprice>
           <Pcard>
-            ou 3x de <span> R$ 43,30 </span> s/ juros
+            ou 3x de <span> R$ {(prod.priceProd / 3).toFixed(2)} </span> s/ juros
           </Pcard>
         </ProdInfo>
         

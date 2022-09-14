@@ -96,6 +96,47 @@ const Categoria = ({option}) => {
 
   const [categorie, setCategorie] = React.useState(true);
 
+  //GRAPHQL query
+  const PROJECT_QUERY = `
+  query MyQuery {
+    allProdutos {
+      id
+      imgBackground {
+        id
+        url
+      }
+      imgProd {
+        id
+        url
+      }
+      priceProd
+      size1
+      size10
+      size2
+      size16
+      size14
+      size12
+      size8
+      size6
+      size5
+      size4
+      size3
+      size22
+      size18
+      size20
+      titleProd
+    }
+  }  
+  `;
+
+  const {error, data } = useQuery(PROJECT_QUERY, {
+    variables: {
+      limit: 100,
+    },
+  });
+
+  console.log('aqui', data);
+
   // se for geral, a categoria vai ser false (n exibe as subcategorias)
   // qd for true, deve fazer usar o useParams pra capturar a categoria e fazer o graphQL
 
@@ -238,7 +279,10 @@ const Categoria = ({option}) => {
       </Categories>
       }
 
-      <Container>{prods.map((prod, index) => <Item key={index} prod={prod} />)}; </Container>
+      <Container>
+        {data?.allProdutos.map((prod, index) => <Item key={index} prod={prod} />)}; 
+      </Container>
+      {/* <Container>{prods.map((prod, index) => <Item key={index} prod={prod} />)}; </Container> */}
     </>
   )
 }

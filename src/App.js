@@ -9,8 +9,21 @@ import Login from './Components/Login/Login';
 import Produto from './Components/Produtos/Produto';
 import Categoria from './Components/Categoria/Categoria';
 
+import { GraphQLClient, ClientContext  } from 'graphql-hooks';
+
+export const API_URL = 'https://graphql.datocms.com/';
+export const API_TOKEN ='f99dfc998a43929e417cab61b132aa';
+
+export const client = new GraphQLClient({
+  url: "https://graphql.datocms.com/",
+  headers: {
+    "Authorization": `Bearer ${API_TOKEN}`,
+  }
+});
+
 function App() {
   return (
+    <ClientContext.Provider value={client}>
     <BrowserRouter>
       <ThemeProvider theme={GlobalVariables}>
         <Header />
@@ -22,6 +35,7 @@ function App() {
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
+    </ClientContext.Provider>
   );
 }
 
