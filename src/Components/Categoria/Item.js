@@ -113,9 +113,89 @@ const Pcard = styled.p`
 
 const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
-
+  const [img, setImg] = React.useState(prod.imgProd[0].url);
   const [likeBtn, setLikeBtn] = React.useState(<Like />);
 
+  /* GAMBIARRA: no mousein, muda a img corretamente, porem no mouseleave, seta a img do ultimo produto carregado, ja que 
+    é o valor atual do state. Nao consegui encontrar uma maneira de armazenar somente o target, ja que a var que receber o state
+    recebe todos os valores de state. e seu valor sempre será o do ultimo produto. 
+    EX: se receber 3 elementos (1, 2, 3), o valor atual sempre sera 3, pois foi o ultimo que receberu
+    Por isso, criei um elemento invisivel dentro do prodImg que recebe o mesmo valor de img, e como nao é alterado,
+    consegue manter o valor pra ser recuperado dps no leave.
+  */
+      React.useEffect(() => {
+        const prodContent = document.querySelectorAll(".prod");
+        let span = false;
+
+
+        prodContent.forEach((item) =>
+          item.addEventListener("mouseenter", (e) => {
+            span = item.children[0].getAttribute('value');
+            
+            item.children[1].setAttribute(
+              "src",
+              "https://scontent.fpoo2-1.fna.fbcdn.net/v/t39.30808-6/307175789_3309818689264803_1742272490401101678_n.jpg?stp=dst-jpg_s600x600&_nc_cat=104&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=bzvPnMCEsPYAX-2FnZJ&_nc_ht=scontent.fpoo2-1.fna&oh=00_AT8o7uiLUAIvJynzCRsMyzeqbli-GMiLxdyIleTEQzamsg&oe=63290AD9"
+            );
+          })
+        );
+
+        prodContent.forEach((item) =>
+          item.addEventListener("mouseleave", (e) => {
+            console.log(span);
+            item.children[1].setAttribute('src', span);
+          })
+        );
+
+      }, [img]);
+
+    // React.useEffect(() => {
+    //   const prodImg = document.querySelectorAll(".prod img");
+
+    //   prodImg.forEach((item) =>
+    //     item.addEventListener("mouseenter", (e) => {
+    //       setTeste(e.target.src);
+    //       console.log("in", teste);
+    //       // console.log('aq', e.target.src);
+    //       item.setAttribute(
+    //         "src",
+    //         "https://scontent.fpoo2-1.fna.fbcdn.net/v/t39.30808-6/307175789_3309818689264803_1742272490401101678_n.jpg?stp=dst-jpg_s600x600&_nc_cat=104&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=bzvPnMCEsPYAX-2FnZJ&_nc_ht=scontent.fpoo2-1.fna&oh=00_AT8o7uiLUAIvJynzCRsMyzeqbli-GMiLxdyIleTEQzamsg&oe=63290AD9"
+    //       );
+
+    //       item.addEventListener("mouseleave", (e) => {
+    //         console.log("out", teste);
+    //         item.setAttribute("src", img);
+    //       });
+    //     })
+    //   );
+    // }, [teste, img]);
+
+  // React.useEffect(() => {
+  //   let img = prod.imgProd[0].url;
+  //   const prodImg = document.querySelectorAll('.prod img')
+  //   let imgCache = 0;
+
+  //   prodImg.forEach((item) => 
+  //     item.addEventListener('mouseenter', (e) => {
+  //       console.log('aq', imgCache);
+  //       // console.log('aq', e.target.src);
+  //       item.setAttribute('src', 'https://scontent.fpoo2-1.fna.fbcdn.net/v/t39.30808-6/307175789_3309818689264803_1742272490401101678_n.jpg?stp=dst-jpg_s600x600&_nc_cat=104&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=bzvPnMCEsPYAX-2FnZJ&_nc_ht=scontent.fpoo2-1.fna&oh=00_AT8o7uiLUAIvJynzCRsMyzeqbli-GMiLxdyIleTEQzamsg&oe=63290AD9');
+
+  //     item.addEventListener('mouseleave', (e) => {
+  //       console.log('leave', imgCache);
+  //       item.setAttribute('src', img);
+  //     })  
+  // }));
+
+  // }); 
+
+  // console.log(prod);
+
+  // if(prod.imgBackground == null) {
+  //   console.log('null');
+  // } else {
+  //   console.log(prod.imgBackground.url);
+  // }
+  
   React.useEffect( () => {
     if(favorite === true) {
       setLikeBtn(<Liked />);
@@ -123,8 +203,6 @@ const Item = ({ prod }) => {
       setLikeBtn(<Like />);
     }
   }, [favorite]);
-
-  console.log('produto: ', prod);
 
   return (
     <Card>
@@ -140,7 +218,8 @@ const Item = ({ prod }) => {
 
       <Link to={`/${prod.titleProd}`}>
 
-        <ImgProd>
+        <ImgProd className="prod">
+          <span style={{'display':'none'}} value={prod.imgProd[0].url}></span>
           <img src={prod.imgProd[0].url} alt="foto do produto" />
         </ImgProd>
 

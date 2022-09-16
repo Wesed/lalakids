@@ -92,8 +92,6 @@ const Container = styled.section`
 
 const Categoria = ({option}) => {
 
-  const prods = [prod1, prod2, prod3, prod4, prod5, prod6, prod7, prod8, prod9, prod10, prod11, prod12, prod13, prod14, prod15, prod16, prod17, prod18, prod19];
-
   const [categorie, setCategorie] = React.useState(true);
 
   //GRAPHQL query
@@ -135,8 +133,6 @@ const Categoria = ({option}) => {
     },
   });
 
-  console.log('aqui', data);
-
   // se for geral, a categoria vai ser false (n exibe as subcategorias)
   // qd for true, deve fazer usar o useParams pra capturar a categoria e fazer o graphQL
 
@@ -145,8 +141,6 @@ const Categoria = ({option}) => {
       setCategorie(false);
     }
   }, [option]);
-
-  console.log(categorie);
 
 
   return (
