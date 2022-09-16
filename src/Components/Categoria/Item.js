@@ -116,6 +116,18 @@ const Item = ({ prod }) => {
   const [img, setImg] = React.useState(prod.imgProd[0].url);
   const [likeBtn, setLikeBtn] = React.useState(<Like />);
 
+  /* pega o elemento do proj, converte em json, dps em obj 
+     assim para de dar erro quando houver valores 'null' no imgBackground
+  */
+  let obj = JSON.parse(JSON.stringify(prod.imgBackground));
+
+  // if(obj != null) {
+  //   console.log(obj.url);
+  // } else {
+  //     obj = 'Vazio';
+  //     console.log('aqui', obj);
+  // }
+
   /* GAMBIARRA: no mousein, muda a img corretamente, porem no mouseleave, seta a img do ultimo produto carregado, ja que 
     é o valor atual do state. Nao consegui encontrar uma maneira de armazenar somente o target, ja que a var que receber o state
     recebe todos os valores de state. e seu valor sempre será o do ultimo produto. 
@@ -127,26 +139,25 @@ const Item = ({ prod }) => {
         const prodContent = document.querySelectorAll(".prod");
         let span = false;
 
-
         prodContent.forEach((item) =>
           item.addEventListener("mouseenter", (e) => {
-            span = item.children[0].getAttribute('value');
-            
-            item.children[1].setAttribute(
-              "src",
-              "https://scontent.fpoo2-1.fna.fbcdn.net/v/t39.30808-6/307175789_3309818689264803_1742272490401101678_n.jpg?stp=dst-jpg_s600x600&_nc_cat=104&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=bzvPnMCEsPYAX-2FnZJ&_nc_ht=scontent.fpoo2-1.fna&oh=00_AT8o7uiLUAIvJynzCRsMyzeqbli-GMiLxdyIleTEQzamsg&oe=63290AD9"
-            );
+            span = item.children[0].getAttribute("value");
+
+            /* 
+              Se houver o atributo background, significa que prod.imgBackground nao e null (contem algo), e portanto trpca a img,
+            */
+            if (item.children[1].getAttribute("background")) {
+              item.children[1].setAttribute("src",item.children[1].getAttribute("background"));
+            }
           })
         );
 
         prodContent.forEach((item) =>
           item.addEventListener("mouseleave", (e) => {
-            console.log(span);
-            item.children[1].setAttribute('src', span);
+            item.children[1].setAttribute("src", span);
           })
         );
-
-      }, [img]);
+      }, []);
 
     // React.useEffect(() => {
     //   const prodImg = document.querySelectorAll(".prod img");
@@ -204,6 +215,9 @@ const Item = ({ prod }) => {
     }
   }, [favorite]);
 
+
+  // console.log(prod.imgBackground);
+
   return (
     <Card>
       {/* 
@@ -220,7 +234,21 @@ const Item = ({ prod }) => {
 
         <ImgProd className="prod">
           <span style={{'display':'none'}} value={prod.imgProd[0].url}></span>
-          <img src={prod.imgProd[0].url} alt="foto do produto" />
+
+          {/* <img src={prod.imgProd[0].url} background={prod.imgBackground.url} alt="foto do produto" /> */}
+
+
+            {prod.imgBackground 
+            ?
+              <>
+                <img src={prod.imgProd[0].url} background={prod.imgBackground.url} alt="foto do produto" />
+              </>
+            : 
+            <>
+              <img src={prod.imgProd[0].url} alt="foto do produto" />
+            </>
+            }
+
         </ImgProd>
 
         <ProdInfo>

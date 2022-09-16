@@ -91,7 +91,6 @@ const Container = styled.section`
 // assim, caso mude as categorias no cms, o site ja capta automaticamente.
 
 const Categoria = ({option}) => {
-
   const [categorie, setCategorie] = React.useState(true);
 
   //GRAPHQL query
