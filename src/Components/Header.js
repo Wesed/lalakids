@@ -121,6 +121,7 @@ export const Header = () => {
 
   const media = UseMedia('(max-width: 30rem)');
 
+  /* isso tem q vir do graphQL */
   const menuSuperior = [
     {
       description: 'Meninas', 

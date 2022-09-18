@@ -18,6 +18,7 @@ const Card = styled.div`
   cursor: pointer;
   transition: ease 0.3s;
 
+
   :hover {
     transform: scale(1.05);
   }
@@ -47,7 +48,7 @@ const ImgProd = styled.div`
   position: relative;
   margin-bottom: 1rem;
   border-radius: 10px;
-  /* overflow: hidden; */
+  overflow: hidden;
   text-align: center;
   height: 330px;
 
@@ -62,7 +63,7 @@ const ImgProd = styled.div`
 
   :hover {
     :before {
-      content: "+ Mais detalhes";
+      content: "Mais Detalhes";
       position: absolute;
       width: 100%;
       padding: 0.3rem;
@@ -116,17 +117,6 @@ const Item = ({ prod }) => {
   const [img, setImg] = React.useState(prod.imgProd[0].url);
   const [likeBtn, setLikeBtn] = React.useState(<Like />);
 
-  /* pega o elemento do proj, converte em json, dps em obj 
-     assim para de dar erro quando houver valores 'null' no imgBackground
-  */
-  let obj = JSON.parse(JSON.stringify(prod.imgBackground));
-
-  // if(obj != null) {
-  //   console.log(obj.url);
-  // } else {
-  //     obj = 'Vazio';
-  //     console.log('aqui', obj);
-  // }
 
   /* GAMBIARRA: no mousein, muda a img corretamente, porem no mouseleave, seta a img do ultimo produto carregado, ja que 
     é o valor atual do state. Nao consegui encontrar uma maneira de armazenar somente o target, ja que a var que receber o state
@@ -141,72 +131,27 @@ const Item = ({ prod }) => {
 
         prodContent.forEach((item) =>
           item.addEventListener("mouseenter", (e) => {
+            // children 0 : span ; children 1 : img
             span = item.children[0].getAttribute("value");
-
-            /* 
-              Se houver o atributo background, significa que prod.imgBackground nao e null (contem algo), e portanto trpca a img,
-            */
+            
+            //Se houver o atributo background, significa que prod.imgBackground nao e null (contem algo), e portanto troca a img,
             if (item.children[1].getAttribute("background")) {
-              item.children[1].setAttribute("src",item.children[1].getAttribute("background"));
+              item.children[1].setAttribute("src", item.children[1].getAttribute("background"));
             }
           })
         );
 
         prodContent.forEach((item) =>
           item.addEventListener("mouseleave", (e) => {
+            /* o prodImg passa por todas as imagens, portanto quando troca no setAtribute, perde a referencia
+               mesmo salvando o valor numa variavel (let valor = prod.img[0].url), vai guardar o valor da ultima img carregada
+              o span guarda esse valor, e como nunca e atualizado, seu valor continua intacto
+            */
             item.children[1].setAttribute("src", span);
           })
         );
       }, []);
 
-    // React.useEffect(() => {
-    //   const prodImg = document.querySelectorAll(".prod img");
-
-    //   prodImg.forEach((item) =>
-    //     item.addEventListener("mouseenter", (e) => {
-    //       setTeste(e.target.src);
-    //       console.log("in", teste);
-    //       // console.log('aq', e.target.src);
-    //       item.setAttribute(
-    //         "src",
-    //         "https://scontent.fpoo2-1.fna.fbcdn.net/v/t39.30808-6/307175789_3309818689264803_1742272490401101678_n.jpg?stp=dst-jpg_s600x600&_nc_cat=104&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=bzvPnMCEsPYAX-2FnZJ&_nc_ht=scontent.fpoo2-1.fna&oh=00_AT8o7uiLUAIvJynzCRsMyzeqbli-GMiLxdyIleTEQzamsg&oe=63290AD9"
-    //       );
-
-    //       item.addEventListener("mouseleave", (e) => {
-    //         console.log("out", teste);
-    //         item.setAttribute("src", img);
-    //       });
-    //     })
-    //   );
-    // }, [teste, img]);
-
-  // React.useEffect(() => {
-  //   let img = prod.imgProd[0].url;
-  //   const prodImg = document.querySelectorAll('.prod img')
-  //   let imgCache = 0;
-
-  //   prodImg.forEach((item) => 
-  //     item.addEventListener('mouseenter', (e) => {
-  //       console.log('aq', imgCache);
-  //       // console.log('aq', e.target.src);
-  //       item.setAttribute('src', 'https://scontent.fpoo2-1.fna.fbcdn.net/v/t39.30808-6/307175789_3309818689264803_1742272490401101678_n.jpg?stp=dst-jpg_s600x600&_nc_cat=104&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=bzvPnMCEsPYAX-2FnZJ&_nc_ht=scontent.fpoo2-1.fna&oh=00_AT8o7uiLUAIvJynzCRsMyzeqbli-GMiLxdyIleTEQzamsg&oe=63290AD9');
-
-  //     item.addEventListener('mouseleave', (e) => {
-  //       console.log('leave', imgCache);
-  //       item.setAttribute('src', img);
-  //     })  
-  // }));
-
-  // }); 
-
-  // console.log(prod);
-
-  // if(prod.imgBackground == null) {
-  //   console.log('null');
-  // } else {
-  //   console.log(prod.imgBackground.url);
-  // }
-  
   React.useEffect( () => {
     if(favorite === true) {
       setLikeBtn(<Liked />);
@@ -215,8 +160,6 @@ const Item = ({ prod }) => {
     }
   }, [favorite]);
 
-
-  // console.log(prod.imgBackground);
 
   return (
     <Card>
@@ -235,19 +178,13 @@ const Item = ({ prod }) => {
         <ImgProd className="prod">
           <span style={{'display':'none'}} value={prod.imgProd[0].url}></span>
 
-          {/* <img src={prod.imgProd[0].url} background={prod.imgBackground.url} alt="foto do produto" /> */}
-
-
-            {prod.imgBackground 
-            ?
-              <>
-                <img src={prod.imgProd[0].url} background={prod.imgBackground.url} alt="foto do produto" />
-              </>
-            : 
-            <>
-              <img src={prod.imgProd[0].url} alt="foto do produto" />
-            </>
-            }
+          {/* se for true, tem img de fundo, portanto cria-se o atributo background e realiza o efeito */}
+          {prod.imgBackground 
+          ?
+            <img src={prod.imgProd[0].url} background={prod.imgBackground.url} alt="foto do produto" />
+          : 
+            <img src={prod.imgProd[0].url} alt="foto do produto" />
+          }
 
         </ImgProd>
 

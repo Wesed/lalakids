@@ -16,13 +16,6 @@ const Main = () => {
   return (
       <Container>
         <Categoria option="Geral"/>
-
-        {/* 
-        content = G (geral), ou seja, exibe todos os produtos
-        <ShowProd content='G'/> 
-        
-        content = 'M' exibe todos os produtos masculinos
-        <ShowProd content='M'/> */}
       </Container>
   )
 }
