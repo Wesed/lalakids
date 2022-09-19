@@ -2,26 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Item from './Item';
 
-import prod1 from '../../Assets/prod1.jpeg';
-import prod2 from '../../Assets/prod2.jpeg';
-import prod3 from '../../Assets/prod3.jpeg';
-import prod4 from '../../Assets/prod4.jpeg';
-import prod5 from '../../Assets/prod5.jpeg';
-import prod6 from '../../Assets/prod6.jpeg';
-import prod7 from '../../Assets/prod7.jpeg';
-import prod8 from '../../Assets/prod8.jpeg';
-import prod9 from '../../Assets/prod9.jpeg';
-import prod10 from '../../Assets/prod10.jpeg';
-import prod11 from '../../Assets/prod11.jpeg';
-import prod12 from '../../Assets/prod12.jpeg';
-import prod13 from '../../Assets/prod13.jpeg';
-import prod14 from '../../Assets/prod14.jpeg';
-import prod15 from '../../Assets/prod15.jpeg';
-import prod16 from '../../Assets/prod16.jpeg';
-import prod17 from '../../Assets/prod17.jpeg';
-import prod18 from '../../Assets/prod18.jpeg';
-import prod19 from '../../Assets/prod19.jpeg';
-
 //graphql
 import { useQuery } from "graphql-hooks";
 
@@ -91,7 +71,7 @@ const Container = styled.section`
 // assim, caso mude as categorias no cms, o site ja capta automaticamente.
 
 const Categoria = ({option}) => {
-  const [categorie, setCategorie] = React.useState(true);
+  // const [categorie, setCategorie] = React.useState(true);
 
   //GRAPHQL query
   const PROJECT_QUERY = `
@@ -126,25 +106,50 @@ const Categoria = ({option}) => {
   }  
   `;
 
+  /* 
+    Nao e viavel usar o componente categoria pra todas as categorias,
+    criar um categoriaGeral pros produtos exibidos no main
+    e um categoria normal pras categorias e subcategorias 
+  */
+
   const {error, data } = useQuery(PROJECT_QUERY, {
     variables: {
       limit: 100,
     },
   });
 
+  console.log(data);
+
+
+
   // se for geral, a categoria vai ser false (n exibe as subcategorias)
   // qd for true, deve fazer usar o useParams pra capturar a categoria e fazer o graphQL
 
-  React.useEffect( ()=> {
-    if(option === 'Geral') {
-      setCategorie(false);
-    }
-  }, [option]);
+  // React.useEffect( ()=> {
+  //   if(option === 'Geral') {
+  //     setCategorie(false);
+  //   }
+  // }, [option]);
 
 
   return (
     <>
-      {categorie 
+      {/* se for 'main', envia o data_main ao component item */}
+      { option === 'Main'
+      ?
+      <Container>
+        {/* {data_main?.allProdutos.map((prod, index) => <Item key={index} prod={prod} />)};  */}
+      </Container>
+      :
+      <></> 
+      }
+      
+      {/* <Container>
+        {data?.allProdutos.map((prod, index) => <Item key={index} prod={prod} />)}; 
+      </Container> */}
+    </>
+
+    /*{categorie 
       && 
       <Categories>
       <SwiperConfig>
@@ -270,13 +275,7 @@ const Categoria = ({option}) => {
       </SwiperConfig>
 
       </Categories>
-      }
-
-      <Container>
-        {data?.allProdutos.map((prod, index) => <Item key={index} prod={prod} />)}; 
-      </Container>
-      {/* <Container>{prods.map((prod, index) => <Item key={index} prod={prod} />)}; </Container> */}
-    </>
+      } */
   )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import styled from 'styled-components';
-import Categoria from './../Categoria/Categoria';
+import CategoriaGeral from './../Categoria/CategoriaGeral';
 
 
 
@@ -15,7 +15,7 @@ const Main = () => {
 
   return (
       <Container>
-        <Categoria option="Geral"/>
+        <CategoriaGeral/>
       </Container>
   )
 }

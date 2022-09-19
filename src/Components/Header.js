@@ -94,7 +94,7 @@ const Navbar = styled.nav`
   a {
     margin: 0 35px 0 0;
     font-size: .875rem;
-    font-weight: bold;
+    font-weight: 500;
     color: rgba(0, 0, 0, 1);
 
     :last-child {
@@ -111,7 +111,7 @@ const Navbar = styled.nav`
       margin: 0;
       padding: 0 25px 0 0;
       font-size: .75rem;
-      font-weight: 700;
+      font-weight: 500;
     }
   }
 `;

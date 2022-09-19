@@ -19,9 +19,9 @@ const Card = styled.div`
   transition: ease 0.3s;
 
 
-  :hover {
+  /* :hover {
     transform: scale(1.05);
-  }
+  } */
 
   @media (max-width: 30rem) {
     width: initial;
@@ -52,7 +52,6 @@ const ImgProd = styled.div`
   text-align: center;
   height: 330px;
 
-
   img {
     width: 100%;
     height: 100%;
@@ -60,25 +59,23 @@ const ImgProd = styled.div`
     border-radius: 10px;
   }
 
-
-  :hover {
-    :before {
-      content: "Mais Detalhes";
-      position: absolute;
-      width: 100%;
-      padding: 0.3rem;
-      background: ${(props) => props.theme.colors.degrade};
-      font-size: 0.9rem;
-      color: white;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 0%;
-    }
+  span {
+    position: absolute;
+    width: 100%;
+    padding: 0.3rem;
+    background: ${(props) => props.theme.colors.degrade};
+    font-size: 0.9rem;
+    color: white;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0%;
+    opacity: 0;
+    transition: .3s;
   }
 `;
 
 const ProdInfo = styled.div`
-  text-align: center;
+  text-align: left;
   padding: 0 0.5rem;
 `;
 
@@ -86,11 +83,11 @@ const Ptitle = styled.p`
   font-size: 14px;
   font-weight: 500;
   color: ${(props) => props.theme.colors.text};
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 `;
 const Pprice = styled.p`
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 24px;
+  font-weight: 700;
   margin-bottom: 0.5rem;
   color: ${(props) => props.theme.colors.blueBackground};
 
@@ -106,7 +103,7 @@ const Pcard = styled.p`
   color: black;
 
   span {
-    font-weight: 900;
+    font-weight: 700;
     font-size: 14px;
     color: ${(props) => props.theme.colors.blueBackground};
   }
@@ -128,16 +125,20 @@ const Item = ({ prod }) => {
       React.useEffect(() => {
         const prodContent = document.querySelectorAll(".prod");
         let span = false;
+        let spanHover = false;
 
         prodContent.forEach((item) =>
           item.addEventListener("mouseenter", (e) => {
             // children 0 : span ; children 1 : img
-            span = item.children[0].getAttribute("value");
-            
+            span = item.children[0].getAttribute("value"); 
+
             //Se houver o atributo background, significa que prod.imgBackground nao e null (contem algo), e portanto troca a img,
             if (item.children[1].getAttribute("background")) {
               item.children[1].setAttribute("src", item.children[1].getAttribute("background"));
-            }
+            }      
+
+            item.children[2].style.opacity = '1';
+
           })
         );
 
@@ -148,6 +149,7 @@ const Item = ({ prod }) => {
               o span guarda esse valor, e como nunca e atualizado, seu valor continua intacto
             */
             item.children[1].setAttribute("src", span);
+            item.children[2].style.opacity = '0';
           })
         );
       }, []);
@@ -163,14 +165,7 @@ const Item = ({ prod }) => {
 
   return (
     <Card>
-      {/* 
-        o nome do produto vem do GraphQL e seta aq, no component categoria: 
-        1. pega o nome do produto usando useParams
-        2. faz uma busca no GrapQL
-        3. seta as infos 
-      */}
 
-      {/* Ao recarregar a pagina, a informacao sobre quais produtos foram curtidos devem permanecer, pra isso e necessario que essa informacao seja carregada junto aos produtos, talvez uma especie INNER JOIN entre os produtos e os favoritos */}
       <button onClick={() => {setFavorite(!favorite)}}> {likeBtn} </button>
 
       <Link to={`/${prod.titleProd}`}>
@@ -185,6 +180,8 @@ const Item = ({ prod }) => {
           : 
             <img src={prod.imgProd[0].url} alt="foto do produto" />
           }
+
+          <span> Mais Detalhes </span>
 
         </ImgProd>
 
