@@ -42,7 +42,6 @@ const CategoriaGeral = () => {
     }
   }`;
 
-
   const {error, data } = useQuery(PROJECT_QUERY, {
     variables: {
       limit: 100,
@@ -65,9 +64,11 @@ const CategoriaGeral = () => {
   let category2 = ObjToString(data?.allOff40s);
   let category3 = ObjToString(data?.allTendenciaVeraos);
 
+  if (error) return 'Ops, algo deu errado! - CategoriaGeral';
+
   return (
     <Container>
-      <CategoriaGeralCarousel category={category1} title={'Tá bombando'}/>
+      <CategoriaGeralCarousel category={category1} title={'Tá bombando!'}/>
       <CategoriaGeralCarousel category={category2} title={'Tudo com 40% OFF'}/>
       <CategoriaGeralCarousel category={category3} title={'Tendências do verão'}/>
     </Container>

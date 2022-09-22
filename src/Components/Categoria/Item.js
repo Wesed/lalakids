@@ -111,21 +111,19 @@ const Pcard = styled.p`
 
 const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
-  const [img, setImg] = React.useState(prod.imgProd[0].url);
-  const [likeBtn, setLikeBtn] = React.useState(<Like />);
+  const [formatUrl, setFormatUrl] = React.useState(prod.titleProd);
 
 
-  /* GAMBIARRA: no mousein, muda a img corretamente, porem no mouseleave, seta a img do ultimo produto carregado, ja que 
+    /* GAMBIARRA: no mousein, muda a img corretamente, porem no mouseleave, seta a img do ultimo produto carregado, ja que 
     é o valor atual do state. Nao consegui encontrar uma maneira de armazenar somente o target, ja que a var que receber o state
     recebe todos os valores de state. e seu valor sempre será o do ultimo produto. 
     EX: se receber 3 elementos (1, 2, 3), o valor atual sempre sera 3, pois foi o ultimo que receberu
     Por isso, criei um elemento invisivel dentro do prodImg que recebe o mesmo valor de img, e como nao é alterado,
     consegue manter o valor pra ser recuperado dps no leave.
   */
-      React.useEffect(() => {
+    React.useEffect(() => {
         const prodContent = document.querySelectorAll(".prod");
         let span = false;
-        let spanHover = false;
 
         prodContent.forEach((item) =>
           item.addEventListener("mouseenter", (e) => {
@@ -152,23 +150,14 @@ const Item = ({ prod }) => {
             item.children[2].style.opacity = '0';
           })
         );
-      }, []);
-
-  React.useEffect( () => {
-    if(favorite === true) {
-      setLikeBtn(<Liked />);
-    } else {
-      setLikeBtn(<Like />);
-    }
-  }, [favorite]);
-
+    }, []);
 
   return (
     <Card>
 
-      <button onClick={() => {setFavorite(!favorite)}}> {likeBtn} </button>
+      <button onClick={() => {setFavorite(!favorite)}}> {favorite ? <Liked/> : <Like/>} </button>
 
-      <Link to={`/${prod.titleProd}`}>
+      <Link to={`/${formatUrl}/${prod.id}`} onLoad={() => {setFormatUrl(formatUrl.toLowerCase().replace(" ", "-"))}}>
 
         <ImgProd className="prod">
           <span style={{'display':'none'}} value={prod.imgProd[0].url}></span>

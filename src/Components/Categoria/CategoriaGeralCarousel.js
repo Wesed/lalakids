@@ -30,6 +30,7 @@ const CategoriaGeralCarousel = ({category, title}) => {
 const PROJECT_QUERY = `
   query MyQuery {
     allProdutos(filter: {id: {in: [${category}]}}) {
+        id
         imgBackground {
           url
         }
@@ -47,6 +48,8 @@ const {error, data } = useQuery(PROJECT_QUERY, {
     limit: 100,
   },
 });
+
+  if (error) return 'Ops, algo deu errado! - CategoriaGeralCarousel'
 
     return (
       <Container>

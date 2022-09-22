@@ -23,9 +23,10 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" end element={<Main/>}> </Route>
-            <Route path="produto/:id" element={<Produto/>}> </Route>
+            <Route path="/:id" element={<Produto/>}> </Route>
+            <Route path="/:titleProd/:idProd" element={<Produto/>}> </Route>
             <Route path="login/*" element={<Login/>}> </Route>
-            <Route path="categoria/*" element={<Categoria/>}> </Route>
+            <Route path="categoria/:id" element={<Categoria/>}> </Route>
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

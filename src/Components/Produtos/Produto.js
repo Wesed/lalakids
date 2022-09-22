@@ -7,8 +7,8 @@ import UseMedia from './../Useful/UseMedia';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-
-
+import { useParams } from 'react-router-dom';
+import { useQuery } from 'graphql-hooks';
 
 const Container = styled.section`
   display: grid;
@@ -192,99 +192,219 @@ const Produto = () => {
   });
     });
 
-  }, []); 
+  }, [])
 
-    /* 
+  const params = useParams();
+
+
+    //GRAPHQL query
+    const PROJECT_QUERY = `
+    query MyQuery {
+      produto(filter: {id: {eq: "${params.idProd}"}}) {
+        imgBackground {
+              url
+            }
+            imgProd {
+              url
+            }
+            priceProd
+            titleProd
+            size1
+            size2
+            size3
+            size4
+            size5
+            size6
+            size7
+            size8
+            size9
+            size10
+            size12
+            size14
+            size16
+            size18
+            size20
+            size22
+      }
+    }
+    `;
+  
+    const {error, data } = useQuery(PROJECT_QUERY, {
+      variables: {
+        limit: 100,
+      },
+    });
+  
+    if (error) return 'Ops, algo deu errado!';; 
+
+    if (data) {
+
+      const { produto} = data;
+
+      let prodSize = [
+        {
+          size: '01',
+          qtd: produto.size1
+        },
+        {
+          size: '02',
+          qtd: produto.size2
+        },
+        {
+          size: '03',
+          qtd: produto.size3
+        },
+        {
+          size: '04',
+          qtd: produto.size4
+        },
+        {
+          size: '05',
+          qtd: produto.size5
+        },
+        {
+          size: '06',
+          qtd: produto.size6
+        },
+        {
+          size: '07',
+          qtd: produto.size7
+        },
+        {
+          size: '08',
+          qtd: produto.size8
+        },
+        {
+          size: '09',
+          qtd: produto.size9
+        },
+        {
+          size: '10',
+          qtd: produto.size10
+        },
+        {
+          size: '12',
+          qtd: produto.size12
+        },
+        {
+          size: '14',
+          qtd: produto.size14
+        },
+        {
+          size: '16',
+          qtd: produto.size16
+        },
+        {
+          size: '18',
+          qtd: produto.size18
+        },
+        {
+          size: '20',
+          qtd: produto.size20
+        },
+        {
+          size: '22',
+          qtd: produto.size22
+        },
+        {
+          size: '24',
+          qtd: produto.size24
+        },
+      ]        
+
+      return (
+        <Container className="animeFade">
+          {media ? (
+            <SwiperConfig>
+              <Swiper
+                spaceBetween={1}
+                slidesPerView={1}>
+                <SwiperSlide><img src={prod1} alt="produto 1" /></SwiperSlide>
+                <SwiperSlide><img src={prod2} alt="produto 1" /></SwiperSlide>
+                <SwiperSlide><img src={prod1} alt="produto 1" /></SwiperSlide>
+                <SwiperSlide><img src={prod2} alt="produto 1" /></SwiperSlide>
+              </Swiper>
+            </SwiperConfig>
+          ) : (
+            <ImgContainer>
+              <img src={produto.imgProd[0].url} alt="imagem do produto" />
     
-      NOTA DE MELHORIA: Estudar use effect e entender como ele funciona
-    */
-
-
-  return (
-    <Container className="animeFade">
-      {media ? (
-        <SwiperConfig>
-          <Swiper
-            spaceBetween={1}
-            slidesPerView={1}>
-            <SwiperSlide><img src={prod1} alt="produto 1" /></SwiperSlide>
-            <SwiperSlide><img src={prod2} alt="produto 1" /></SwiperSlide>
-            <SwiperSlide><img src={prod1} alt="produto 1" /></SwiperSlide>
-            <SwiperSlide><img src={prod2} alt="produto 1" /></SwiperSlide>
-          </Swiper>
-        </SwiperConfig>
-      ) : (
-        <ImgContainer>
-          <img src={imgProd} alt="imagem do produto" />
-
-          <div id="previewProd">
-            <img src={prod2} alt="produto 1" />
-            <img src={prod1} alt="produto 2" />
-            <img src={prod2} alt="produto 3" />
-          </div>
-        </ImgContainer>
-      )}
-
-      <ProdInfo>
-        <Ptitle>Calça Moletom jogger masculina summer</Ptitle>
-
-        <Pprice>
-          R$ 129,90 <span> à vista </span>
-        </Pprice>
-
-        {hasSizes ? (
-          <DivSizes>
-            <p>Tamanho:</p>
-            <div>
-              <button> 08 </button>
-              <button> 10 </button>
-              <button> 12 </button>
-              <button> 14 </button>
-              <button> 16 </button>
-              <button> 18 </button>
-              <button> 20 </button>
-              <button> 22 </button>
-            </div>
-          </DivSizes>
-        ) : (
-          <div> </div>
-        )}
-
-        {hasColors ? (
-          <DivColors>
-            <p>Cores:</p>
-            <div>
-              {/* aq aparece miniaturas das outras cores, q vira pelo graphQL */}
-              <div onClick={ ()=> {setImgProd(prod1)}}>
-                {" "}
-                <img src={prod1} alt="img produto" />{" "}
+              <div id="previewProd">
+                <img src={prod2} alt="produto 1" />
+                <img src={prod1} alt="produto 2" />
+                <img src={prod2} alt="produto 3" />
               </div>
-              <div onClick={ ()=> {setImgProd(prod2)}}>
-                {" "}
-                <img src={prod2} alt="img produto" />{" "}
-              </div>
-              <div onClick={ ()=> {setImgProd(prod1)}}>
-                {" "}
-                <img src={prod1} alt="img produto" />{" "}
-              </div>
-              <div onClick={ ()=> {setImgProd(prod2)}}>
-                {" "}
-                <img src={prod2} alt="img produto" />{" "}
-              </div>
-            </div>
-          </DivColors>
-        ) : (
-          <div> </div>
-        )}
+            </ImgContainer>
+          )}
+    
+          <ProdInfo>
+            <Ptitle>{produto.titleProd}</Ptitle>
+    
+            <Pprice>
+              {produto.priceProd} <span> à vista </span>
+            </Pprice>
 
-        <Pcard>
-          ou 3x de <span> R$ 43,30 </span> s/ juros
-        </Pcard>
+            <Pcard>
+              ou 3x de <span> R$ {(produto.priceProd / 3).toFixed(2)}  </span> s/ juros
+            </Pcard>
+    
+            {hasSizes ? (
+              <DivSizes>
+                <p>Tamanho:</p>
+                <div>
+                  {/* Arrumar uma forma de rodar o map nesse vetor.
+                  Ele nao esta funcionando pq o prodSize, por ser um vet, precisa da posicao, que tem q ser
+                  dinamica. Ja pensei em criar um for e o .map dentro, mas nao parece certo
+                  
+                  prodSize[i] tbm n funciona pq ele e instanciado depois.
+                  prodSize e um vetor de objetos, portanto precisa do '.qtd'
+                  
+                  
+                  ler bloco de notas 
+                  */}
+                  {prodSize[index].qtd.map((size, index) => 
+                    size > 0 && <button key={index}> {prodSize.size} {size} </button>
+                  )}
+                </div>
+              </DivSizes>
+            ) : (
+              <div> </div>
+            )}
+    
+            {hasColors ? (
+              <DivColors>
+                <p>Cores:</p>
+                <div>
+                  {/* aq aparece miniaturas das outras cores, q vira pelo graphQL */}
+                  <div onClick={ ()=> {setImgProd(prod1)}}>
+                    {" "}
+                    <img src={prod1} alt="img produto" />{" "}
+                  </div>
+                  <div onClick={ ()=> {setImgProd(prod2)}}>
+                    {" "}
+                    <img src={prod2} alt="img produto" />{" "}
+                  </div>
+                  <div onClick={ ()=> {setImgProd(prod1)}}>
+                    {" "}
+                    <img src={prod1} alt="img produto" />{" "}
+                  </div>
+                  <div onClick={ ()=> {setImgProd(prod2)}}>
+                    {" "}
+                    <img src={prod2} alt="img produto" />{" "}
+                  </div>
+                </div>
+              </DivColors>
+            ) : (
+              <div> </div>
+            )}
 
-        <Button> comprar </Button>
-      </ProdInfo>
-    </Container>
-  );
+            <Button> comprar </Button>
+          </ProdInfo>
+        </Container>
+          );
+    }
+
+      return false;
 }
 
 export default Produto;

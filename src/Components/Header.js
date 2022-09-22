@@ -124,13 +124,13 @@ export const Header = () => {
   /* isso tem q vir do graphQL */
   const menuSuperior = [
     {
-      description: 'Meninas', 
-      href: "meninas"
+      description: 'Menina', 
+      href: "feminino"
     }, 
 
     {
-      description: 'Meninos', 
-      href: "meninos"
+      description: 'Menino', 
+      href: "masculino"
     }, 
 
     {
