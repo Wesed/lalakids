@@ -248,11 +248,13 @@ const Produto = () => {
       /* precisa arrumar uma maneira de somente um
       input radio ficar ativado, os outros desativados */
       console.log('a', target);
-      if (target.checked) {
-        target.closest('[name="label-radio-size"]').classList.add('radio-active');
-      } else {
-        target.closest('[name="label-radio-size"]').classList.remove('radio-active');
-      }
+
+      target.checked && target.closest('[name="label-radio-size"]').classList.add('radio-active');
+      
+      target.addEventListener('focusout', () => {
+        target.checked && target.closest('[name="label-radio-size"]').classList.remove('radio-active');
+      });
+
       setRadio(target.innerText);
       radio && console.log(radio);
     }
