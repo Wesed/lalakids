@@ -95,7 +95,6 @@ const Pprice = styled.p`
 const DivSizes = styled.div`
   margin-bottom: 2rem;
 
-
   p {
     margin: 1rem 0;
     text-align: start;
@@ -107,7 +106,7 @@ const DivSizes = styled.div`
     justify-content: start;
     gap: 1rem;
 
-    button {
+    label {
       padding: .8rem;
       text-decoration: none;
       /* border: 1px solid ${props => props.theme.colors.text}; */
@@ -117,7 +116,15 @@ const DivSizes = styled.div`
       background: transparent;
       color: black;
       cursor: pointer;
-      transition: .1s;
+      transition: .2s;
+
+      :hover {
+        border: 1px solid ${props => props.theme.colors.blueBackground};
+      }
+
+      :selected {
+        
+      }
 
       /* 
         Ao clicar nesse elemento, mudara o background pro azul bebe somente no item selecionado (add class active, por ex)
@@ -183,6 +190,8 @@ const Produto = () => {
 
   const [imgProd, setImgProd] = React.useState(prod1);
 
+  const [radio, setRadio] = React.useState(false);
+
   React.useEffect(() => {
     const getImgProd = document.querySelectorAll("#previewProd img");
 
@@ -194,8 +203,8 @@ const Produto = () => {
 
   }, [])
 
-  const params = useParams();
 
+  const params = useParams();
 
     //GRAPHQL query
     const PROJECT_QUERY = `
@@ -234,6 +243,19 @@ const Produto = () => {
         limit: 100,
       },
     });
+
+    function handleClick({target}) {
+      /* precisa arrumar uma maneira de somente um
+      input radio ficar ativado, os outros desativados */
+      console.log('a', target);
+      if (target.checked) {
+        target.closest('[name="label-radio-size"]').classList.add('radio-active');
+      } else {
+        target.closest('[name="label-radio-size"]').classList.remove('radio-active');
+      }
+      setRadio(target.innerText);
+      radio && console.log(radio);
+    }
   
     if (error) return 'Ops, algo deu errado!';; 
 
@@ -347,29 +369,19 @@ const Produto = () => {
             <Pcard>
               ou 3x de <span> R$ {(produto.priceProd / 3).toFixed(2)}  </span> s/ juros
             </Pcard>
-    
-            {hasSizes ? (
-              <DivSizes>
+       
+            <DivSizes>
                 <p>Tamanho:</p>
                 <div>
-                  {/* Arrumar uma forma de rodar o map nesse vetor.
-                  Ele nao esta funcionando pq o prodSize, por ser um vet, precisa da posicao, que tem q ser
-                  dinamica. Ja pensei em criar um for e o .map dentro, mas nao parece certo
-                  
-                  prodSize[i] tbm n funciona pq ele e instanciado depois.
-                  prodSize e um vetor de objetos, portanto precisa do '.qtd'
-                  
-                  
-                  ler bloco de notas 
-                  */}
-                  {prodSize[index].qtd.map((size, index) => 
-                    size > 0 && <button key={index}> {prodSize.size} {size} </button>
+                  {prodSize.map((size, index) => 
+                  // exibe apenas os tamanhos disponiveis. Evita que apareça varios tamanhos (1 ao 22)
+                  size.qtd > 0 &&
+                    <label name="label-radio-size" key={index} onClick={handleClick}> {size.size} 
+                      <input type="radio" name="input-radio-size"/>
+                    </label>
                   )}
                 </div>
-              </DivSizes>
-            ) : (
-              <div> </div>
-            )}
+            </DivSizes>
     
             {hasColors ? (
               <DivColors>

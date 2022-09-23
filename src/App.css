@@ -26,6 +26,10 @@ body {
   box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.5);
 }
 
+.radio-active {
+  /* border: 1px solid #0ED6E5 !important; */
+  background: rgba(14, 214, 229, .2) !important;
+}
 
 .animeFade {
   opacity: 0;
