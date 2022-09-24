@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import prod1 from '../../Assets/prod1.jpeg';
-import prod2 from '../../Assets/prod2.jpeg';
 import Button from './../Useful/Button';
 import UseMedia from './../Useful/UseMedia';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation } from "swiper/core";
+import "swiper/css/navigation";
 import 'swiper/css';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'graphql-hooks';
+
+SwiperCore.use([Navigation]);
 
 const Container = styled.section`
   display: grid;
@@ -29,7 +31,6 @@ const Container = styled.section`
 `;
 
 const SwiperConfig = styled.div`
-
   img {
     width: 100%;
     height: 450px;
@@ -122,9 +123,11 @@ const DivSizes = styled.div`
         border: 1px solid ${props => props.theme.colors.blueBackground};
       }
 
-      :selected {
-        
-      }
+      input[type="radio"] {
+        // o absolute e pra ele nao ocupar espaço
+        opacity: 0;
+        position: absolute;
+      };
 
       /* 
         Ao clicar nesse elemento, mudara o background pro azul bebe somente no item selecionado (add class active, por ex)
@@ -174,80 +177,69 @@ const Pcard = styled.p`
   }
 `;
 
-/* 
-  aula https://www.origamid.com/curso/react-completo/0606-desafio-router-2
-  quando for configurar com os dados do cms
-*/
-
 const Produto = () => {
   const media = UseMedia('(max-width: 30rem)');
 
-  //qd for true, e pq o produto tem outras cores
-  const [hasColors] = React.useState(true);
+  const params = useParams();
 
-  //qd for true, e pq o produto tem outros tamanhos
-  const [hasSizes] = React.useState(true);
+  //GRAPHQL query
+  const PROJECT_QUERY = `
+  query MyQuery {
+    produto(filter: {id: {eq: "${params.idProd}"}}) {
+      imgBackground {
+            url
+          }
+          imgProd {
+            url
+          }
+          priceProd
+          titleProd
+          size1
+          size2
+          size3
+          size4
+          size5
+          size6
+          size7
+          size8
+          size9
+          size10
+          size12
+          size14
+          size16
+          size18
+          size20
+          size22
+    }
+  }
+  `;
 
-  const [imgProd, setImgProd] = React.useState(prod1);
+  const {error, data } = useQuery(PROJECT_QUERY, {
+    variables: {
+      limit: 100,
+    },
+  });
+
+  const [imgProd, setImgProd] = React.useState("");
 
   const [radio, setRadio] = React.useState(false);
 
-  React.useEffect(() => {
-    const getImgProd = document.querySelectorAll("#previewProd img");
 
-    getImgProd.forEach( (item) => {
-      item.addEventListener('mouseenter', (e) => {
-        setImgProd(e.target.src);
-  });
-    });
+    React.useEffect(() => {
 
-  }, [])
+      // seta a img somente na 1x que entra no useEffect
+      data && imgProd === "" && setImgProd(data.produto.imgProd[0].url);
 
-
-  const params = useParams();
-
-    //GRAPHQL query
-    const PROJECT_QUERY = `
-    query MyQuery {
-      produto(filter: {id: {eq: "${params.idProd}"}}) {
-        imgBackground {
-              url
-            }
-            imgProd {
-              url
-            }
-            priceProd
-            titleProd
-            size1
-            size2
-            size3
-            size4
-            size5
-            size6
-            size7
-            size8
-            size9
-            size10
-            size12
-            size14
-            size16
-            size18
-            size20
-            size22
-      }
-    }
-    `;
-  
-    const {error, data } = useQuery(PROJECT_QUERY, {
-      variables: {
-        limit: 100,
-      },
-    });
+        const getImgProd = document.querySelectorAll("#previewProd img");
+        getImgProd.forEach( (item) => {
+          item.addEventListener('mouseenter', (e) => {
+            console.log(imgProd);
+            setImgProd(e.target.src);
+      });
+        });  
+    }, [imgProd, data])
 
     function handleClick({target}) {
-      /* precisa arrumar uma maneira de somente um
-      input radio ficar ativado, os outros desativados */
-      console.log('a', target);
 
       target.checked && target.closest('[name="label-radio-size"]').classList.add('radio-active');
       
@@ -255,8 +247,8 @@ const Produto = () => {
         target.checked && target.closest('[name="label-radio-size"]').classList.remove('radio-active');
       });
 
+      // vai armazenar o atual tam. selecionado
       setRadio(target.innerText);
-      radio && console.log(radio);
     }
   
     if (error) return 'Ops, algo deu errado!';; 
@@ -343,21 +335,37 @@ const Produto = () => {
               <Swiper
                 spaceBetween={1}
                 slidesPerView={1}>
-                <SwiperSlide><img src={prod1} alt="produto 1" /></SwiperSlide>
-                <SwiperSlide><img src={prod2} alt="produto 1" /></SwiperSlide>
-                <SwiperSlide><img src={prod1} alt="produto 1" /></SwiperSlide>
-                <SwiperSlide><img src={prod2} alt="produto 1" /></SwiperSlide>
+                  {
+                    produto.imgProd.map((prod, index) => 
+                        <SwiperSlide key={index}>
+                          <img src={prod.url} alt={"produto" + index} />
+                        </SwiperSlide>
+                    )
+                  }
               </Swiper>
             </SwiperConfig>
           ) : (
             <ImgContainer>
-              <img src={produto.imgProd[0].url} alt="imagem do produto" />
-    
-              <div id="previewProd">
-                <img src={prod2} alt="produto 1" />
-                <img src={prod1} alt="produto 2" />
-                <img src={prod2} alt="produto 3" />
-              </div>
+              <img src={imgProd} alt="imagem do produto" />
+
+              <Swiper id="imgProd"
+                direction="vertical"
+                mousewheel={true}
+                pagination={{ clickable: true}}
+                scrollbar={{ draggable: true}}
+                navigation={true}      
+                slidesPerView={5}
+                spaceBetween={20}>
+
+                  {
+                    produto.imgProd.map((prod, index) => 
+                        <SwiperSlide key={index}>
+                          <img src={prod.url} alt={"produto " + (index+1)} />
+                        </SwiperSlide>
+                    )
+                  }
+
+              </Swiper>
             </ImgContainer>
           )}
     
@@ -373,7 +381,7 @@ const Produto = () => {
             </Pcard>
        
             <DivSizes>
-                <p>Tamanho:</p>
+                <p>Tamanhos disponíveis:</p>
                 <div>
                   {prodSize.map((size, index) => 
                   // exibe apenas os tamanhos disponiveis. Evita que apareça varios tamanhos (1 ao 22)
@@ -384,12 +392,10 @@ const Produto = () => {
                   )}
                 </div>
             </DivSizes>
-    
-            {hasColors ? (
-              <DivColors>
+
+            {/* <DivColors>
                 <p>Cores:</p>
                 <div>
-                  {/* aq aparece miniaturas das outras cores, q vira pelo graphQL */}
                   <div onClick={ ()=> {setImgProd(prod1)}}>
                     {" "}
                     <img src={prod1} alt="img produto" />{" "}
@@ -407,10 +413,7 @@ const Produto = () => {
                     <img src={prod2} alt="img produto" />{" "}
                   </div>
                 </div>
-              </DivColors>
-            ) : (
-              <div> </div>
-            )}
+            </DivColors> */}
 
             <Button> comprar </Button>
           </ProdInfo>
@@ -418,7 +421,7 @@ const Produto = () => {
           );
     }
 
-      return false;
+    return false;
 }
 
 export default Produto;
