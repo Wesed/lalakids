@@ -4,13 +4,11 @@ import Button from './../Useful/Button';
 import UseMedia from './../Useful/UseMedia';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation } from "swiper/core";
+import { Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'graphql-hooks';
-
-SwiperCore.use([Navigation]);
 
 const Container = styled.section`
   display: grid;
@@ -30,7 +28,7 @@ const Container = styled.section`
 
 `;
 
-const SwiperConfig = styled.div`
+const SwiperMobile = styled.div`
   img {
     width: 100%;
     height: 450px;
@@ -43,9 +41,9 @@ const ImgContainer = styled.div`
   display: grid;
   grid-template-columns: 20% 80%;
   gap: 1rem;
-  overflow: hidden;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 
   img {
     max-width: 100%;
@@ -53,19 +51,40 @@ const ImgContainer = styled.div`
     border-radius: 4px;
   }
 
-  div {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    grid-column: 1;
-    gap: 1rem;
-    border-radius: 4px;
-  }
-
   img:nth-child(1) {
     grid-column: 2;
     grid-row: 1 / 3;
+    max-width: 100%;
     max-height: 30.81rem;
+  }
+`;
+
+const SwiperDesktop = styled.div`
+  height: 75%;
+
+  div {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    
+    img {
+      cursor: pointer;
+    }
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    position: absolute;
+    transform: rotate(90deg); 
+    left: 2rem;
+  }
+
+  .swiper-button-prev {
+    top: 1rem;
+  }
+
+  .swiper-button-next {
+    top: 27.5rem; 
   }
 `;
 
@@ -230,10 +249,9 @@ const Produto = () => {
       // seta a img somente na 1x que entra no useEffect
       data && imgProd === "" && setImgProd(data.produto.imgProd[0].url);
 
-        const getImgProd = document.querySelectorAll("#previewProd img");
+        const getImgProd = document.querySelectorAll("#previewProd div img");
         getImgProd.forEach( (item) => {
-          item.addEventListener('mouseenter', (e) => {
-            console.log(imgProd);
+          item.addEventListener('click', (e) => {
             setImgProd(e.target.src);
       });
         });  
@@ -331,66 +349,74 @@ const Produto = () => {
       return (
         <Container className="animeFade">
           {media ? (
-            <SwiperConfig>
-              <Swiper
-                spaceBetween={1}
-                slidesPerView={1}>
-                  {
-                    produto.imgProd.map((prod, index) => 
-                        <SwiperSlide key={index}>
-                          <img src={prod.url} alt={"produto" + index} />
-                        </SwiperSlide>
-                    )
-                  }
+            <SwiperMobile>
+              <Swiper spaceBetween={1} slidesPerView={1}>
+                {produto.imgProd.map((prod, index) => (
+                  <SwiperSlide key={index}>
+                    <img src={prod.url} alt={"produto" + index} />
+                  </SwiperSlide>
+                ))}
               </Swiper>
-            </SwiperConfig>
+            </SwiperMobile>
           ) : (
             <ImgContainer>
               <img src={imgProd} alt="imagem do produto" />
 
-              <Swiper id="imgProd"
-                direction="vertical"
-                mousewheel={true}
-                pagination={{ clickable: true}}
-                scrollbar={{ draggable: true}}
-                navigation={true}      
-                slidesPerView={5}
-                spaceBetween={20}>
-
-                  {
-                    produto.imgProd.map((prod, index) => 
-                        <SwiperSlide key={index}>
-                          <img src={prod.url} alt={"produto " + (index+1)} />
-                        </SwiperSlide>
-                    )
-                  }
-
-              </Swiper>
+              <SwiperDesktop>
+                <Swiper
+                  direction={"vertical"}
+                  slidesPerView={"auto"}
+                  spaceBetween={30}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  navigation = {true}
+                  mousewheel={true}
+                  // navigation={true}
+                  modules={[Navigation, Mousewheel]}
+                  id="previewProd"
+                >
+                  {produto.imgProd.map((prod, index) => (
+                    <SwiperSlide key={index}>
+                        <img src={prod.url} alt={"produto " + (index + 1)} />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              </SwiperDesktop>
             </ImgContainer>
           )}
-    
+
           <ProdInfo>
             <Ptitle>{produto.titleProd}</Ptitle>
-    
+
             <Pprice>
               {produto.priceProd} <span> à vista </span>
             </Pprice>
 
             <Pcard>
-              ou 3x de <span> R$ {(produto.priceProd / 3).toFixed(2)}  </span> s/ juros
+              ou 3x de <span> R$ {(produto.priceProd / 3).toFixed(2)} </span> s/
+              juros
             </Pcard>
-       
+
             <DivSizes>
-                <p>Tamanhos disponíveis:</p>
-                <div>
-                  {prodSize.map((size, index) => 
-                  // exibe apenas os tamanhos disponiveis. Evita que apareça varios tamanhos (1 ao 22)
-                  size.qtd > 0 &&
-                    <label name="label-radio-size" key={index} onClick={handleClick}> {size.size} 
-                      <input type="radio" name="input-radio-size"/>
-                    </label>
-                  )}
-                </div>
+              <p>Tamanhos disponíveis:</p>
+              <div>
+                {prodSize.map(
+                  (size, index) =>
+                    // exibe apenas os tamanhos disponiveis. Evita que apareça varios tamanhos (1 ao 22)
+                    size.qtd > 0 && (
+                      <label
+                        name="label-radio-size"
+                        key={index}
+                        onClick={handleClick}
+                      >
+                        {" "}
+                        {size.size}
+                        <input type="radio" name="input-radio-size" />
+                      </label>
+                    )
+                )}
+              </div>
             </DivSizes>
 
             {/* <DivColors>
@@ -418,7 +444,7 @@ const Produto = () => {
             <Button> comprar </Button>
           </ProdInfo>
         </Container>
-          );
+      );
     }
 
     return false;
