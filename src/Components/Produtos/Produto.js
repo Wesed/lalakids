@@ -40,9 +40,10 @@ const SwiperMobile = styled.div`
 const ImgContainer = styled.div`
   display: grid;
   grid-template-columns: 20% 80%;
+  justify-content: space-between;
   gap: 1rem;
-  height: 100%;
-  width: 100%;
+  /* height: 100%;
+  width: 100%; */
   overflow: hidden;
 
   img {
@@ -92,22 +93,35 @@ const ProdInfo = styled.div`
   text-align: center;
 `;
 
-const Ptitle = styled.p`
-  font-size: 1.125rem;
-  font-weight: 700;
+const Ptitle = styled.h1`
+  font-size: 1.25rem;
+  font-weight: 500;
   /* color: ${(props) => props.theme.colors.darkGray}; */
   color: #222;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+  text-align: left;
 `;
 const Pprice = styled.p`
-  font-size: 2rem;
-  font-weight: 900;
-  color: ${(props) => props.theme.colors.blueBackground};
-  margin-bottom: 1rem;
-
-  span {
     font-weight: normal;
     color: black;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 1rem;
+
+  span {
+    font-size: 1.625rem;
+    font-weight: 900;
+    color: ${(props) => props.theme.colors.blueBackground};
+  }
+`;
+
+const Pcard = styled.p`
+  font-size: 14px;
+  text-align: start;
+  margin-bottom: 2rem;
+
+  span {
+    font-weight: 900;
     font-size: 14px;
   }
 `;
@@ -116,6 +130,7 @@ const DivSizes = styled.div`
   margin-bottom: 2rem;
 
   p {
+    font-size: 16px;
     margin: 1rem 0;
     text-align: start;
   }
@@ -155,46 +170,17 @@ const DivSizes = styled.div`
   }
 `;
 
-const DivColors = styled.div`
-  margin-bottom: 2rem;
-
-  p {
-    margin: 1rem 0;
-    text-align: start;
-  }
-  
-  div {
-    display: flex;
-    justify-content: start;
-    gap: 1rem;
-    
-    div {
-      max-width: 58px;
-      max-height: 58px;
-      display: flex;
-      justify-content: center;
-      border: 1px solid rgba(0, 0, 0, .4);
-      border-radius: 4px;
-      cursor: pointer;
-
-      img {
-        max-width: 100%;
-        border-radius: 4px;
-      }
-    }
-  }
-`;
-
-const Pcard = styled.p`
-  font-size: 12px;
-  text-align: start;
-  margin-bottom: 2rem;
+const DivOrder = styled.div`
+  background-color: rgba(14, 214, 229, 0.2);
+  padding: .5rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
 
   span {
-    font-weight: 900;
-    font-size: 14px;
+    font-weight: 700;
   }
 `;
+
 
 const Produto = () => {
   const media = UseMedia('(max-width: 30rem)');
@@ -370,7 +356,7 @@ const Produto = () => {
                   pagination={{
                     clickable: true,
                   }}
-                  navigation = {true}
+                  navigation={true}
                   mousewheel={true}
                   // navigation={true}
                   modules={[Navigation, Mousewheel]}
@@ -378,7 +364,7 @@ const Produto = () => {
                 >
                   {produto.imgProd.map((prod, index) => (
                     <SwiperSlide key={index}>
-                        <img src={prod.url} alt={"produto " + (index + 1)} />
+                      <img src={prod.url} alt={"produto " + (index + 1)} />
                     </SwiperSlide>
                   ))}
                 </Swiper>
@@ -387,10 +373,14 @@ const Produto = () => {
           )}
 
           <ProdInfo>
-            <Ptitle>{produto.titleProd}</Ptitle>
+            {/* <Ptitle>{produto.titleProd}</Ptitle> */}
+            <Ptitle>
+              {" "}
+              Calça de pijama em viscose estampada xadrez com bolso{" "}
+            </Ptitle>
 
             <Pprice>
-              {produto.priceProd} <span> à vista </span>
+              por<span> R$ {produto.priceProd} </span>
             </Pprice>
 
             <Pcard>
@@ -418,6 +408,10 @@ const Produto = () => {
                 )}
               </div>
             </DivSizes>
+
+            <DivOrder>
+              Não tem o seu tamanho? <span> Faça um pedido!</span>
+            </DivOrder>
 
             {/* <DivColors>
                 <p>Cores:</p>

@@ -15,6 +15,7 @@ const Btn = styled.button`
   background-image: ${props => props.theme.colors.degrade};
   opacity: .7;
   transition: ease-in .1s;
+  border-radius: 4px;
 
   :hover {
     opacity: 1;
