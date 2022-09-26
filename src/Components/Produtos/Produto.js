@@ -10,6 +10,10 @@ import 'swiper/css';
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'graphql-hooks';
 
+import { ReactComponent as Like } from "../../Assets/heart.svg";
+
+import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
+
 const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -67,16 +71,22 @@ const SwiperDesktop = styled.div`
     position: relative;
     max-width: 100%;
     max-height: 100%;
-    
+
     img {
       cursor: pointer;
+      transform: scale(0.9);
+      transition: 0.1s;
+
+      :hover {
+        transform: scale(1);
+      }
     }
   }
 
   .swiper-button-prev,
   .swiper-button-next {
     position: absolute;
-    transform: rotate(90deg); 
+    transform: rotate(90deg);
     left: 2rem;
   }
 
@@ -85,7 +95,7 @@ const SwiperDesktop = styled.div`
   }
 
   .swiper-button-next {
-    top: 27.5rem; 
+    top: 27.5rem;
   }
 `;
 
@@ -117,11 +127,12 @@ const Pprice = styled.p`
 
 const Pcard = styled.p`
   font-size: 14px;
-  text-align: start;
+  /* opacity: .8; */
+  text-align: left;
   margin-bottom: 2rem;
 
   span {
-    font-weight: 900;
+    font-weight: 700;
     font-size: 14px;
   }
 `;
@@ -172,12 +183,38 @@ const DivSizes = styled.div`
 
 const DivOrder = styled.div`
   background-color: rgba(14, 214, 229, 0.2);
+  font-size: 14px;
   padding: .5rem;
   margin-bottom: 1rem;
   border-radius: 4px;
+  text-align: left;
 
   span {
     font-weight: 700;
+  }
+`;
+
+const DivBtn = styled.div`
+  display: flex;
+
+  div {
+    display: flex;
+    padding: .5rem 0.6rem;
+    margin-right: 1rem;
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 50%);
+    border-radius: 4px;
+
+    button {
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+
+      svg {
+        width: 30px;
+        height: 30px;
+        opacity: .8;
+      }
+    }
   }
 `;
 
@@ -226,10 +263,33 @@ const Produto = () => {
   });
 
   const [imgProd, setImgProd] = React.useState("");
-
   const [radio, setRadio] = React.useState(false);
+  let [price, setPrice] = React.useState("");
+  const [favorite, setFavorite] = React.useState(false);
 
 
+  /* formata os precos */
+  React.useEffect(() => {
+      data && price === "" && setPrice(data.produto.priceProd.toString().replace('.', ','));
+
+      /* 
+        quando for <6, significa que veio como '150.5' do datoCMS, portanto adiciona um zero no final
+        quando vier '150.50', nao vai acontecer o if
+      */
+
+      /* 
+        E necessario comparar com > 0 pra evitar loop infinito. 
+        Todav vez q entra no useEffect, o setPrice e setado novamente, entao o if é ativado toda vez q o useEffect ocorre,
+        o loope acontece pq o useEffect ativa toda vez que o valor de price muda
+      */
+
+      if (price.length > 0 && price.length < 6) {
+        setPrice(price + "0");
+      }
+
+  }, [price, data]);
+
+   /* muda a img ao clicar nas miniaturas */
     React.useEffect(() => {
 
       // seta a img somente na 1x que entra no useEffect
@@ -243,6 +303,7 @@ const Produto = () => {
         });  
     }, [imgProd, data])
 
+    /* opcao e estilizacao de tamanho*/
     function handleClick({target}) {
 
       target.checked && target.closest('[name="label-radio-size"]').classList.add('radio-active');
@@ -380,7 +441,7 @@ const Produto = () => {
             </Ptitle>
 
             <Pprice>
-              por<span> R$ {produto.priceProd} </span>
+              por<span> R$ {price} </span>
             </Pprice>
 
             <Pcard>
@@ -435,7 +496,12 @@ const Produto = () => {
                 </div>
             </DivColors> */}
 
-            <Button> comprar </Button>
+            <DivBtn>
+              <div>
+              <button onClick={() => {setFavorite(!favorite)}}> {favorite ? <Liked/> : <Like viewbox="0 0 512 512"/>} </button>
+              </div>
+              <Button> comprar </Button>
+            </DivBtn>
           </ProdInfo>
         </Container>
       );
