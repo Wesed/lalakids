@@ -52,6 +52,7 @@ const Categoria = ({option}) => {
   const PROJECT_QUERY = `
   query MyQuery {
     allProdutos(filter: {genreProd: {eq: "${params}"}}) {
+      id
       imgBackground {
             url
           }
@@ -70,8 +71,6 @@ const Categoria = ({option}) => {
       limit: 100,
     },
   });
-
-  console.log('aa', data);
 
   if (error) return 'Ops, algo deu errado!';
 

@@ -202,12 +202,12 @@ const DivColors = styled.div`
     width: 60px;
     height: 60px;
     gap: 0 1rem;
-    margin-top: 1rem;
+    margin-top: 1rem; 
 
     img {
       max-width: 100%;
       object-fit: cover;
-      transition: .1s;
+      transition: 0.1s;
       cursor: pointer;
 
       :hover {
@@ -330,7 +330,7 @@ const Produto = () => {
     /* opcao e estilizacao de tamanho*/
     function handleClick(op, {target}) {
 
-      console.log(op);
+    console.log(op, target);
       
       if (op === 1) {
         target.checked &&
@@ -352,9 +352,10 @@ const Produto = () => {
       if (op === 2) {
         setImgProd(target.src);
 
-        target.classList.add('img-color-active')
+        console.log('kk');
 
-        console.log('target:', target);
+        target.classList.add('img-color-active');
+
 
         target.addEventListener("focusout", () => {
             console.log('aaa');

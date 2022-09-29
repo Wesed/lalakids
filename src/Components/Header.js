@@ -190,9 +190,7 @@ export const Header = () => {
       </HeaderContent>
 
       <Navbar>
-        
         {menuSuperior.map((menu, index) => <Link key={index} to={'categoria/' + menu.href}> {menu.description} </Link>)}
-
       </Navbar>
     </HeaderContainer>
   )
