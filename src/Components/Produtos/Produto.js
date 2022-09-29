@@ -13,6 +13,7 @@ import { useQuery } from 'graphql-hooks';
 import { ReactComponent as Like } from "../../Assets/heart.svg";
 
 import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
+import FormatPrice from '../Useful/FormatPrice';
 
 const Container = styled.section`
   display: grid;
@@ -289,35 +290,28 @@ const Produto = () => {
 
   const [imgProd, setImgProd] = React.useState("");
   const [radio, setRadio] = React.useState(false);
-  let [price, setPrice] = React.useState("");
   const [favorite, setFavorite] = React.useState(false);
-
-  // - criar um component que recebe o preco e formata
-  // - usa em varias partes do projeto, inviavel ficar replicando codigo
 
   // FOCUS OUT NAO FUNCIONA NO OP 2 HANDLE CLICK  
 
+  //     data && price === "" && setPrice(data.produto.priceProd.toString().replace('.', ','));
 
-  /* formata os precos */
-  React.useEffect(() => {
-      data && price === "" && setPrice(data.produto.priceProd.toString().replace('.', ','));
+  //     /* 
+  //       quando for <6, significa que veio como '150.5' do datoCMS, portanto adiciona um zero no final
+  //       quando vier '150.50', nao vai acontecer o if
+  //     */
 
-      /* 
-        quando for <6, significa que veio como '150.5' do datoCMS, portanto adiciona um zero no final
-        quando vier '150.50', nao vai acontecer o if
-      */
+  //     /* 
+  //       E necessario comparar com > 0 pra evitar loop infinito. 
+  //       Todav vez q entra no useEffect, o setPrice e setado novamente, entao o if é ativado toda vez q o useEffect ocorre,
+  //       o loope acontece pq o useEffect ativa toda vez que o valor de price muda
+  //     */
 
-      /* 
-        E necessario comparar com > 0 pra evitar loop infinito. 
-        Todav vez q entra no useEffect, o setPrice e setado novamente, entao o if é ativado toda vez q o useEffect ocorre,
-        o loope acontece pq o useEffect ativa toda vez que o valor de price muda
-      */
+  //     if (price.length > 0 && price.length < 6) {
+  //       setPrice(price + "0");
+  //     }
 
-      if (price.length > 0 && price.length < 6) {
-        setPrice(price + "0");
-      }
-
-  }, [price, data]);
+  // }, [price, data]);
 
    /* muda a img ao clicar nas miniaturas */
     React.useEffect(() => {
@@ -493,7 +487,7 @@ const Produto = () => {
             </Ptitle>
 
             <Pprice>
-              por<span> R$ {price} </span>
+              por<span> R$ <FormatPrice getPrice={produto.priceProd}/> </span>
             </Pprice>
 
             <Pcard>
