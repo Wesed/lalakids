@@ -100,6 +100,9 @@ const SwiperDesktop = styled.div`
 `;
 
 const ProdInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem 0;
   text-align: center;
 `;
 
@@ -108,15 +111,14 @@ const Ptitle = styled.h1`
   font-weight: 500;
   /* color: ${(props) => props.theme.colors.darkGray}; */
   color: #222;
-  margin-bottom: 2rem;
   text-align: left;
 `;
+
 const Pprice = styled.p`
-    font-weight: normal;
     color: black;
     font-size: 14px;
     text-align: left;
-    margin-bottom: 1rem;
+    margin-bottom: -1rem;
 
   span {
     font-size: 1.625rem;
@@ -127,9 +129,8 @@ const Pprice = styled.p`
 
 const Pcard = styled.p`
   font-size: 14px;
-  /* opacity: .8; */
+  opacity: .8;
   text-align: left;
-  margin-bottom: 2rem;
 
   span {
     font-weight: 700;
@@ -138,7 +139,6 @@ const Pcard = styled.p`
 `;
 
 const DivSizes = styled.div`
-  margin-bottom: 2rem;
 
   p {
     font-size: 16px;
@@ -185,12 +185,34 @@ const DivOrder = styled.div`
   background-color: rgba(14, 214, 229, 0.2);
   font-size: 14px;
   padding: .5rem;
-  margin-bottom: 1rem;
   border-radius: 4px;
   text-align: left;
 
   span {
     font-weight: 700;
+  }
+`;
+
+const DivColors = styled.div`
+  text-align: left;
+
+  div {
+    display: flex;
+    width: 60px;
+    height: 60px;
+    gap: 0 1rem;
+    margin-top: 1rem;
+
+    img {
+      max-width: 100%;
+      object-fit: cover;
+      transition: .1s;
+      cursor: pointer;
+
+      :hover {
+        transform: scale(1.1);
+      }
+    }
   }
 `;
 
@@ -234,6 +256,9 @@ const Produto = () => {
           imgProd {
             url
           }
+          colors {
+            url
+          }
           priceProd
           titleProd
           size1
@@ -266,6 +291,11 @@ const Produto = () => {
   const [radio, setRadio] = React.useState(false);
   let [price, setPrice] = React.useState("");
   const [favorite, setFavorite] = React.useState(false);
+
+  // - criar um component que recebe o preco e formata
+  // - usa em varias partes do projeto, inviavel ficar replicando codigo
+
+  // FOCUS OUT NAO FUNCIONA NO OP 2 HANDLE CLICK  
 
 
   /* formata os precos */
@@ -304,19 +334,42 @@ const Produto = () => {
     }, [imgProd, data])
 
     /* opcao e estilizacao de tamanho*/
-    function handleClick({target}) {
+    function handleClick(op, {target}) {
 
-      target.checked && target.closest('[name="label-radio-size"]').classList.add('radio-active');
+      console.log(op);
       
-      target.addEventListener('focusout', () => {
-        target.checked && target.closest('[name="label-radio-size"]').classList.remove('radio-active');
-      });
+      if (op === 1) {
+        target.checked &&
+          target
+            .closest('[name="label-radio-size"]')
+            .classList.add("radio-active");
 
-      // vai armazenar o atual tam. selecionado
-      setRadio(target.innerText);
+        target.addEventListener("focusout", () => {
+          target.checked &&
+            target
+              .closest('[name="label-radio-size"]')
+              .classList.remove("radio-active");
+        });
+
+        // vai armazenar o atual tam. selecionado
+        setRadio(target.innerText);
+      }
+
+      if (op === 2) {
+        setImgProd(target.src);
+
+        target.classList.add('img-color-active')
+
+        console.log('target:', target);
+
+        target.addEventListener("focusout", () => {
+            console.log('aaa');
+            target.classList.remove('img-color-active');
+        });
+      }
     }
   
-    if (error) return 'Ops, algo deu errado!';; 
+    if (error) return 'Ops, algo deu errado!';
 
     if (data) {
 
@@ -391,7 +444,7 @@ const Produto = () => {
           size: '24',
           qtd: produto.size24
         },
-      ]        
+      ]       
 
       return (
         <Container className="animeFade">
@@ -436,8 +489,7 @@ const Produto = () => {
           <ProdInfo>
             {/* <Ptitle>{produto.titleProd}</Ptitle> */}
             <Ptitle>
-              {" "}
-              Calça de pijama em viscose estampada xadrez com bolso{" "}
+              Calça de pijama em viscose estampada xadrez com bolso
             </Ptitle>
 
             <Pprice>
@@ -459,9 +511,10 @@ const Produto = () => {
                       <label
                         name="label-radio-size"
                         key={index}
-                        onClick={handleClick}
+                        onClick={(e) => {
+                          handleClick(1, e);
+                        }}
                       >
-                        {" "}
                         {size.size}
                         <input type="radio" name="input-radio-size" />
                       </label>
@@ -474,31 +527,32 @@ const Produto = () => {
               Não tem o seu tamanho? <span> Faça um pedido!</span>
             </DivOrder>
 
-            {/* <DivColors>
-                <p>Cores:</p>
-                <div>
-                  <div onClick={ ()=> {setImgProd(prod1)}}>
-                    {" "}
-                    <img src={prod1} alt="img produto" />{" "}
-                  </div>
-                  <div onClick={ ()=> {setImgProd(prod2)}}>
-                    {" "}
-                    <img src={prod2} alt="img produto" />{" "}
-                  </div>
-                  <div onClick={ ()=> {setImgProd(prod1)}}>
-                    {" "}
-                    <img src={prod1} alt="img produto" />{" "}
-                  </div>
-                  <div onClick={ ()=> {setImgProd(prod2)}}>
-                    {" "}
-                    <img src={prod2} alt="img produto" />{" "}
-                  </div>
-                </div>
-            </DivColors> */}
+            <DivColors>
+              <p>Cores:</p>
+              <div>
+                {produto?.colors.map((prod, index) => (
+                  <img
+                    src={prod.url}
+                    key={index}
+                    alt="variação do produto"
+                    onClick={(e) => {
+                      handleClick(2, e);
+                    }}
+                  />
+                ))}
+              </div>
+            </DivColors>
 
             <DivBtn>
               <div>
-              <button onClick={() => {setFavorite(!favorite)}}> {favorite ? <Liked/> : <Like viewbox="0 0 512 512"/>} </button>
+                <button
+                  onClick={() => {
+                    setFavorite(!favorite);
+                  }}
+                >
+                  {" "}
+                  {favorite ? <Liked /> : <Like />}{" "}
+                </button>
               </div>
               <Button> comprar </Button>
             </DivBtn>
