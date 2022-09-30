@@ -17,8 +17,10 @@ import {client} from './Services/Datocms.js';
 
 function App() {
   return (
+      // datocms
       <ClientContext.Provider value={client}>
       <BrowserRouter>
+        {/* styled components */}
         <ThemeProvider theme={GlobalVariables}>
           <Header />
           <Routes>

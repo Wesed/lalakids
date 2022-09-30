@@ -20,6 +20,20 @@ const Categories = styled.div`
   border-radius: 10px;
 `;
 
+const NoProd = styled.div`
+  display: flex;
+  width: 100vw;
+  height: 50vh;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    color: ${props => props.theme.colors.textDark};
+    font-size: 1.25rem;
+  }
+  
+`;
+
 const Container = styled.section`
   background: white;
   max-width: 80%;
@@ -36,10 +50,6 @@ const Container = styled.section`
     margin: auto;
   }
 `;
-
-// Crio uma 'tabela' chamada categoriaM e categoriaF, que terá todas as categorias (sapatos, bolsas, camisetas, etc)
-// Cada categoria vai ter uma 'imagem de capa'
-// assim, caso mude as categorias no cms, o site ja capta automaticamente.
 
 const Categoria = ({option}) => {
   // const [categorie, setCategorie] = React.useState(true);
@@ -73,6 +83,12 @@ const Categoria = ({option}) => {
   });
 
   if (error) return 'Ops, algo deu errado!';
+
+  if (data) {
+    if (data.allProdutos.length === 0) {
+      return  <NoProd> <h1> Não temos produtos nessa categoria :(</h1> </NoProd>;
+    }
+  }
 
   return (
       <Container>

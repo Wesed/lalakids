@@ -352,8 +352,6 @@ const Produto = () => {
       if (op === 2) {
         setImgProd(target.src);
 
-        console.log('kk');
-
         target.classList.add('img-color-active');
 
 
