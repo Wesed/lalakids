@@ -5,7 +5,6 @@ import { ReactComponent as Like } from "../../Assets/heart.svg";
 
 import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
 
-// import {ReactComponent as Liked} from '../../Assets/heartLiked.svg';
 import { Link } from 'react-router-dom';
 import FormatPrice from './../Useful/FormatPrice';
 
@@ -48,16 +47,21 @@ const Card = styled.div`
 const ImgProd = styled.div`
   position: relative;
   margin-bottom: 1rem;
-  border-radius: 10px;
+  border-radius: 4px;
   overflow: hidden;
   text-align: center;
   height: 250px;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 30rem) {
+    height: 200px;
+  }
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 4px;
   }
 
   span {
@@ -91,29 +95,35 @@ const Pprice = styled.p`
   font-weight: 700;
   margin-bottom: 0.5rem;
   color: ${(props) => props.theme.colors.blueBackground};
-
+  
   span {
     font-weight: normal;
     color: black;
     font-size: 14px;
   }
+
+  @media (max-width: 30rem) {
+    font-size: 18px;
+  }
 `;
 
-const Pcard = styled.p`
-  font-size: 12px;
+const Pcard = styled.div`
+  font-size: 14px;
   color: black;
 
+  p {
+    margin: .3rem 0;
+  }
+
   span {
-    font-weight: 700;
+    font-weight: 900;
     font-size: 14px;
-    color: ${(props) => props.theme.colors.blueBackground};
   }
 `;
 
 const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
   const [formatUrl, setFormatUrl] = React.useState(prod.titleProd);
-
 
     /* GAMBIARRA: no mousein, muda a img corretamente, porem no mouseleave, seta a img do ultimo produto carregado, ja que 
     é o valor atual do state. Nao consegui encontrar uma maneira de armazenar somente o target, ja que a var que receber o state
@@ -174,14 +184,16 @@ const Item = ({ prod }) => {
           <span> Mais Detalhes </span>
 
         </ImgProd>
-
+        
         <ProdInfo>
           <Ptitle>{prod.titleProd}</Ptitle>
           <Pprice>
             R$ {<FormatPrice getPrice={prod.priceProd}/>} <span> à vista </span>
           </Pprice>
           <Pcard>
-            ou 3x de <span> R$ {(prod.priceProd / 3).toFixed(2)} </span> s/ juros
+            <p>em até</p> 
+            <span> 3x de R$ {(prod.priceProd / 3).toFixed(2)}  </span> 
+            <p>sem juros</p>
           </Pcard>
         </ProdInfo>
         

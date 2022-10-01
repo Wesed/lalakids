@@ -8,15 +8,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 import "swiper/css/navigation";
 import 'swiper/css';
+import UseMedia from './../Useful/UseMedia';
 
 const Container = styled.div`
-  /* border: 1px solid red; */
   margin-bottom: 3.75rem;
-`;
-
-const SwiperConfig = styled.section`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const Title = styled.h1`
@@ -24,6 +19,8 @@ const Title = styled.h1`
 `;
 
 const CategoriaGeralCarousel = ({category, title}) => {
+
+const media = UseMedia('(max-width: 30rem)');
 
 
 const PROJECT_QUERY = `
@@ -54,8 +51,8 @@ const {error, data } = useQuery(PROJECT_QUERY, {
       <Container>
         <Title> {title} </Title>
         <Swiper
-          spaceBetween={40}
-          slidesPerView={4}
+          spaceBetween={media? 20 : 40}
+          slidesPerView={media ? 2 : 4}
           navigation={true}
         >
           {data?.allProdutos.map((prod, index) =>           
