@@ -5,7 +5,6 @@ import Item from './Item';
 import styled from 'styled-components';
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Navigation } from "swiper/core";
 import 'swiper/css';
 import "swiper/css/navigation";
 import 'swiper/css';
@@ -55,8 +54,8 @@ const {error, data } = useQuery(PROJECT_QUERY, {
       <Container>
         <Title> {title} </Title>
         <Swiper
-          spaceBetween={50}
-          slidesPerView={3}
+          spaceBetween={40}
+          slidesPerView={4}
           navigation={true}
         >
           {data?.allProdutos.map((prod, index) =>           

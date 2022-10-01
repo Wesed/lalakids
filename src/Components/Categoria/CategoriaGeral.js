@@ -29,7 +29,7 @@ const CategoriaGeral = () => {
     4. O dado pega esse array e faz as 3 chamadas, retorna 3 datas com as 3 listas de produtos diferentes
   */
 
-  const PROJECT_QUERY = `
+    const PROJECT_QUERY = `
   query MyQuery {
     allBombandos {
       productCode

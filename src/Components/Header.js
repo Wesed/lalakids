@@ -81,7 +81,6 @@ const BagLink = styled.a`
   }
 `;
 
-
 const Navbar = styled.nav`
   height: 40px;
   display: flex;
@@ -185,7 +184,7 @@ export const Header = () => {
         : 
         <Link to="/login" >Entre ou cadastre-se</Link>}
 
-        <BagLink href="#"><BagIcon/></BagLink>
+        <BagLink href="/cart"><BagIcon/></BagLink>
 
       </HeaderContent>
 

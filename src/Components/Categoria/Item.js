@@ -7,6 +7,7 @@ import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
 
 // import {ReactComponent as Liked} from '../../Assets/heartLiked.svg';
 import { Link } from 'react-router-dom';
+import FormatPrice from './../Useful/FormatPrice';
 
 // responsavel por cada item (produto) )
 
@@ -50,7 +51,7 @@ const ImgProd = styled.div`
   border-radius: 10px;
   overflow: hidden;
   text-align: center;
-  height: 330px;
+  height: 250px;
 
   img {
     width: 100%;
@@ -177,7 +178,7 @@ const Item = ({ prod }) => {
         <ProdInfo>
           <Ptitle>{prod.titleProd}</Ptitle>
           <Pprice>
-            R$ {prod.priceProd} <span> à vista </span>
+            R$ {<FormatPrice getPrice={prod.priceProd}/>} <span> à vista </span>
           </Pprice>
           <Pcard>
             ou 3x de <span> R$ {(prod.priceProd / 3).toFixed(2)} </span> s/ juros

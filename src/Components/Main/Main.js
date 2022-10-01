@@ -15,7 +15,7 @@ const Main = () => {
 
   return (
       <Container>
-        <CategoriaGeral/>
+        <CategoriaGeral />
       </Container>
   )
 }

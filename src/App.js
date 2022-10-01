@@ -12,6 +12,7 @@ import Categoria from './Components/Categoria/Categoria';
 import { ClientContext  } from 'graphql-hooks';
 
 import {client} from './Services/Datocms.js';
+import Cart from './Components/Cart/Cart';
 
 
 
@@ -25,6 +26,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" end element={<Main/>}> </Route>
+            <Route path="/cart" end element={<Cart/>}> </Route>
             <Route path="/:id" element={<Produto/>}> </Route>
             <Route path="/:titleProd/:idProd" element={<Produto/>}> </Route>
             <Route path="login/*" element={<Login/>}> </Route>
