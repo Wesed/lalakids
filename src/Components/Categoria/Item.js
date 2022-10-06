@@ -18,11 +18,6 @@ const Card = styled.div`
   cursor: pointer;
   transition: ease 0.3s;
 
-
-  /* :hover {
-    transform: scale(1.05);
-  } */
-
   @media (max-width: 30rem) {
     width: initial;
     height: initial;
@@ -50,7 +45,7 @@ const ImgProd = styled.div`
   border-radius: 4px;
   overflow: hidden;
   text-align: center;
-  height: 250px;
+  height: 300px;
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 30rem) {

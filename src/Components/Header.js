@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../Assets/logo.png';
-import { Input } from './Useful/Input';
 
 import {ReactComponent as BagIcon} from "../Assets/bagIcon.svg";
 import {ReactComponent as Hamburguer} from "../Assets/hamburguer.svg";
 import UseMedia from './Useful/UseMedia';
 
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar/SearchBar';
 
 const HeaderContainer = styled.header`
   background: white;
@@ -178,7 +178,7 @@ export const Header = () => {
       <HeaderContent>
         <Link to="/"> <img src={logo} alt="logo" /> </Link>
 
-        <Input type="type" placeholder="O que você procura?" icon="Search"/>
+        <SearchBar />
 
         {media ? <Link to="#" > <Hamburguer/> </Link>
         : 
