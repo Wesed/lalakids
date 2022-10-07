@@ -53,7 +53,7 @@ const InputField = styled.div`
 `;
 
 
-export const Input = ({type, placeholder, icon}) => {
+export const Input = ({type, name, placeholder, icon}) => {
 
   let iconSvg = null;
 
@@ -72,7 +72,7 @@ export const Input = ({type, placeholder, icon}) => {
   
   return (
     <InputField>
-      <input type={type} placeholder={placeholder}></input>
+      <input type={type} name={name} placeholder={placeholder}></input>
       {iconSvg && 
       <button> {iconSvg} </button>}
     </InputField>
