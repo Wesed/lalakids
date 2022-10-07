@@ -8,12 +8,19 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import ForgotForm from './ForgotForm';
 
+const Body = styled.div`
+  position: absolute;
+  width: 100vw;
+  background: ${(props) => props.theme.colors.grayBackground};
+`;
+
 const LoginContainer = styled.div`
   background: white;
   display: flex;
   justify-content: space-between;
   width: 63.125rem;
   margin: 5rem auto;
+  box-shadow: 0 3px 3px 1px rgba(0, 0, 0, 0.2);
 
   border-radius: 10px;
 
@@ -62,7 +69,6 @@ const InfoLogin = styled.div`
 
 
 const BackgroundLogin = styled.div`
-  /* border: 1px solid red; */
   padding: 0;
   
   img  {
@@ -79,7 +85,8 @@ const BackgroundLogin = styled.div`
 const Login = () => {
 
   return (
-    <LoginContainer>
+    <Body>
+      <LoginContainer>
       <InfoLogin>
         <Routes>
           <Route path="/" element={<LoginForm />}></Route>
@@ -93,6 +100,7 @@ const Login = () => {
         <img src={backgroundLogin} alt="Background Login" />
       </BackgroundLogin>
     </LoginContainer>
+    </Body>
   );
 };
 

@@ -5,10 +5,12 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import { buildClient } from '@datocms/cma-client-browser';
+import useForm from './../Useful/UseForm';
 
 
 const DivPassword = styled.div`
   position: relative;
+  margin-bottom: 2.5rem;
 
   a {
     position: absolute;
@@ -44,50 +46,88 @@ const GoLogin = styled.div`
 const NameField = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: start;
   gap: 0 1rem;
+`;
+
+const SucessDiv = styled.div`
+  margin-top: 2.5rem;
+  color: green;
+
+  span {
+    display: block;
+    color: black;
+    margin-top: .5rem;
+  }
 `;
 
 const Register = () => {
 
+  const [register, setRegister] = React.useState(false);
 
-  const run = async () => { 
+  const name = useForm(true);
+  const lastName = useForm(true);
+  const email = useForm('email');
+  const password = useForm('password');
 
-    const name = document.querySelector('[name="input_name"]');
-    const lastName = document.querySelector('[name="input_lastName"]');
-    const email = document.querySelector('[name="input_email"]');
-    const password = document.querySelector('[name="input_password"]');
+  /* 
+    if (password.validate() so vai retornar true se tiver sido validado,
+    usar esse if antes de cadastrar o usuario
+  */
 
-    const client = buildClient({ apiToken: '126a9840ad52f13ded80e6ac84b657' });
+  const run = async () => {
+    if ( name.validate() && lastName.validate() && email.validate() && password.validate() ) {
 
-    console.log(typeof lastName.value);
+      const name = document.querySelector('[name="input_name"]');
+      const lastName = document.querySelector('[name="input_lastName"]');
+      const email = document.querySelector('[name="input_email"]');
+      const password = document.querySelector('[name="input_password"]');
 
-    const record = await client.items.create({
-      item_type: { type: 'item_type', id: '18618' },
-      name_cli: name.value + " " + lastName.value,
-      password: password.value,
-      email_cli: email.value,
-      phone_cli: '',
-      debit_cli: 0,
-      credit_cli: 0,
-      address_cli: '',
-      comments_cli: ''
-    });
-  
-    console.log(record);
+      const client = buildClient({
+        apiToken: "126a9840ad52f13ded80e6ac84b657",
+      });
+
+      console.log(typeof lastName.value);
+
+      const record = await client.items.create({
+        item_type: { type: "item_type", id: "18618" },
+        name_cli: name.value + " " + lastName.value,
+        password: password.value,
+        email_cli: email.value,
+        phone_cli: "",
+        debit_cli: 0,
+        credit_cli: 0,
+        address_cli: "",
+        comments_cli: "",
+      });
+      
+      setRegister(true);
+    }
   };
   
   return (
     <div className="animeFade">
       <h2>Preencha com seus dados ;)</h2>
           <NameField>
-            <Input type="text" name="input_name" placeholder="Nome" />
-            <Input type="text" name="input_lastName" placeholder="Sobrenome" />
+            <Input type="text" name="input_name" 
+            label="Nome" {...name} />
+
+            <Input type="text" 
+            name="input_lastName" 
+            label="Sobrenome" {...lastName} />
           </NameField>
 
-          <Input type="email" name="input_email" placeholder="Seu e-mail" />
+          <Input type="email" 
+          name="input_email" 
+          label="Email"
+          placeholder="exemplo@.com" {...email} />
 
           <DivPassword>
-            <Input type="password" name="input_password" placeholder="Crie uma senha" icon="ShowPassword"/>
+            <Input type="password" 
+            name="input_password" 
+            label="Senha"
+            placeholder="Crie uma senha" 
+            icon="ShowPassword" {...password}/>
           </DivPassword>
 
           <Button handleClick={run}> CRIAR CONTA  </Button>
@@ -96,6 +136,12 @@ const Register = () => {
             Já tem uma conta?
             <Link to="/login"> Entre agora!</Link>
           </GoLogin>
+
+          {register && 
+          <SucessDiv> 
+            <p> Oba! Seu cadastro foi um sucesso! </p>
+            <span> <Link to="/login"> Clique aqui </Link> e faça login 😃</span>
+          </SucessDiv>}
     </div>
   )
 }

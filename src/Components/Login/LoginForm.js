@@ -4,16 +4,23 @@ import { Link } from 'react-router-dom';
 import { Input } from './../Useful/Input';
 import Button from './../Useful/Button';
 
+const Container = styled.div`
+`;
+
 
 const DivPassword = styled.div`
   position: relative;
+  text-align: right;
+  margin-bottom: 2.5rem;
 
   a {
-    position: absolute;
-    top: 2.5rem;
-    right: 0;
+    display: block;
     font-size: 0.8rem;
-    padding: 0.5rem;
+    margin-top: -0.5rem;
+  }
+
+  button {
+    top: 45%;
   }
 `;
 
@@ -26,7 +33,7 @@ const GoRegister = styled.div`
 
 const LoginForm = () => {
   return (
-    <div className="animeFade">
+    <Container className="animeFade">
       <h2>Faça login ou <Link to="register">crie uma nova conta!</Link></h2>
           <Input type="text" placeholder="Informe o usuário" />
           <DivPassword>
@@ -40,7 +47,7 @@ const LoginForm = () => {
             Não tem uma conta?
             <Link to="/login/register"> Crie agora!</Link>
           </GoRegister>
-    </div>
+    </Container>
   )
 }
 
