@@ -93,7 +93,7 @@ const Register = () => {
       const name = document.querySelector('[name="input_name"]');
       const lastName = document.querySelector('[name="input_lastName"]');
       const email = document.querySelector('[name="input_email"]');
-      const password = document.querySelector('[name="input_password"]');
+      const password = document.querySelector('[name="input_password"]').value;
 
       const crypto = Crypto(password, 'lalakids');
 

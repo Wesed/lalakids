@@ -48,6 +48,20 @@ const HeaderContent = styled.div`
     transform: translateY(-50%);
   }
 
+  /* referente ao input search */
+  div {
+      /* evitar margens desnecessarias*/
+      display: inline-block;
+      margin-bottom: 0;
+
+      button {
+        position: absolute;
+        top: 50%;
+        left: 93.5%;
+        transform: translatey(-50%);
+      }
+  }
+
   @media (max-width:30rem) {
     width: 100%;
   }
