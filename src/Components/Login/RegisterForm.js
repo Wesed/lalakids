@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { buildClient } from '@datocms/cma-client-browser';
 import useForm from './../Useful/UseForm';
-
+import { Crypto } from './../Useful/Crypto';
 
 const DivPassword = styled.div`
   position: relative;
@@ -61,9 +61,21 @@ const SucessDiv = styled.div`
   }
 `;
 
+const ErrorDiv = styled.div`
+  margin-top: 2.5rem;
+  color: red;
+
+  span {
+    display: block;
+    color: black;
+    margin-top: .5rem;
+  }
+`;
+
 const Register = () => {
 
   const [register, setRegister] = React.useState(false);
+  const [getError, setError] = React.useState(false);
 
   const name = useForm(true);
   const lastName = useForm(true);
@@ -74,7 +86,7 @@ const Register = () => {
     if (password.validate() so vai retornar true se tiver sido validado,
     usar esse if antes de cadastrar o usuario
   */
-
+ 
   const run = async () => {
     if ( name.validate() && lastName.validate() && email.validate() && password.validate() ) {
 
@@ -83,25 +95,35 @@ const Register = () => {
       const email = document.querySelector('[name="input_email"]');
       const password = document.querySelector('[name="input_password"]');
 
+      const crypto = Crypto(password, 'lalakids');
+
+
       const client = buildClient({
         apiToken: "126a9840ad52f13ded80e6ac84b657",
       });
 
       console.log(typeof lastName.value);
 
-      const record = await client.items.create({
-        item_type: { type: "item_type", id: "18618" },
-        name_cli: name.value + " " + lastName.value,
-        password: password.value,
-        email_cli: email.value,
-        phone_cli: "",
-        debit_cli: 0,
-        credit_cli: 0,
-        address_cli: "",
-        comments_cli: "",
-      });
-      
-      setRegister(true);
+      // testa
+
+      try {
+        const record = await client.items.create({
+          item_type: { type: "item_type", id: "18618" },
+          name_cli: name.value + " " + lastName.value,
+          password: crypto,
+          email_cli: email.value,
+          phone_cli: "",
+          debit_cli: 0,
+          credit_cli: 0,
+          address_cli: "",
+          comments_cli: "",
+        });
+        setRegister(true);
+        setError(false);
+      } catch (e) {
+        setError(true);
+        setRegister(false);
+      }
     }
   };
   
@@ -137,10 +159,19 @@ const Register = () => {
             <Link to="/login"> Entre agora!</Link>
           </GoLogin>
 
+          {
+            getError &&
+            <ErrorDiv>
+              <p> Ops, algo deu errado! 🙁</p>
+              <span> PS: o email não pode ter sido usado por outra pessoa, ok?</span>
+            </ErrorDiv>
+          }
+
           {register && 
           <SucessDiv> 
             <p> Oba! Seu cadastro foi um sucesso! </p>
-            <span> <Link to="/login"> Clique aqui </Link> e faça login 😃</span>
+            <span> <Link to="/login"> Clique aqui </Link> e faça login 😃 </span>
+            
           </SucessDiv>}
     </div>
   )

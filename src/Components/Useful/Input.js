@@ -6,6 +6,7 @@ import {ReactComponent as Search} from "../../Assets/search.svg";
 import {ReactComponent as ShowPassword} from "../../Assets/eye.svg";
 
 const InputField = styled.div`
+border: 1px solid green;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -18,6 +19,7 @@ const InputField = styled.div`
   }
 
   input {
+    z-index: 98;
     width: 100%;
     height: 40px;
 
@@ -40,9 +42,11 @@ const InputField = styled.div`
   }
 
   button {
-    position: absolute;
+    z-index: 99;
+    position: relative;
     width: 24px;
-    right: 0.8rem;
+    bottom: 1.8rem;
+    left: 92.5%;
 
     top: 55%;
 
