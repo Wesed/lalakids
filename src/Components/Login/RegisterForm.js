@@ -102,8 +102,6 @@ const Register = () => {
         apiToken: "126a9840ad52f13ded80e6ac84b657",
       });
 
-      console.log(typeof lastName.value);
-
       // testa
 
       try {

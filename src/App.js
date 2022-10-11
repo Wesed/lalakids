@@ -13,28 +13,31 @@ import { ClientContext  } from 'graphql-hooks';
 
 import {client} from './Services/Datocms.js';
 import CartContainer from './Components/Cart/CartContainer';
+import { UserStorage } from './Components/UserContext';
 
 
 
 function App() {
   return (
-      // datocms
-      <ClientContext.Provider value={client}>
-      <BrowserRouter>
-        {/* styled components */}
-        <ThemeProvider theme={GlobalVariables}>
-          <Header />
-          <Routes>
-            <Route path="/" end element={<Main/>}> </Route>
-            <Route path="/cart" end element={<CartContainer/>}> </Route>
-            <Route path="/:id" element={<Produto/>}> </Route>
-            <Route path="/:titleProd/:idProd" element={<Produto/>}> </Route>
-            <Route path="login/*" element={<Login/>}> </Route>
-            <Route path="categoria/:id" element={<Categoria/>}> </Route>
-          </Routes>
-        </ThemeProvider>
-      </BrowserRouter>
-      </ClientContext.Provider>
+    <ClientContext.Provider value={client}>
+      <UserStorage>
+        {/* graphql-hooks */}
+          <BrowserRouter>
+            {/* styled components */}
+            <ThemeProvider theme={GlobalVariables}>
+              <Header />
+              <Routes>
+                <Route path="/" end element={<Main />}> </Route>
+                <Route path="/cart" end element={<CartContainer />}> </Route>
+                <Route path="/:id" element={<Produto />}> </Route>
+                <Route path="/:titleProd/:idProd" element={<Produto />}> </Route>
+                <Route path="login/*" element={<Login />}> </Route>
+                <Route path="categoria/:id" element={<Categoria />}> </Route>
+              </Routes>
+            </ThemeProvider>
+          </BrowserRouter>
+      </UserStorage>
+    </ClientContext.Provider>
   );
 }
 
