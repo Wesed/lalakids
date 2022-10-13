@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { buildClient } from '@datocms/cma-client-browser';
 import useForm from './../Useful/UseForm';
 import { Crypto } from './../Useful/Crypto';
+import Error from './../Useful/Error';
 
 const DivPassword = styled.div`
   position: relative;
@@ -61,17 +62,6 @@ const SucessDiv = styled.div`
   }
 `;
 
-const ErrorDiv = styled.div`
-  margin-top: 2.5rem;
-  color: red;
-
-  span {
-    display: block;
-    color: black;
-    margin-top: .5rem;
-  }
-`;
-
 const Register = () => {
 
   const [register, setRegister] = React.useState(false);
@@ -90,20 +80,13 @@ const Register = () => {
   const run = async () => {
     if ( name.validate() && lastName.validate() && email.validate() && password.validate() ) {
 
-      const name = document.querySelector('[name="input_name"]');
-      const lastName = document.querySelector('[name="input_lastName"]');
-      const email = document.querySelector('[name="input_email"]');
-      const password = document.querySelector('[name="input_password"]').value;
-
-      const crypto = Crypto(password, 'lalakids');
+      const crypto = Crypto(password.value, 'lalakids');
 
 
       const client = buildClient({
         apiToken: "126a9840ad52f13ded80e6ac84b657",
       });
-
-      // testa
-
+      
       try {
         const record = await client.items.create({
           item_type: { type: "item_type", id: "18618" },
@@ -159,10 +142,7 @@ const Register = () => {
 
           {
             getError &&
-            <ErrorDiv>
-              <p> Ops, algo deu errado! 🙁</p>
-              <span> PS: o email não pode ter sido usado por outra pessoa, ok?</span>
-            </ErrorDiv>
+              <Error tip="PS: o email não pode ter sido usado por outra pessoa, ok?"> Ops, algo deu errado! 🙁 </Error>
           }
 
           {register && 

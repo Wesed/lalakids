@@ -19,24 +19,24 @@ import { UserStorage } from './Components/UserContext';
 
 function App() {
   return (
-    <ClientContext.Provider value={client}>
-      <UserStorage>
-        {/* graphql-hooks */}
-          <BrowserRouter>
-            {/* styled components */}
-            <ThemeProvider theme={GlobalVariables}>
-              <Header />
-              <Routes>
-                <Route path="/" end element={<Main />}> </Route>
-                <Route path="/cart" end element={<CartContainer />}> </Route>
-                <Route path="/:id" element={<Produto />}> </Route>
-                <Route path="/:titleProd/:idProd" element={<Produto />}> </Route>
-                <Route path="login/*" element={<Login />}> </Route>
-                <Route path="categoria/:id" element={<Categoria />}> </Route>
-              </Routes>
-            </ThemeProvider>
-          </BrowserRouter>
-      </UserStorage>
+    
+    <ClientContext.Provider value={client}>  {/* graphql-hooks */}
+      <BrowserRouter>
+        <UserStorage>
+              {/* styled components */}
+              <ThemeProvider theme={GlobalVariables}>
+                <Header />
+                <Routes>
+                  <Route path="/" end element={<Main />}> </Route>
+                  <Route path="/cart" end element={<CartContainer />}> </Route>
+                  <Route path="/:id" element={<Produto />}> </Route>
+                  <Route path="/:titleProd/:idProd" element={<Produto />}> </Route>
+                  <Route path="login/*" element={<Login />}> </Route>
+                  <Route path="categoria/:id" element={<Categoria />}> </Route>
+                </Routes>
+              </ThemeProvider>
+        </UserStorage>
+      </BrowserRouter>
     </ClientContext.Provider>
   );
 }

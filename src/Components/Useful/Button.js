@@ -20,6 +20,7 @@ const Btn = styled.button`
   :hover {
     opacity: 1;
   }
+
 `;
 
 const Button = ({handleClick, children}) => {

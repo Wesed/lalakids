@@ -7,7 +7,10 @@ import { useQuery } from 'graphql-hooks';
 import { Crypto } from './../Useful/Crypto';
 
 import useLogin from './../Hooks/useLogin';
+import useForm from './../Useful/UseForm';
 
+import { UserContext } from './../UserContext';
+import Error from './../Useful/Error';
 
 
 const Container = styled.div`
@@ -35,44 +38,50 @@ const GoRegister = styled.div`
   margin-top: 1rem;
 `;
 
+
 const LoginForm = () => {
-
-  const {dataContext, errorState, loading, verify} = useLogin();
-
-  /* 
-    colocar o validate nos campos pra ver se nao estao vazios antes de fazer a requisiçao
-    assim que clicar, criar um estado de loading
-    ao retornar, verificar se esta null (erro) ou se tem conteudo (logou)
-  */
+  const username = useForm('email');
+  const password = useForm(true);
+  // indica qd o button foi clicado
+  const [verificador, setVerificador] = React.useState(false);
+  const {errrorContext, login, loadingContext, verifyLogin} = React.useContext(UserContext);
+  // quando login for true, ja vai direto pra pagina inicial 
+  // isso deveria estar no context, nao ?
 
   const handleClick = () => {
-    const username = document.querySelector('[name="username"]').value;
-    const password = Crypto(document.querySelector('[name="password"]').value, 'lalakids');
-    verify(username, password);
-    // nao tem nenhum retorno do hook, logo os campos estao vazios
-    if (dataContext === 'undefined') {
-      console.log(dataContext);
-      if (dataContext && dataContext.userClient == null) {
-        // nao encontrou nenhum registro, info erradas
-      }
+    if (username.validate() && password.validate()) {
+      const passwordCrypto = Crypto(password.value, "lalakids");
+      verifyLogin(username.value, passwordCrypto);
+
+      setTimeout(()=> {
+        setVerificador(true);
+      }, 1000)
     }
   };
 
 return (
   <Container className="animeFade">
         <h2>Faça login ou <Link to="register">crie uma nova conta!</Link></h2>
-        <Input type="text" name="username" placeholder="Informe o email cadastrado" />
+        <Input type="text" name="username" placeholder="Informe o email cadastrado" {...username}/>
         <DivPassword>
-          <Input type="password" name="password" placeholder="Informe a senha" icon="ShowPassword"/>
+          <Input type="password" name="password" placeholder="Informe a senha" icon="ShowPassword" {...password}/>
           <Link to="/login/forgot"> Esqueci minha senha </Link>
         </DivPassword>
 
-        <Button handleClick={handleClick}> Entrar</Button>
+        {
+          loadingContext ? 
+          <Button disabled> Carregando... </Button>
+          :
+          <Button handleClick={handleClick}> Entrar</Button>
+        }
 
         <GoRegister>
           Não tem uma conta?
           <Link to="/login/register"> Crie agora!</Link>
         </GoRegister>
+
+        { verificador && !login && <Error> Ops, as informações estão erradas 🙁  Tente novamente </Error> }
+
   </Container>
 )
 }

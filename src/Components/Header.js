@@ -9,6 +9,9 @@ import UseMedia from './Useful/UseMedia';
 import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar/SearchBar';
 
+import { UserContext } from './UserContext';
+
+
 const HeaderContainer = styled.header`
   background: white;
   width: 100%;
@@ -40,6 +43,7 @@ const HeaderContent = styled.div`
   }
 
   div { 
+    text-align: center;
     flex: 1;
   }
 
@@ -133,6 +137,7 @@ const Navbar = styled.nav`
 export const Header = () => {
 
   const media = UseMedia('(max-width: 30rem)');
+  const {login, dataContext} = React.useContext(UserContext);
 
   /* isso tem q vir do graphQL */
   const menuSuperior = [
@@ -194,9 +199,20 @@ export const Header = () => {
 
         <SearchBar />
 
-        {media ? <Link to="#" > <Hamburguer/> </Link>
+        {media ? 
+        <Link to="#" > <Hamburguer/> </Link>
+
+        /* criar um component e dentro do component verificar se ta logado */
         : 
-        <Link to="/login" >Entre ou cadastre-se</Link>}
+        <div>
+          {
+            login ?
+            <p> {dataContext.userClient.nameCli} </p>
+            :
+            <Link to="/login">Entre ou cadastre-se</Link>
+          }
+        </div>
+        }
 
         <BagLink href="/cart"><BagIcon/></BagLink>
 
