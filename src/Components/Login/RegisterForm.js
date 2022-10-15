@@ -80,7 +80,8 @@ const Register = () => {
   const run = async () => {
     if ( name.validate() && lastName.validate() && email.validate() && password.validate() ) {
 
-      const crypto = Crypto(password.value, 'lalakids');
+      const cryptoPassword = Crypto(password.value, 'lalakids');
+      const token = Crypto((email.value + cryptoPassword), 'lalakids');
 
 
       const client = buildClient({
@@ -91,8 +92,9 @@ const Register = () => {
         const record = await client.items.create({
           item_type: { type: "item_type", id: "18618" },
           name_cli: name.value + " " + lastName.value,
-          password: crypto,
           email_cli: email.value,
+          password: cryptoPassword,
+          token: token,
           phone_cli: "",
           debit_cli: 0,
           credit_cli: 0,

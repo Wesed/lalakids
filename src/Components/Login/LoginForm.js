@@ -45,13 +45,12 @@ const LoginForm = () => {
   // indica qd o button foi clicado
   const [verificador, setVerificador] = React.useState(false);
   const {errrorContext, login, loadingContext, verifyLogin} = React.useContext(UserContext);
-  // quando login for true, ja vai direto pra pagina inicial 
-  // isso deveria estar no context, nao ?
 
   const handleClick = () => {
     if (username.validate() && password.validate()) {
       const passwordCrypto = Crypto(password.value, "lalakids");
-      verifyLogin(username.value, passwordCrypto);
+      const token = Crypto((username.value + passwordCrypto), 'lalakids');
+      verifyLogin(token);
 
       setTimeout(()=> {
         setVerificador(true);
@@ -80,6 +79,8 @@ return (
           <Link to="/login/register"> Crie agora!</Link>
         </GoRegister>
 
+        {/* dps de 1 sec, verificador fica true, significando q o btn foi clicado, assim 
+        se o data continuar null, e pq o login nao funcionou */}
         { verificador && !login && <Error> Ops, as informações estão erradas 🙁  Tente novamente </Error> }
 
   </Container>

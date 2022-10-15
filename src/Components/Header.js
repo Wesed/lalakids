@@ -32,6 +32,7 @@ const HeaderContainer = styled.header`
 const HeaderContent = styled.div`
   padding: 0.5rem 0;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 75%;
   margin: 0 auto;
@@ -42,9 +43,12 @@ const HeaderContent = styled.div`
     height: 50px;
   }
 
-  div { 
+  div:nth-child(3) { 
     text-align: center;
-    flex: 1;
+
+    a {
+      color: black;
+    }
   }
 
   svg {
@@ -53,10 +57,11 @@ const HeaderContent = styled.div`
   }
 
   /* referente ao input search */
-  div {
+  div:nth-child(2) {
       /* evitar margens desnecessarias*/
       display: inline-block;
       margin-bottom: 0;
+      flex: 2;
 
       button {
         position: absolute;
