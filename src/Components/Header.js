@@ -138,11 +138,49 @@ const Navbar = styled.nav`
   }
 `;
 
+const UserDiv = styled.div`
+
+  :hover {
+    cursor: pointer;
+
+    ul {
+      opacity: 1;
+    }
+  }
+
+  ul {
+    position: absolute;
+    top: 3rem;
+    right: 10rem;
+    background: ${(props) => props.theme.colors.grayBackground};
+    border: 1px solid green;
+    padding: .5rem 1rem;
+    text-align: left;
+    border: 1px solid transparent;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    opacity: 0;
+    transition: .1s;
+
+    li {
+      list-style: none;
+      padding: .3rem;
+      color: rgba(0, 0, 0, 0.8);
+
+      :hover {
+        cursor: pointer;
+        font-weight: 500;
+      }
+    }
+  }
+`;
+
 
 export const Header = () => {
 
   const media = UseMedia('(max-width: 30rem)');
-  const {login, dataContext} = React.useContext(UserContext);
+  const {login, dataContext, userLogout} = React.useContext(UserContext);
 
   /* isso tem q vir do graphQL */
   const menuSuperior = [
@@ -212,7 +250,14 @@ export const Header = () => {
         <div>
           {
             login ?
-            <p> {dataContext.userClient.nameCli} </p>
+            <UserDiv> 
+              <p> {dataContext.userClient.nameCli}  </p>
+
+              <ul>
+                <li> Minha conta </li>
+                <li onClick={userLogout}> Sair </li>
+              </ul>
+            </UserDiv>
             :
             <Link to="/login">Entre ou cadastre-se</Link>
           }
