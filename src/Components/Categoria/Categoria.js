@@ -16,6 +16,10 @@ import ItemCategory from './ItemCategory';
 SwiperCore.use([Navigation]);
 
 const Categories = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+  border: 1px solid red;
+  gap: 1.25rem;
   max-width: 70%;
   margin: 2.5rem auto;
   border-radius: 10px;
@@ -35,7 +39,7 @@ const NoProd = styled.div`
   
 `;
 
-const Container = styled.section`
+const Items = styled.section`
   background: white;
   max-width: 80%;
   margin: 2.5rem auto;
@@ -88,6 +92,8 @@ const Categoria = ({option}) => {
     },
   });
 
+  // console.log(data);
+
   if (error) return 'Ops, algo deu errado!';
 
   if (data) {
@@ -97,13 +103,21 @@ const Categoria = ({option}) => {
   }
 
   return (
-      <Container>
-        {/* exibir as subcategorias aqui  */}
-        {data?.category.jsonCategory.subcategory.map((category, index) => 
-        <ItemCategory key={index} category={{category}}/>)}
-        {data?.allProdutos.map((prod, index) => <Item key={index} prod={prod} />)}
-      </Container>
-  )
+    <>
+      {/* exibir as subcategorias aqui  */}
+      <Categories>
+        {data?.category.jsonCategory.subcategory.map((category, index) => (
+          <ItemCategory key={index} category={{ category }} />
+        ))}
+      </Categories>
+
+      <Items>
+        {data?.allProdutos.map((prod, index) => (
+          <Item key={index} prod={prod} />
+        ))}
+      </Items>
+    </>
+  );
 }
 
 export default Categoria;
