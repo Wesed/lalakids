@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar/SearchBar';
 
 import { UserContext } from './UserContext';
+import { useQuery } from 'graphql-hooks';
 
 
 const HeaderContainer = styled.header`
@@ -117,10 +118,14 @@ const Navbar = styled.nav`
     margin: 0 35px 0 0;
     font-size: .875rem;
     font-weight: 500;
-    color: rgba(0, 0, 0, 1);
+    color: rgba(0, 0, 0, .8);
 
     :last-child {
       margin: 0;
+    }
+
+    :hover {
+      color: rgba(0, 0, 0, 1);
     }
   }
   
@@ -183,57 +188,25 @@ export const Header = () => {
   const {login, dataContext, userLogout} = React.useContext(UserContext);
 
   /* isso tem q vir do graphQL */
-  const menuSuperior = [
-    {
-      description: 'Menina', 
-      href: "feminino"
-    }, 
+  const PROJECT_QUERY = `
+  query MyQuery {
+    allCategories(orderBy: titleCategory_ASC) {
+      titleCategory
+      slug
+      subcategory1
+      subcategory2
+      subcategory3
+      subcategory4
+      subcategory5
+    }
+  }
+  `;
 
-    {
-      description: 'Menino', 
-      href: "masculino"
-    }, 
-
-    {
-      description: 'Unissex', 
-      href: "unissex"
-    }, 
-
-    {
-      description: 'Plus Size', 
-      href: "plus-size"
-    }, 
-
-    {
-      description: 'Mona íntima', 
-      href: "moda-intima"
-    }, 
-
-    {
-      description: 'Calçados', 
-      href: "calcados"
-    }, 
-
-    {
-      description: 'Promoções', 
-      href: "promocoes"
-    }, 
-
-    {
-      description: 'Conjuntos', 
-      href: "conjuntos"
-    }, 
-
-    {
-      description: 'Acessórios', 
-      href: "acessorios"
-    }, 
-
-    {
-      description: 'Me surpreenda!', 
-      href: "surpreenda"
-    }, 
-  ];
+  const {error, data } = useQuery(PROJECT_QUERY, {
+    variables: {
+      limit: 100,
+    },
+  });
 
   return (
     <HeaderContainer>
@@ -269,7 +242,7 @@ export const Header = () => {
       </HeaderContent>
 
       <Navbar>
-        {menuSuperior.map((menu, index) => <Link key={index} to={'categoria/' + menu.href}> {menu.description} </Link>)}
+        {data?.allCategories.map((menu, index) => <Link key={index} to={'categoria/' + menu.slug}> {menu.titleCategory} </Link>)}
       </Navbar>
     </HeaderContainer>
   )

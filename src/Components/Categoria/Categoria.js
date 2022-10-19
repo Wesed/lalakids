@@ -61,7 +61,7 @@ const Categoria = ({option}) => {
   //GRAPHQL query
   const PROJECT_QUERY = `
   query MyQuery {
-    allProdutos(filter: {genreProd: {eq: "${params}"}}) {
+    allProdutos(filter: {categoryProd: {eq: "${params}"}}) {
       id
       imgBackground {
             url
@@ -71,9 +71,9 @@ const Categoria = ({option}) => {
           }
           priceProd
           titleProd
+          subcategoryProd
     }
   }
-  
   `;
 
   const {error, data } = useQuery(PROJECT_QUERY, {
