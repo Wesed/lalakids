@@ -23,13 +23,13 @@ const Btn = styled.button`
 
 `;
 
-const Button = ({handleClick, children}) => {
+const Button = ({children, ...props}) => {
 
   /* 
     o botao sempre vai ter uma acao, porem sempre tera um evento no onclick
   */
 
-  return <Btn onClick={handleClick}> {children} </Btn>;
+  return <Btn {...props}> {children} </Btn>;
 }
 
 export default Button;

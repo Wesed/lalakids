@@ -2,7 +2,7 @@ import React from 'react'
 import { Input } from './../Useful/Input';
 import Button from './../Useful/Button';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import { buildClient } from '@datocms/cma-client-browser';
 import useForm from './../Useful/UseForm';
@@ -66,6 +66,7 @@ const Register = () => {
 
   const [register, setRegister] = React.useState(false);
   const [getError, setError] = React.useState(false);
+  const navigate = useNavigate();
 
   const name = useForm(true);
   const lastName = useForm(true);
@@ -77,7 +78,8 @@ const Register = () => {
     usar esse if antes de cadastrar o usuario
   */
  
-  const run = async () => {
+  const run = async (e) => {
+    e.preventDefault();
     if ( name.validate() && lastName.validate() && email.validate() && password.validate() ) {
 
       const cryptoPassword = Crypto(password.value, 'lalakids');
@@ -103,6 +105,10 @@ const Register = () => {
         });
         setRegister(true);
         setError(false);
+        /* espera 1s pra aparecer a msg de sucesso */
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
       } catch (e) {
         setError(true);
         setRegister(false);
@@ -113,48 +119,60 @@ const Register = () => {
   return (
     <div className="animeFade">
       <h2>Preencha com seus dados ;)</h2>
-          <NameField>
-            <Input type="text" name="input_name" 
-            label="Nome" {...name} />
+      <form onSubmit={run}>
+        <NameField>
+          <Input type="text" name="input_name" label="Nome" {...name} />
 
-            <Input type="text" 
-            name="input_lastName" 
-            label="Sobrenome" {...lastName} />
-          </NameField>
+          <Input
+            type="text"
+            name="input_lastName"
+            label="Sobrenome"
+            {...lastName}
+          />
+        </NameField>
 
-          <Input type="email" 
-          name="input_email" 
+        <Input
+          type="email"
+          name="input_email"
           label="Email"
-          placeholder="exemplo@.com" {...email} />
+          placeholder="exemplo@.com"
+          {...email}
+        />
 
-          <DivPassword>
-            <Input type="password" 
-            name="input_password" 
+        <DivPassword>
+          <Input
+            type="password"
+            name="input_password"
             label="Senha"
-            placeholder="Crie uma senha" 
-            icon="ShowPassword" {...password}/>
-          </DivPassword>
+            placeholder="Crie uma senha"
+            icon="ShowPassword"
+            {...password}
+          />
+        </DivPassword>
+      </form>
+      <Button> CRIAR CONTA </Button>
 
-          <Button handleClick={run}> CRIAR CONTA  </Button>
+      <GoLogin>
+        Já tem uma conta?
+        <Link to="/login"> Entre agora!</Link>
+      </GoLogin>
 
-          <GoLogin>
-            Já tem uma conta?
-            <Link to="/login"> Entre agora!</Link>
-          </GoLogin>
+      {getError && (
+        <Error tip="PS: o email não pode ter sido usado por outra pessoa, ok?">
+          Ops, algo deu errado! 🙁{" "}
+        </Error>
+      )}
 
-          {
-            getError &&
-              <Error tip="PS: o email não pode ter sido usado por outra pessoa, ok?"> Ops, algo deu errado! 🙁 </Error>
-          }
-
-          {register && 
-          <SucessDiv> 
-            <p> Oba! Seu cadastro foi um sucesso! </p>
-            <span> <Link to="/login"> Clique aqui </Link> e faça login 😃 </span>
-            
-          </SucessDiv>}
+      {register && (
+        <SucessDiv>
+          <p> Oba! Seu cadastro foi um sucesso! </p>
+          <span>
+            Aguarde que será redirecionado 😃
+          </span>
+        </SucessDiv>
+      )}
     </div>
-  )
+  );
 }
 
 export default Register;

@@ -3,12 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Input } from './../Useful/Input';
 import Button from './../Useful/Button';
-import { useQuery } from 'graphql-hooks';
 import { Crypto } from './../Useful/Crypto';
-
-import useLogin from './../Hooks/useLogin';
 import useForm from './../Useful/UseForm';
-
 import { UserContext } from './../UserContext';
 import Error from './../Useful/Error';
 
@@ -25,7 +21,7 @@ const DivPassword = styled.div`
   a {
     display: block;
     font-size: 0.8rem;
-    margin-top: -0.5rem;
+    margin-top: -2rem;
   }
 
   button {
@@ -46,7 +42,8 @@ const LoginForm = () => {
   const [verificador, setVerificador] = React.useState(false);
   const {errrorContext, login, loadingContext, verifyLogin} = React.useContext(UserContext);
 
-  const handleClick = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (username.validate() && password.validate()) {
       const passwordCrypto = Crypto(password.value, "lalakids");
       const token = Crypto((username.value + passwordCrypto), 'lalakids');
@@ -60,31 +57,46 @@ const LoginForm = () => {
 
 return (
   <Container className="animeFade">
-        <h2>Faça login ou <Link to="register">crie uma nova conta!</Link></h2>
-        <Input type="text" name="username" placeholder="Informe o email cadastrado" {...username}/>
-        <DivPassword>
-          <Input type="password" name="password" placeholder="Informe a senha" icon="ShowPassword" {...password}/>
-          <Link to="/login/forgot"> Esqueci minha senha </Link>
-        </DivPassword>
+    <h2>
+      Faça login ou <Link to="register">crie uma nova conta!</Link>
+    </h2>
+    <form onSubmit={handleSubmit}>
+      <Input
+        type="text"
+        name="username"
+        placeholder="Informe o email cadastrado"
+        {...username}
+      />
+      <DivPassword>
+        <Input
+          type="password"
+          name="password"
+          placeholder="Informe a senha"
+          icon="ShowPassword"
+          {...password}
+        />
+        <Link to="/login/forgot"> Esqueci minha senha </Link>
+      </DivPassword>
 
-        {
-          loadingContext ? 
-          <Button disabled> Carregando... </Button>
-          :
-          <Button handleClick={handleClick}> Entrar</Button>
-        }
+      {loadingContext ? (
+        <Button disabled> Carregando... </Button>
+      ) : (
+        <Button> Entrar</Button>
+      )}
+    </form>
 
-        <GoRegister>
-          Não tem uma conta?
-          <Link to="/login/register"> Crie agora!</Link>
-        </GoRegister>
+    <GoRegister>
+      Não tem uma conta?
+      <Link to="/login/register"> Crie agora!</Link>
+    </GoRegister>
 
-        {/* dps de 1 sec, verificador fica true, significando q o btn foi clicado, assim 
+    {/* dps de 1 sec, verificador fica true, significando q o btn foi clicado, assim 
         se o data continuar null, e pq o login nao funcionou */}
-        { verificador && !login && <Error> Ops, as informações estão erradas 🙁  Tente novamente </Error> }
-
+    {verificador && !login && (
+      <Error> Ops, as informações estão erradas 🙁 Tente novamente </Error>
+    )}
   </Container>
-)
+);
 }
 
 export default LoginForm;
