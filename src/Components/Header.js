@@ -193,11 +193,6 @@ export const Header = () => {
     allCategories(orderBy: titleCategory_ASC) {
       titleCategory
       slug
-      subcategory1
-      subcategory2
-      subcategory3
-      subcategory4
-      subcategory5
     }
   }
   `;

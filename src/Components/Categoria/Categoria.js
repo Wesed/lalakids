@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper/core";
 import 'swiper/css';
 import "swiper/css/navigation";
+import ItemCategory from './ItemCategory';
 
 SwiperCore.use([Navigation]);
 
@@ -64,14 +65,19 @@ const Categoria = ({option}) => {
     allProdutos(filter: {categoryProd: {eq: "${params}"}}) {
       id
       imgBackground {
-            url
-          }
-          imgProd {
-            url
-          }
-          priceProd
-          titleProd
-          subcategoryProd
+        url
+      }
+      imgProd {
+        url
+      }
+      priceProd
+      titleProd
+      subcategoryProd
+    }
+
+    category(filter: {slug: {eq: "${p.id}"}}) {
+      titleCategory
+      jsonCategory
     }
   }
   `;
@@ -92,6 +98,9 @@ const Categoria = ({option}) => {
 
   return (
       <Container>
+        {/* exibir as subcategorias aqui  */}
+        {data?.category.jsonCategory.subcategory.map((category, index) => 
+        <ItemCategory key={index} category={{category}}/>)}
         {data?.allProdutos.map((prod, index) => <Item key={index} prod={prod} />)}
       </Container>
   )
