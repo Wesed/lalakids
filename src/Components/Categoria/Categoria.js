@@ -18,7 +18,7 @@ SwiperCore.use([Navigation]);
 const Categories = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, auto));
-  border: 1px solid red;
+  /* border: 1px solid red; */
   gap: 1.25rem;
   max-width: 70%;
   margin: 2.5rem auto;

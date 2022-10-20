@@ -118,7 +118,6 @@ const Pcard = styled.div`
 
 const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
-  const [formatUrl, setFormatUrl] = React.useState(prod.titleProd);
 
     /* GAMBIARRA: no mousein, muda a img corretamente, porem no mouseleave, seta a img do ultimo produto carregado, ja que 
     é o valor atual do state. Nao consegui encontrar uma maneira de armazenar somente o target, ja que a var que receber o state
@@ -163,7 +162,7 @@ const Item = ({ prod }) => {
 
       <button onClick={() => {setFavorite(!favorite)}}> {favorite ? <Liked/> : <Like/>} </button>
 
-      <Link to={`/${formatUrl}/${prod.id}`} onLoad={() => {setFormatUrl(formatUrl.toLowerCase().replace(" ", "-"))}}>
+      <Link to={`/${prod.titleProd}.toLowerCase().replace(" ", "-")/${prod.id}`}>
 
         <ImgProd className="prod">
           <span style={{'display':'none'}} value={prod.imgProd[0].url}></span>
