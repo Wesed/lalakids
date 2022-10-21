@@ -47,9 +47,8 @@ const ImgContainer = styled.div`
   grid-template-columns: 20% 80%;
   justify-content: space-between;
   gap: 1rem;
-  /* height: 100%;
-  width: 100%; */
   overflow: hidden;
+  height: 31rem;
 
   img {
     max-width: 100%;
@@ -61,19 +60,20 @@ const ImgContainer = styled.div`
     grid-column: 2;
     grid-row: 1 / 3;
     max-width: 100%;
-    max-height: 30.81rem;
   }
 `;
 
 const SwiperDesktop = styled.div`
-  height: 75%;
+  height: 31rem;
 
   div {
-    position: relative;
     max-width: 100%;
     max-height: 100%;
 
     img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
       cursor: pointer;
       transform: scale(0.9);
       transition: 0.1s;
@@ -294,25 +294,6 @@ const Produto = () => {
 
   // FOCUS OUT NAO FUNCIONA NO OP 2 HANDLE CLICK  
 
-  //     data && price === "" && setPrice(data.produto.priceProd.toString().replace('.', ','));
-
-  //     /* 
-  //       quando for <6, significa que veio como '150.5' do datoCMS, portanto adiciona um zero no final
-  //       quando vier '150.50', nao vai acontecer o if
-  //     */
-
-  //     /* 
-  //       E necessario comparar com > 0 pra evitar loop infinito. 
-  //       Todav vez q entra no useEffect, o setPrice e setado novamente, entao o if é ativado toda vez q o useEffect ocorre,
-  //       o loope acontece pq o useEffect ativa toda vez que o valor de price muda
-  //     */
-
-  //     if (price.length > 0 && price.length < 6) {
-  //       setPrice(price + "0");
-  //     }
-
-  // }, [price, data]);
-
    /* muda a img ao clicar nas miniaturas */
     React.useEffect(() => {
 
@@ -458,14 +439,12 @@ const Produto = () => {
               <SwiperDesktop>
                 <Swiper
                   direction={"vertical"}
-                  slidesPerView={"auto"}
-                  spaceBetween={30}
+                  slidesPerView={'auto'}
                   pagination={{
                     clickable: true,
                   }}
                   navigation={true}
                   mousewheel={true}
-                  // navigation={true}
                   modules={[Navigation, Mousewheel]}
                   id="previewProd"
                 >

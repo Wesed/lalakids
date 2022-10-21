@@ -9,20 +9,31 @@ import { useParams } from "react-router-dom";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation } from "swiper/core";
+
 import 'swiper/css';
 import "swiper/css/navigation";
+import "swiper/css/grid";
+
+import { Grid } from "swiper";
+
 import ItemCategory from './ItemCategory';
+import Container from './../Useful/Container';
+import UseMedia from '../Useful/UseMedia';
 
 SwiperCore.use([Navigation]);
 
 const Categories = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, auto));
-  /* border: 1px solid red; */
-  gap: 1.25rem;
   max-width: 70%;
   margin: 2.5rem auto;
-  border-radius: 10px;
+
+  @media (max-width: 30rem) {
+    max-width: 80%;
+  }
+
+  a {
+    text-decoration: none;
+    color: black
+  }
 `;
 
 const NoProd = styled.div`
@@ -39,28 +50,29 @@ const NoProd = styled.div`
   
 `;
 
-const Items = styled.section`
-  background: white;
-  max-width: 80%;
-  margin: 2.5rem auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, auto));
-  gap: 4rem 5rem;
-  padding: 1rem;
-  border-radius: 10px;
+// const Items = styled.section`
+//   background: white;
+//   max-width: 80%;
+//   margin: 2.5rem auto;
+//   display: grid;
+//   grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+//   gap: 4rem 5rem;
+//   padding: 1rem;
+//   border-radius: 10px;
 
-  @media (max-width: 30rem) {
-    max-width: 100%;
-    gap: 2rem 1rem;
-    margin: auto;
-  }
-`;
+//   @media (max-width: 30rem) {
+//     max-width: 100%;
+//     gap: 2rem 1rem;
+//     margin: auto;
+//   }
+// `;
 
 const Categoria = ({option}) => {
   // const [categorie, setCategorie] = React.useState(true);
 
   const p = useParams();
   const params = p.id[0].toUpperCase() + p.id.substr(1);
+  const media = UseMedia('(max-width: 30rem)');
 
 
   //GRAPHQL query
@@ -106,16 +118,32 @@ const Categoria = ({option}) => {
     <>
       {/* exibir as subcategorias aqui  */}
       <Categories>
-        {data?.category.jsonCategory.subcategory.map((category, index) => (
-          <ItemCategory key={index} category={{ category }} />
-        ))}
+        <Swiper
+          spaceBetween={media ? 0 : 15}
+          slidesPerView={media ? 3 : 5}
+          navigation={true}
+          grid={{
+            rows: 2,
+            fill: "row",
+          }}
+          pagination={{
+            clickable: true
+          }}
+          modules={[Grid]}
+        >
+          {data?.category.jsonCategory.subcategory.map((category, index) => (
+            <SwiperSlide key={index}>
+              <ItemCategory category={{ category }} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </Categories>
 
-      <Items>
+      <Container>
         {data?.allProdutos.map((prod, index) => (
           <Item key={index} prod={prod} />
         ))}
-      </Items>
+      </Container>
     </>
   );
 }
