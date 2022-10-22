@@ -19,6 +19,7 @@ import { Grid } from "swiper";
 import ItemCategory from './ItemCategory';
 import Container from './../Useful/Container';
 import UseMedia from '../Useful/UseMedia';
+import useUpdate from './../Hooks/useUpdate';
 
 SwiperCore.use([Navigation]);
 
@@ -73,6 +74,9 @@ const Categoria = ({option}) => {
   const p = useParams();
   const params = p.id[0].toUpperCase() + p.id.substr(1);
   const media = UseMedia('(max-width: 30rem)');
+  const { update } = useUpdate();
+
+
 
 
   //GRAPHQL query
@@ -118,6 +122,7 @@ const Categoria = ({option}) => {
     <>
       {/* exibir as subcategorias aqui  */}
       <Categories>
+        <button onClick={update}> aaa </button>
         <Swiper
           spaceBetween={media ? 0 : 15}
           slidesPerView={media ? 3 : 5}
