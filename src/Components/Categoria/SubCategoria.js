@@ -6,24 +6,6 @@ import styled  from 'styled-components';
 import Container from './../Useful/Container';
 import EmptyCategory from './../Useful/EmptyCategory';
 
-// const Items = styled.section`
-//   background: white;
-//   max-width: 80%;
-//   margin: 2.5rem auto;
-//   display: grid;
-//   /* nao pode ser object fit aq, pq qd tiver so 1 produto, vai distorcer*/
-//   grid-template-columns: repeat(auto-fit, minmax(150px, auto));
-//   gap: 4rem 5rem;
-//   padding: 1rem;
-//   border-radius: 10px;
-
-//   @media (max-width: 30rem) {
-//     max-width: 100%;
-//     gap: 2rem 1rem;
-//     margin: auto;
-//   }
-// `;
-
 const SubCategoria = () => {
 
   const params = useParams();

@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { UserContext } from './../UserContext';
 import { ReactComponent as Like } from "../../Assets/heart.svg";
 import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import FormatPrice from './../Useful/FormatPrice';
 import useUpdate from './../Hooks/useUpdate';
+import LoginModal from './../Login/LoginModal';
 
 // responsavel por cada item (produto) )
 
@@ -119,6 +120,7 @@ const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
   const { update } = useUpdate();
   const {dataContext, login, loadingContext} = React.useContext(UserContext);
+  const navigate = useNavigate();
 
 
   // const [formatUrl, setFormatUrl] = React.useState(prod.titleProd);
@@ -170,13 +172,16 @@ const Item = ({ prod }) => {
           setFavorite(false);
         }
       } else {
-        alert('Faça login para favoritar esse produto 😃');
+        alert('Precisa estar logado para salvar como favorito 😃');
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000);
       }
     }
 
+
   return (
     <Card>
-
       <button onClick={addFavorite}>  {favorite ? <Liked/> : <Like/>} </button>
 
       {/* <Link to={`/${formatUrl}/${prod.id}`} onLoad={() => {setFormatUrl(formatUrl)}}> */}
