@@ -19,6 +19,7 @@ import { Grid } from "swiper";
 import ItemCategory from './ItemCategory';
 import Container from './../Useful/Container';
 import UseMedia from '../Useful/UseMedia';
+import EmptyCategory from './../Useful/EmptyCategory';
 
 SwiperCore.use([Navigation]);
 
@@ -36,19 +37,6 @@ const Categories = styled.div`
   }
 `;
 
-const NoProd = styled.div`
-  display: flex;
-  width: 100vw;
-  height: 50vh;
-  justify-content: center;
-  align-items: center;
-
-  h1 {
-    color: ${props => props.theme.colors.textDark};
-    font-size: 1.25rem;
-  }
-  
-`;
 
 // const Items = styled.section`
 //   background: white;
@@ -112,7 +100,7 @@ const Categoria = ({option}) => {
 
   if (data) {
     if (data.allProdutos.length === 0) {
-      return  <NoProd> <h1> Não temos produtos nessa categoria :(</h1> </NoProd>;
+      return  <EmptyCategory />;
     }
   }
 

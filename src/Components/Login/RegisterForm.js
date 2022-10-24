@@ -159,7 +159,7 @@ const Register = () => {
 
       {getError && (
         <Error tip="PS: o email não pode ter sido usado por outra pessoa, ok?">
-          Ops, algo deu errado! 🙁{" "}
+          Ops, algo deu errado! 🙁
         </Error>
       )}
 

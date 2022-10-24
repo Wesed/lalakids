@@ -44,16 +44,22 @@ React.useEffect(()=>{
 
         if (!favoriteFound) {
           // so vai executar se favoriteFound for falso, ou seja, o item nao esta na lista de favoritos
-          const client = buildClient({ apiToken: '126a9840ad52f13ded80e6ac84b657' });
-          const idClient = '37138133';
-          // remove o colchete que fecha o json
-          let favoriteList = JSON.stringify(favorites);
-          favoriteList = favoriteList.substring(0, favoriteList.length-1);
-          console.log(favoriteList);
-          const item = await client.items.update(idClient, {
-            favorite: favoriteList + ',{"codeProd": "' + idProd + '"}]'
-          });
-          console.log('ok');
+          try {
+            const client = buildClient({
+              apiToken: "126a9840ad52f13ded80e6ac84b657",
+            });
+            const idClient = "37138133";
+            // transform em json e remove o colchete que fecha o json, afim de concatenar
+            let favoriteList = JSON.stringify(favorites);
+            favoriteList = favoriteList.substring(0, favoriteList.length - 1);
+            console.log(favoriteList);
+            const item = await client.items.update(idClient, {
+              favorite: favoriteList + ',{"codeProd": "' + idProd + '"}]',
+            });
+          } catch (err) {
+            return err;
+          }
+          return "ok";
         }
 
         // agora preciso desenvolver uma maneira pra quando a lista estiver vazia,

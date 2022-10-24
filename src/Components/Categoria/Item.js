@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-
+import { UserContext } from './../UserContext';
 import { ReactComponent as Like } from "../../Assets/heart.svg";
-
 import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
-
 import { Link } from 'react-router-dom';
 import FormatPrice from './../Useful/FormatPrice';
 import useUpdate from './../Hooks/useUpdate';
@@ -120,6 +118,7 @@ const Pcard = styled.div`
 const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
   const { update } = useUpdate();
+  const {dataContext, login, loadingContext} = React.useContext(UserContext);
 
 
   // const [formatUrl, setFormatUrl] = React.useState(prod.titleProd);
@@ -162,10 +161,23 @@ const Item = ({ prod }) => {
         );
     }, []);
 
+    const addFavorite = async () => {
+      if (login) {
+        const teste = await update(prod.id);
+        if (teste === "ok") {
+          setFavorite(true);
+        } else {
+          setFavorite(false);
+        }
+      } else {
+        alert('Faça login para favoritar esse produto 😃');
+      }
+    }
+
   return (
     <Card>
 
-      <button onClick={() => {update(prod.id)}}> {favorite ? <Liked/> : <Like/>} </button>
+      <button onClick={addFavorite}>  {favorite ? <Liked/> : <Like/>} </button>
 
       {/* <Link to={`/${formatUrl}/${prod.id}`} onLoad={() => {setFormatUrl(formatUrl)}}> */}
       <Link to={`/${prod.titleProd.toLowerCase().replace(" ", "-")}/${prod.id}`}>

@@ -4,6 +4,7 @@ import { useQuery } from 'graphql-hooks';
 import Item from './Item';
 import styled  from 'styled-components';
 import Container from './../Useful/Container';
+import EmptyCategory from './../Useful/EmptyCategory';
 
 // const Items = styled.section`
 //   background: white;
@@ -52,9 +53,14 @@ const SubCategoria = () => {
         limit: 100,
       },
     });
+
+    data && console.log(data.allProdutos.length);
   
   return (
     <Container>
+      {data && data.allProdutos.length <= 0}
+      <EmptyCategory />
+      
       {data?.allProdutos.map((prod, index) => (
           <Item key={index} prod={prod} />
         ))}
