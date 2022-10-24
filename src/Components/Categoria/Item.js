@@ -7,6 +7,7 @@ import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
 
 import { Link } from 'react-router-dom';
 import FormatPrice from './../Useful/FormatPrice';
+import useUpdate from './../Hooks/useUpdate';
 
 // responsavel por cada item (produto) )
 
@@ -118,6 +119,9 @@ const Pcard = styled.div`
 
 const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
+  const { update } = useUpdate();
+
+
   // const [formatUrl, setFormatUrl] = React.useState(prod.titleProd);
 
     /* GAMBIARRA: no mousein, muda a img corretamente, porem no mouseleave, seta a img do ultimo produto carregado, ja que 
@@ -161,7 +165,7 @@ const Item = ({ prod }) => {
   return (
     <Card>
 
-      <button onClick={() => {setFavorite(!favorite)}}> {favorite ? <Liked/> : <Like/>} </button>
+      <button onClick={() => {update(prod.id)}}> {favorite ? <Liked/> : <Like/>} </button>
 
       {/* <Link to={`/${formatUrl}/${prod.id}`} onLoad={() => {setFormatUrl(formatUrl)}}> */}
       <Link to={`/${prod.titleProd.toLowerCase().replace(" ", "-")}/${prod.id}`}>
