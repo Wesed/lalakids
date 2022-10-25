@@ -6,8 +6,6 @@ import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
 import { Link, useNavigate } from 'react-router-dom';
 import FormatPrice from './../Useful/FormatPrice';
 import useUpdate from './../Hooks/useUpdate';
-import LoginModal from './../Login/LoginModal';
-
 // responsavel por cada item (produto) )
 
 const Card = styled.div`
@@ -118,21 +116,13 @@ const Pcard = styled.div`
 
 const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
-  const { update } = useUpdate();
+  const [emailUser, setEmail] = React.useState();
   const {dataContext, login, loadingContext} = React.useContext(UserContext);
+  const { update } = useUpdate(emailUser);
   const navigate = useNavigate();
-
-
-  // const [formatUrl, setFormatUrl] = React.useState(prod.titleProd);
-
-    /* GAMBIARRA: no mousein, muda a img corretamente, porem no mouseleave, seta a img do ultimo produto carregado, ja que 
-    é o valor atual do state. Nao consegui encontrar uma maneira de armazenar somente o target, ja que a var que receber o state
-    recebe todos os valores de state. e seu valor sempre será o do ultimo produto. 
-    EX: se receber 3 elementos (1, 2, 3), o valor atual sempre sera 3, pois foi o ultimo que receberu
-    Por isso, criei um elemento invisivel dentro do prodImg que recebe o mesmo valor de img, e como nao é alterado,
-    consegue manter o valor pra ser recuperado dps no leave.
-  */
+  
     React.useEffect(() => {
+        dataContext && setEmail(dataContext.userClient.emailCli);
         const prodContent = document.querySelectorAll(".prod");
         let span = false;
 
@@ -161,7 +151,7 @@ const Item = ({ prod }) => {
             item.children[2].style.opacity = '0';
           })
         );
-    }, []);
+    }, [dataContext]);
 
     const addFavorite = async () => {
       if (login) {
@@ -184,13 +174,11 @@ const Item = ({ prod }) => {
     <Card>
       <button onClick={addFavorite}>  {favorite ? <Liked/> : <Like/>} </button>
 
-      {/* <Link to={`/${formatUrl}/${prod.id}`} onLoad={() => {setFormatUrl(formatUrl)}}> */}
       <Link to={`/${prod.titleProd.toLowerCase().replace(" ", "-")}/${prod.id}`}>
 
         <ImgProd className="prod">
           <span style={{'display':'none'}} value={prod.imgProd[0].url}></span>
 
-          {/* se for true, tem img de fundo, portanto cria-se o atributo background e realiza o efeito */}
           {prod.imgBackground 
           ?
             <img src={prod.imgProd[0].url} background={prod.imgBackground.url} alt="foto do produto" />

@@ -15,6 +15,7 @@ const useLogin = (tokenValue) => {
       userClient(filter: {token: {eq: "${token}"}}) {
         id
         nameCli
+        emailCli
       }
     }
     `;
