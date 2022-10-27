@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import SearchBar from './SearchBar/SearchBar';
 
 import { UserContext } from './UserContext';
-import { useQuery } from 'graphql-hooks';
+import { gql, useQuery } from '@apollo/client';
 
 
 const HeaderContainer = styled.header`
@@ -187,15 +187,14 @@ export const Header = () => {
   const media = UseMedia('(max-width: 30rem)');
   const {login, dataContext, userLogout} = React.useContext(UserContext);
 
-  /* isso tem q vir do graphQL */
-  const PROJECT_QUERY = `
+  const PROJECT_QUERY = gql`
   query MyQuery {
     allCategories(orderBy: titleCategory_ASC) {
       titleCategory
       slug
     }
   }
-  `;
+`;
 
   const {error, data } = useQuery(PROJECT_QUERY, {
     variables: {

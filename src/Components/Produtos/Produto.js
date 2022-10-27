@@ -8,7 +8,7 @@ import { Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'graphql-hooks';
+import { gql, useQuery } from '@apollo/client';
 
 import { ReactComponent as Like } from "../../Assets/heart.svg";
 
@@ -248,7 +248,7 @@ const Produto = () => {
   const params = useParams();
 
   //GRAPHQL query
-  const PROJECT_QUERY = `
+  const PROJECT_QUERY = gql`
   query MyQuery {
     produto(filter: {id: {eq: "${params.idProd}"}}) {
       imgBackground {

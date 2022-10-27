@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserContext } from './../UserContext';
-import { useQuery } from 'graphql-hooks'; 
+import { gql, useQuery } from '@apollo/client';
 
 const useLogin = (tokenValue) => {
 
@@ -10,15 +10,15 @@ const useLogin = (tokenValue) => {
     setToken(tokenValue);
   },[tokenValue]);
 
-    const PROJECT_QUERY = `
-    query MyQuery {
+  const PROJECT_QUERY = gql`
+  query MyQuery {
       userClient(filter: {token: {eq: "${token}"}}) {
         id
         nameCli
         emailCli
       }
     }
-    `;
+`;
 
   const {error, data, loading } = useQuery(PROJECT_QUERY, {
     variables: {

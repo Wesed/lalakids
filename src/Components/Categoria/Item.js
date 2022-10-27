@@ -6,7 +6,7 @@ import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
 import { Link, useNavigate } from 'react-router-dom';
 import FormatPrice from './../Useful/FormatPrice';
 import useUpdate from './../Hooks/useUpdate';
-// responsavel por cada item (produto) )
+import { gql, useLazyQuery } from '@apollo/client';
 
 const Card = styled.div`
   position: relative;
@@ -116,13 +116,15 @@ const Pcard = styled.div`
 
 const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
-  const [emailUser, setEmail] = React.useState();
+  const [idUser, setID] = React.useState(null);
   const {dataContext, login, loadingContext} = React.useContext(UserContext);
-  const { update } = useUpdate(emailUser);
+  const { update } = useUpdate(idUser);
   const navigate = useNavigate();
+
+  // console.log('aa', loadGreeting);
   
     React.useEffect(() => {
-        dataContext && setEmail(dataContext.userClient.emailCli);
+        dataContext && setID(dataContext.userClient.id);
         const prodContent = document.querySelectorAll(".prod");
         let span = false;
 
@@ -155,8 +157,8 @@ const Item = ({ prod }) => {
 
     const addFavorite = async () => {
       if (login) {
-        const teste = await update(prod.id);
-        if (teste === "ok") {
+        const res = await update(prod.id);
+        if (res === "ok") {
           setFavorite(true);
         } else {
           setFavorite(false);
@@ -168,7 +170,6 @@ const Item = ({ prod }) => {
         }, 1000);
       }
     }
-
 
   return (
     <Card>

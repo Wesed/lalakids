@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'graphql-hooks';
+import { gql, useQuery } from '@apollo/client';
 import Item from './Item';
 
 import styled from 'styled-components';
@@ -23,7 +23,7 @@ const CategoriaGeralCarousel = ({category, title}) => {
 const media = UseMedia('(max-width: 30rem)');
 
 
-const PROJECT_QUERY = `
+const PROJECT_QUERY = gql`
   query MyQuery {
     allProdutos(filter: {id: {in: [${category}]}}) {
         id

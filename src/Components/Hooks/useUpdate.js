@@ -1,79 +1,80 @@
 import React from 'react';
 import { buildClient } from '@datocms/cma-client-browser';
-import { useQuery } from 'graphql-hooks';
+import { gql, useQuery } from '@apollo/client';
 
-
-const useUpdate = (emailUser) => {
+const useUpdate = (id) => {
   const [dataUser, setData] = React.useState(null);
+  const [idUser, setID] = React.useState(id);
+  const [idProd, setIdProd] = React.useState();
 
-  console.log(emailUser);
 
-  const PROJECT_QUERY = `
-    query MyQuery ($email: String!){
-      userClient(filter: {emailCli: {eq: $email}}) {
+const PROJECT_QUERY = gql`
+    query MyQuery {
+      userClient(filter: {id: {eq: "${idUser}"}}) {
       favorite
       }
-    }`;
+}`;
 
-
-  const {error, data } = useQuery(PROJECT_QUERY, {
-    variables: {
-      $email: emailUser,
-      limit: 100,
-    },
-  });
-
-console.log('data', data);
+// const {data, error} = useQuery(PROJECT_QUERY); 
+const {data, error} = useQuery(PROJECT_QUERY, {skip: idUser === true}); 
 
 React.useEffect(()=>{
+  setID(id);
   setData(data);
-}, [data]);
+}, [id, data, dataUser]);
 
-  // async function update(idProd=undefined) {
-  
-  //     if (dataUser) {
-  //       const favorites = dataUser.userClient.favorite;
 
-  //       const favoriteFound = favorites.find((favorite)=>{
-  //         console.log(favorite.codeProd);
-  //         return favorite.codeProd === idProd;
-  //       });
+const update = async (id) => {
+  // setIdProd(id);
 
-  //       if (!favoriteFound) {
-  //         // so vai executar se favoriteFound for falso, ou seja, o item nao esta na lista de favoritos
-  //         try {
-  //           const client = buildClient({
-  //             apiToken: "126a9840ad52f13ded80e6ac84b657",
-  //           });
-  //           if (favorites.length === 0) {
-  //             console.log('zero');
-  //             const idClient = idUser; // remover isso e mandar o idUser direto
-  //             let favoriteList = JSON.stringify(favorites);
-  //             const item = await client.items.update(idClient, {
-  //               favorite: '[{"codeProd": "' + idProd + '"}]',
-  //             });
-  //           } else {
-  //             console.log('tem');
-  //             const idClient = idUser; // remover isso e mandar o idUser direto
-  //             // transform em json e remove o colchete que fecha o json, afim de concatenar
-  //             let favoriteList = JSON.stringify(favorites);
-  //             favoriteList = favoriteList.substring(0, favoriteList.length - 1);
-  //             console.log(favoriteList);
-  //             const item = await client.items.update(idClient, {
-  //               favorite: favoriteList + ',{"codeProd": "' + idProd + '"}]',
-  //             });
-  //           }
-  //         } catch (err) {
-  //           return err;
-  //         }
-  //         return "ok";
-  //       }
-  //     } 
-  // }
-  
+  /* por algum motivo, mesmo o componente renderizando novamente graças ao setIdProd, o useQuery nao atualiza a lista de favoritos,
+   fazendo com q o ultimo valor sempre seja sobreescrito. Por esse motivo, forcei a pagina a recarregar td vez que um produto
+   for favoritado com sucesso, ate que saiba como resolver esse problema.  
+   */
+
+  if (dataUser) {
+    const favorites = dataUser.userClient.favorite;
+
+    const favoriteFound = favorites.find((favorite) => {
+      return favorite.codeProd === id;
+    });
+
+    if (!favoriteFound) {
+      let response = null;
+      // so vai executar se favoriteFound for falso, ou seja, o item nao esta na lista de favoritos
+      const client = buildClient({
+        apiToken: "126a9840ad52f13ded80e6ac84b657",
+      });
+
+      try {
+        if (favorites.length === 0) {
+          const item = client.items.update(idUser, {
+            favorite: '[{"codeProd": "' + id + '"}]',
+          });
+        } else {
+          // transform em json e remove o colchete que fecha o json, afim de concatenar
+          let favoriteList = JSON.stringify(favorites);
+          favoriteList = favoriteList.substring(0, favoriteList.length - 1);
+          console.log(favoriteList);
+          const item = await client.items.update(idUser, {
+            favorite: favoriteList + ',{"codeProd": "' + id + '"}]',
+          });
+        }
+        response = "ok";
+        document.location.reload();
+      } catch (err) {
+        response = "fail";
+      } finally {
+        return response;
+      }
+    }
+  }
+};
+
+
   return {
-    // update
+    update
   }
 }
 
-export default useUpdate
+export default useUpdate;

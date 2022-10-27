@@ -9,9 +9,6 @@ import Login from './Components/Login/Login';
 import Produto from './Components/Produtos/Produto';
 import Categoria from './Components/Categoria/Categoria';
 
-import { ClientContext  } from 'graphql-hooks';
-
-import {client} from './Services/Datocms.js';
 import CartContainer from './Components/Cart/CartContainer';
 import { UserStorage } from './Components/UserContext';
 import SubCategoria from './Components/Categoria/SubCategoria';
@@ -20,8 +17,6 @@ import SubCategoria from './Components/Categoria/SubCategoria';
 
 function App() {
   return (
-    
-    <ClientContext.Provider value={client}>  {/* graphql-hooks */}
       <BrowserRouter>
         <UserStorage>
               {/* styled components */}
@@ -39,7 +34,6 @@ function App() {
               </ThemeProvider>
         </UserStorage>
       </BrowserRouter>
-    </ClientContext.Provider>
   );
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Item from './Item';
-import { useQuery } from 'graphql-hooks';
+import { gql, useQuery } from '@apollo/client';
 import CategoriaGeralCarousel from './CategoriaGeralCarousel';
 
 const Container = styled.section`
@@ -29,7 +29,8 @@ const CategoriaGeral = () => {
     4. O dado pega esse array e faz as 3 chamadas, retorna 3 datas com as 3 listas de produtos diferentes
   */
 
-    const PROJECT_QUERY = `
+
+  const PROJECT_QUERY = gql`
   query MyQuery {
     allBombandos {
       productCode
@@ -40,7 +41,8 @@ const CategoriaGeral = () => {
     allTendenciaVeraos {
       productCode
     }
-  }`;
+  }
+`;
 
   const {error, data } = useQuery(PROJECT_QUERY, {
     variables: {
