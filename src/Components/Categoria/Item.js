@@ -118,11 +118,12 @@ const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
   const [idUser, setID] = React.useState(null);
   const {dataContext, login, loadingContext} = React.useContext(UserContext);
-  const { update } = useUpdate(idUser);
+  const { update, removeFavorite } = useUpdate(idUser);
   const navigate = useNavigate();
 
-  // console.log('aa', loadGreeting);
-  
+  // dataContext && console.log('aa', dataContext.userClient.favorite);
+
+  /* efeito ao passar o mouse sobre o iten*/
     React.useEffect(() => {
         dataContext && setID(dataContext.userClient.id);
         const prodContent = document.querySelectorAll(".prod");
@@ -155,6 +156,16 @@ const Item = ({ prod }) => {
         );
     }, [dataContext]);
 
+    /* verifica se o item em questao esta na lista de favoritos*/
+    React.useEffect(()=>{
+      const favoriteFound = dataContext?.userClient.favorite.find((favorite) => {
+        return favorite.codeProd === prod.id;
+      });
+
+      favoriteFound && setFavorite(true);
+
+    }, [dataContext, prod.id]);
+
     const addFavorite = async () => {
       if (login) {
         const res = await update(prod.id);
@@ -173,7 +184,16 @@ const Item = ({ prod }) => {
 
   return (
     <Card>
-      <button onClick={addFavorite}>  {favorite ? <Liked/> : <Like/>} </button>
+
+      {
+        favorite ?
+        /* o onClick aq vai ser removeFavorite */
+        <button onClick={()=>{removeFavorite(prod.id, setFavorite)}}><Liked/></button>
+        :
+        <button onClick={addFavorite}><Like/></button>
+      }
+
+      {/* <button onClick={addFavorite}>  {favorite ? <Liked/> : <Like/>} </button> */}
 
       <Link to={`/${prod.titleProd.toLowerCase().replace(" ", "-")}/${prod.id}`}>
 

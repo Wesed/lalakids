@@ -8,15 +8,20 @@ const useUpdate = (id) => {
   const [idProd, setIdProd] = React.useState();
 
 
-const PROJECT_QUERY = gql`
+const ADD_QUERY = gql`
     query MyQuery {
       userClient(filter: {id: {eq: "${idUser}"}}) {
       favorite
       }
 }`;
 
+
 // const {data, error} = useQuery(PROJECT_QUERY); 
-const {data, error} = useQuery(PROJECT_QUERY, {skip: idUser === true}); 
+const {data, error} = useQuery(ADD_QUERY, {
+  fetchPolicy: "no-cache", // nao funciona
+  skip: idUser === true
+  }, 
+); 
 
 React.useEffect(()=>{
   setID(id);
@@ -71,9 +76,38 @@ const update = async (id) => {
   }
 };
 
+const removeFavorite = async (id, setFavorite) => {
+  if (dataUser) {
+    const favorites = dataUser.userClient.favorite;
+
+    /* salva em index a posicao do produto clicado */
+    const index = favorites.findIndex((favorite) => {
+      return favorite.codeProd === id;
+    });
+
+    favorites.splice(index, 1); /* remove o item na posicao index*/
+
+    const client = buildClient({
+      apiToken: "126a9840ad52f13ded80e6ac84b657",
+    });
+
+    try {
+      let favoriteList = JSON.stringify(favorites);
+      const item = await client.items.update(idUser, {
+        favorite: favoriteList,
+      });
+      setFavorite(false);
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
+};
+
 
   return {
-    update
+    update,
+    removeFavorite
   }
 }
 
