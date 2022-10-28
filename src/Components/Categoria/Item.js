@@ -194,8 +194,6 @@ const Item = ({ prod }) => {
       }
 
 
-      {/* <button onClick={addFavorite}>  {favorite ? <Liked/> : <Like/>} </button> */}
-
       <Link to={`/${prod.titleProd.toLowerCase().replace(" ", "-")}/${prod.id}`}>
 
         <ImgProd className="prod">

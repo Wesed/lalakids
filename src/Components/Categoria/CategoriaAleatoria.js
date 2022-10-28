@@ -1,5 +1,5 @@
 import React from 'react'
-import { useQuery } from 'graphql-hooks';
+import { gql, useQuery } from '@apollo/client';
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
@@ -32,7 +32,7 @@ const CategoriaAleatoria = () => {
   const media = UseMedia('(max-width: 30rem)');
 
     //GRAPHQL query
-    const PROJECT_QUERY = `
+    const PROJECT_QUERY = gql`
     query MyQuery {
       allProdutos {
         id

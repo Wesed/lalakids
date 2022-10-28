@@ -22,14 +22,16 @@ export const UserStorage = ({children}) => {
       setLoading(loading);
 
       if (data && !(data.userClient == null)) { 
-        // so vai redirecionar se nao tiver logado. Senao vai sempre navegar ate o inicio
-        !login && navigate('/');
         setData(data);
         setLogin(true);
         /* aq vai ser falso da 1 vez, ja que o token ainda nao existe*/
         const tokenExists = window.localStorage.getItem("token");
         /* essa verificacao impede que o localStorage seja sobrescrito, ja que so vai ser false aq na 1 vez.*/
-        if (!tokenExists) window.localStorage.setItem('token', token);
+        if (!tokenExists) {
+          // so vai redirecionar se nao tiver logado. Senao vai sempre navegar ate o inicio
+          !login && navigate('/');
+          window.localStorage.setItem('token', token);
+        }
       }
     }, [error, loading, data, token, login, navigate]);    
 

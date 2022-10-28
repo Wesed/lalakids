@@ -6,11 +6,12 @@ import {ReactComponent as Search} from "../../Assets/search.svg";
 import {ReactComponent as ShowPassword} from "../../Assets/eye.svg";
 
 const InputField = styled.div`
+  background: ${(props) => props.theme.colors.grayBackground} !important;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+
   position: relative;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  margin-bottom: 1.25rem;
+  display: flex !important;
+  /* flex-direction: row-reverse; */
 
   label {
     font-size: 14px;
@@ -22,11 +23,10 @@ const InputField = styled.div`
     height: 40px;
 
     padding: 0 1rem;
-    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
-    background: ${(props) => props.theme.colors.grayBackground} !important;
     transition: 0.1s;
-    margin: auto !important;
+    background: transparent;
+    border: 1px solid transparent;
 
     :focus {
       outline: 1px solid transparent;
@@ -39,30 +39,33 @@ const InputField = styled.div`
     }
   }
 
-  button {
-    z-index: 99;
+  span {
     position: relative;
+    right: .5rem;
     width: 24px;
-    bottom: 1.8rem;
-    left: 92.5%;
-
-    top: 55%;
-
-    border: transparent;
-    background: transparent;
-    text-decoration: none;
-    display: block;
-    cursor: pointer;
 
     svg {
+      position: relative;
+      width: 24px;
       padding: 0.3rem;
-      max-width: 100%;
 
       path {
         fill: ${(props) => props.theme.colors.darkGray};
       }
     }
   }
+
+  @media (max-width: 30rem) {
+      input {
+        order: 2;
+      }
+
+      span {
+        order: 1;
+        left: .5rem;
+        right: 0;
+      }
+    }
 `;
 
 const Error = styled.p`
@@ -101,7 +104,8 @@ export const Input = ({type, name, label, placeholder, value, onChange, onBlur, 
       </input>
 
       {iconSvg && 
-      <button> {iconSvg} </button>}
+      <span> {iconSvg} </span> }
+
       { error && <Error> {error} </Error> }
     </InputField>
   )

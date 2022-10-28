@@ -12,6 +12,7 @@ import Categoria from './Components/Categoria/Categoria';
 import CartContainer from './Components/Cart/CartContainer';
 import { UserStorage } from './Components/UserContext';
 import SubCategoria from './Components/Categoria/SubCategoria';
+import FavoriteContainer from './Components/Favorite/FavoriteContainer';
 
 
 
@@ -24,7 +25,8 @@ function App() {
                 <Header />
                 <Routes>
                   <Route path="/" end element={<Main />}> </Route>
-                  <Route path="/cart" end element={<CartContainer />}> </Route>
+                  <Route path="/lista-de-favoritos" end element={<FavoriteContainer />}> </Route>
+                  <Route path="/carrinho" end element={<CartContainer />}> </Route>
                   {/* <Route path="/:id" element={<Produto />}> </Route> */}
                   <Route path="/:titleProd/:idProd" element={<Produto />}> </Route>
                   <Route path="login/*" element={<Login />}> </Route>

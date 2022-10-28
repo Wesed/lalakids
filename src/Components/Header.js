@@ -4,6 +4,9 @@ import logo from '../Assets/logo.png';
 
 import {ReactComponent as BagIcon} from "../Assets/bagIcon.svg";
 import {ReactComponent as Hamburguer} from "../Assets/hamburguer.svg";
+import { ReactComponent as Like } from "../Assets/heart.svg";
+import { ReactComponent as Liked } from "../Assets/heartLiked.svg";
+
 import UseMedia from './Useful/UseMedia';
 
 import { Link } from 'react-router-dom';
@@ -98,12 +101,15 @@ const HeaderContent = styled.div`
   
 `;
 
-const BagLink = styled.a`
+const DivIcons = styled.div`
   svg {
-    top: auto;
-    transform: translateY(0);
+    position: relative;
+    top: .8rem;
+    width: 24px;
+    height: 24px;
   }
 `;
+
 
 const Navbar = styled.nav`
   height: 40px;
@@ -209,39 +215,50 @@ export const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <Link to="/"> <img src={logo} alt="logo" /> </Link>
+        <Link to="/">
+          <img src={logo} alt="logo" />
+        </Link>
 
         <SearchBar />
 
-        {media ? 
-        <Link to="#" > <Hamburguer/> </Link>
+        {media ? (
+          <Link to="#">
+            <Hamburguer />
+          </Link>
+        ) : (
+          /* criar um component e dentro do component verificar se ta logado */
+          <div>
+            {login ? (
+              <UserDiv>
+                <p> {dataContext.userClient.nameCli} </p>
 
-        /* criar um component e dentro do component verificar se ta logado */
-        : 
-        <div>
-          {
-            login ?
-            <UserDiv> 
-              <p> {dataContext.userClient.nameCli}  </p>
+                <ul>
+                  <li> Minha conta </li>
+                  <li onClick={userLogout}> Sair </li>
+                </ul>
+              </UserDiv>
+            ) : (
+              <Link to="/login">Entre ou cadastre-se</Link>
+            )}
+          </div>
+        )}
 
-              <ul>
-                <li> Minha conta </li>
-                <li onClick={userLogout}> Sair </li>
-              </ul>
-            </UserDiv>
-            :
-            <Link to="/login">Entre ou cadastre-se</Link>
-          }
-        </div>
-        }
+        <DivIcons>
+          <Link to="/lista-de-favoritos"> {login ? <Liked /> : <Like />} </Link>
+        </DivIcons>
 
-        <BagLink href="/cart"><BagIcon/></BagLink>
-
+        <DivIcons>
+          <Link to="/carrinho"> <BagIcon /> </Link>
+        </DivIcons>
       </HeaderContent>
 
       <Navbar>
-        {data?.allCategories.map((menu, index) => <Link key={index} to={'categoria/' + menu.slug}> {menu.titleCategory} </Link>)}
+        {data?.allCategories.map((menu, index) => (
+          <Link key={index} to={"categoria/" + menu.slug}>
+            {menu.titleCategory}
+          </Link>
+        ))}
       </Navbar>
     </HeaderContainer>
-  )
+  );
 }

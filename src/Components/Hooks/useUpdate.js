@@ -5,36 +5,6 @@ const useUpdate = (id) => {
   const [dataUser, setData] = React.useState(null);
   const [idUser, setID] = React.useState(id);
 
-  /* receber o estado do login aqui e retornar quando for false
-  
-         alert('Precisa estar logado para salvar como favorito 😃');
-        setTimeout(() => {
-          navigate('/login');
-        }, 1000);
-  
-  */
-
-
-// const ADD_QUERY = gql`
-//     query MyQuery {
-//       userClient(filter: {id: {eq: "${idUser}"}}) {
-//       favorite
-//       }
-// }`;
-
-
-// // const {data, error} = useQuery(PROJECT_QUERY); 
-// const {data, error} = useQuery(ADD_QUERY, {
-//   fetchPolicy: "no-cache", // nao funciona
-//   skip: idUser === true
-//   }, 
-// ); 
-
-// React.useEffect(()=>{
-//   setID(id);
-//   setData(data);
-// }, [id, data]);
-
 
 const addFavorite = async (dataUser, idUser, id, setFavorite) => {
 

@@ -12,8 +12,7 @@ const SubCategoria = () => {
   const p1 = params.id[0].toUpperCase() + params.id.substr(1);
   const p2 = params['*'];
 
-    //GRAPHQL query
-    const PROJECT_QUERY = gql `
+  const PROJECT_QUERY = gql `
     query MyQuery {
       allProdutos(filter: {categoryProd: {eq: "${p1}"}, subcategoryProd: {matches: {pattern: "${p2}"}}}) {
         id
@@ -27,7 +26,6 @@ const SubCategoria = () => {
         titleProd
       }
     }
-    
   `;
   
     const {error, data } = useQuery(PROJECT_QUERY, {
