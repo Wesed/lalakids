@@ -118,7 +118,7 @@ const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
   const [idUser, setID] = React.useState(null);
   const {dataContext, login, loadingContext} = React.useContext(UserContext);
-  const { update, removeFavorite } = useUpdate(idUser);
+  const { update, removeFavorite, addFavorite } = useUpdate(idUser);
   const navigate = useNavigate();
 
   // dataContext && console.log('aa', dataContext.userClient.favorite);
@@ -166,31 +166,15 @@ const Item = ({ prod }) => {
 
     }, [dataContext, prod.id]);
 
-    const addFavorite = async () => {
-      if (login) {
-        const res = await update(prod.id);
-        if (res === "ok") {
-          setFavorite(true);
-        } else {
-          setFavorite(false);
-        }
-      } else {
-        alert('Precisa estar logado para salvar como favorito 😃');
-        setTimeout(() => {
-          navigate('/login');
-        }, 1000);
-      }
-    }
-
   return (
     <Card>
 
       {
         favorite ?
         /* o onClick aq vai ser removeFavorite */
-        <button onClick={()=>{removeFavorite(prod.id, setFavorite)}}><Liked/></button>
+        <button onClick={()=>{removeFavorite(dataContext, idUser, prod.id, setFavorite)}}><Liked/></button>
         :
-        <button onClick={addFavorite}><Like/></button>
+        <button onClick={()=>{addFavorite(dataContext, idUser, prod.id, setFavorite)}}><Like/></button>
       }
 
       {/* <button onClick={addFavorite}>  {favorite ? <Liked/> : <Like/>} </button> */}

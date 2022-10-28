@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Item from './Item';
 
-//graphql
-import { useQuery } from "graphql-hooks";
+import { gql, useQuery } from '@apollo/client';
 
 import { useParams } from "react-router-dom";
 
@@ -66,7 +65,7 @@ const Categoria = ({option}) => {
 
 
   //GRAPHQL query
-  const PROJECT_QUERY = `
+  const PROJECT_QUERY = gql `
   query MyQuery {
     allProdutos(filter: {categoryProd: {eq: "${params}"}}) {
       id

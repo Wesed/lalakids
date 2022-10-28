@@ -144,17 +144,20 @@ const Navbar = styled.nav`
 `;
 
 const UserDiv = styled.div`
-
+  padding: .5rem 0;
+  
   :hover {
     cursor: pointer;
 
     ul {
       opacity: 1;
+      pointer-events: auto;
     }
   }
 
   ul {
     position: absolute;
+    z-index: 998;
     top: 3rem;
     right: 10rem;
     background: ${(props) => props.theme.colors.grayBackground};
@@ -166,6 +169,7 @@ const UserDiv = styled.div`
     box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
     opacity: 0;
+    pointer-events: none;
     transition: .1s;
 
     li {

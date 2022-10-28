@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'graphql-hooks';
+import { gql, useQuery } from '@apollo/client';
 import Item from './Item';
 import styled  from 'styled-components';
 import Container from './../Useful/Container';
@@ -13,7 +13,7 @@ const SubCategoria = () => {
   const p2 = params['*'];
 
     //GRAPHQL query
-    const PROJECT_QUERY = `
+    const PROJECT_QUERY = gql `
     query MyQuery {
       allProdutos(filter: {categoryProd: {eq: "${p1}"}, subcategoryProd: {matches: {pattern: "${p2}"}}}) {
         id
@@ -35,14 +35,10 @@ const SubCategoria = () => {
         limit: 100,
       },
     });
-
-    data && console.log(data.allProdutos.length);
-  
+    
   return (
     <Container>
-      {data && data.allProdutos.length <= 0}
-      <EmptyCategory />
-      
+      {data?.allProdutos.length <= 0 && <EmptyCategory /> }
       {data?.allProdutos.map((prod, index) => (
           <Item key={index} prod={prod} />
         ))}
