@@ -166,16 +166,33 @@ const Item = ({ prod }) => {
 
     }, [dataContext, prod.id]);
 
+    const toLogin = () => {
+      if (!login) {
+        alert('Precisa estar logado para salvar como favorito 😃');
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000);
+      }
+    };
+
   return (
     <Card>
-
+      
       {
         favorite ?
-        /* o onClick aq vai ser removeFavorite */
         <button onClick={()=>{removeFavorite(dataContext, idUser, prod.id, setFavorite)}}><Liked/></button>
         :
-        <button onClick={()=>{addFavorite(dataContext, idUser, prod.id, setFavorite)}}><Like/></button>
+
+        <>
+          {
+            login && !favorite ?
+            <button onClick={()=>{addFavorite(dataContext, idUser, prod.id, setFavorite)}}><Like/></button>
+            :
+            <button onClick={toLogin}><Like/></button>
+          }
+        </>
       }
+
 
       {/* <button onClick={addFavorite}>  {favorite ? <Liked/> : <Like/>} </button> */}
 
