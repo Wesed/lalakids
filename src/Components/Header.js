@@ -36,6 +36,7 @@ const HeaderContainer = styled.header`
 const HeaderContent = styled.div`
   padding: 0.5rem 0;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   width: 75%;
@@ -47,7 +48,7 @@ const HeaderContent = styled.div`
     height: 50px;
   }
 
-  div:nth-child(3) { 
+  div:nth-child(3) {
     text-align: center;
 
     a {
@@ -62,43 +63,43 @@ const HeaderContent = styled.div`
 
   /* referente ao input search */
   div:nth-child(2) {
-      /* evitar margens desnecessarias*/
-      display: inline-block;
-      margin-bottom: 0;
-      flex: 2;
+    flex: 2;
 
-      button {
-        position: absolute;
-        top: 50%;
-        left: 93.5%;
-        transform: translatey(-50%);
-      }
+    @media (max-width: 30rem) {
+      flex-basis: 100%;
+    }
   }
 
-  @media (max-width:30rem) {
+  @media (max-width: 30rem) {
     width: 100%;
+    gap: .5rem;
+
+    div:nth-child(2) {
+      order: 4;
+    }
   }
 
+  /* menu hamburguer*/
   a:nth-child(3) {
-    color: ${props => props.theme.colors.text};
-    transition: ease .3s;
+    color: ${(props) => props.theme.colors.text};
+    transition: ease 0.3s;
 
     :hover {
       color: black;
     }
 
-  svg {
-    width: 24px;
-    height: 24px;
-    fill: ${props => props.theme.colors.darkGray};
-  }
+    svg {
+      position: relative;
+      top: .8rem;;
+      width: 24px;
+      height: 24px;
+      fill: ${(props) => props.theme.colors.darkGray};
+    }
 
-  @media (max-width: 30rem) {
-    order: -1;
+    @media (max-width: 30rem) {
+      order: -1;
+    }
   }
-  }
-
-  
 `;
 
 const DivIcons = styled.div`

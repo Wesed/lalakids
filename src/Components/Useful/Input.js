@@ -1,16 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import {ReactComponent as Search} from "../../Assets/search.svg";
 
 import {ReactComponent as ShowPassword} from "../../Assets/eye.svg";
 
 const InputField = styled.div`
-  background: ${(props) => props.theme.colors.grayBackground} !important;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-
+  /* border: 1px solid blue; */
   position: relative;
   display: flex !important;
+  flex-direction: column;
+  text-align: left;
   /* flex-direction: row-reverse; */
 
   label {
@@ -25,8 +24,8 @@ const InputField = styled.div`
     padding: 0 1rem;
     border-radius: 4px;
     transition: 0.1s;
-    background: transparent;
-    border: 1px solid transparent;
+    background: ${(props) => props.theme.colors.grayBackground} !important;
+    border: 1px solid rgba(0, 0, 0, 0.2);
 
     :focus {
       outline: 1px solid transparent;
@@ -40,7 +39,7 @@ const InputField = styled.div`
   }
 
   span {
-    position: relative;
+    position: absolute;
     right: .5rem;
     width: 24px;
 
@@ -48,6 +47,7 @@ const InputField = styled.div`
       position: relative;
       width: 24px;
       padding: 0.3rem;
+      top: 1.2rem;
 
       path {
         fill: ${(props) => props.theme.colors.darkGray};
@@ -57,11 +57,11 @@ const InputField = styled.div`
 
   @media (max-width: 30rem) {
       input {
-        order: 2;
+        order: 1;
       }
 
       span {
-        order: 1;
+        order: 2;
         left: .5rem;
         right: 0;
       }
@@ -80,9 +80,6 @@ export const Input = ({type, name, label, placeholder, value, onChange, onBlur, 
   let iconSvg = null;
 
   switch (icon) {
-    case 'Search': 
-      iconSvg =  <Search />
-      break;
 
       case 'ShowPassword': 
       iconSvg =  <ShowPassword />
