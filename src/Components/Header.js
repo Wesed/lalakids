@@ -90,7 +90,7 @@ const HeaderContent = styled.div`
 
     svg {
       position: relative;
-      top: .8rem;;
+      top: .8rem;
       width: 24px;
       height: 24px;
       fill: ${(props) => props.theme.colors.darkGray};
