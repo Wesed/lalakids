@@ -8,13 +8,16 @@ export const UserContext = React.createContext();
 
 export const UserStorage = ({children}) => {
 
-    const [login, setLogin] = React.useState(false);
-    const [dataContext, setData] = React.useState(null);
-    const [errorContext, setError] = React.useState();
-    const [loadingContext, setLoading] = React.useState();
-    const [token, setToken] = React.useState();
-    const navigate = useNavigate();
+    const [login, setLogin] = React.useState(false); /* informa se esta logado ou nao */
+    const [dataContext, setData] = React.useState(null); /* guarda info do usuario */
+    const [errorContext, setError] = React.useState(); 
+    const [category, setCategory] = React.useState(); /* guarda tds as categorias*/ 
+    const [loadingContext, setLoading] = React.useState(); 
+    const [token, setToken] = React.useState(); /* seta o token do usuario no localStorage */
+    const navigate = useNavigate(); 
     const {data, error, loading, userLogin} = useLogin(token);
+
+    /* QUERYS */
 
     /* login */
     React.useEffect(()=>{
@@ -63,17 +66,9 @@ export const UserStorage = ({children}) => {
     };
 
   return (
-    <UserContext.Provider value={{dataContext, login, setLogin, errorContext, setLoading, loadingContext, setData, verifyLogin, userLogout}}> 
+    <UserContext.Provider value={{dataContext, login, setLogin, errorContext, setLoading, loadingContext, setData, verifyLogin, userLogout, category, setCategory}}> 
       {children} 
     </UserContext.Provider>
   );
   
 };
-
-/* 
-  acessar o valor em outro component:
-
-    if (dataContext && !(dataContext.userClient == null)) {
-    console.log(dataContext.userClient.nameCli);
-  }
-*/

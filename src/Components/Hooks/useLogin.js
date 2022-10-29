@@ -1,5 +1,4 @@
 import React from 'react';
-import { UserContext } from './../UserContext';
 import { gql, useQuery } from '@apollo/client';
 
 const useLogin = (tokenValue) => {

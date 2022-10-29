@@ -67,7 +67,6 @@ const InfoLogin = styled.div`
   }
 `;
 
-
 const BackgroundLogin = styled.div`
   padding: 0;
   

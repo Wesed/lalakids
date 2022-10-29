@@ -14,6 +14,7 @@ import SearchBar from './SearchBar/SearchBar';
 
 import { UserContext } from './UserContext';
 import { gql, useQuery } from '@apollo/client';
+import MenuSidebar from './Sidebar/MenuSidebar';
 
 
 const HeaderContainer = styled.header`
@@ -80,8 +81,10 @@ const HeaderContent = styled.div`
   }
 
   /* menu hamburguer*/
-  a:nth-child(3) {
+    button {
     color: ${(props) => props.theme.colors.text};
+    border: 1px solid transparent;
+    background: transparent;
     transition: ease 0.3s;
 
     :hover {
@@ -196,7 +199,8 @@ const UserDiv = styled.div`
 export const Header = () => {
 
   const media = UseMedia('(max-width: 30rem)');
-  const {login, dataContext, userLogout} = React.useContext(UserContext);
+  const [mobileActive, setActive] = React.useState(true);
+  const {login, dataContext, userLogout, category, setCategory} = React.useContext(UserContext);
 
   const PROJECT_QUERY = gql`
   query MyQuery {
@@ -213,6 +217,10 @@ export const Header = () => {
     },
   });
 
+  React.useEffect(()=>{
+    data && setCategory(data.allCategories);
+  }, [category, setCategory, data]);
+
   return (
     <HeaderContainer>
       <HeaderContent>
@@ -223,9 +231,10 @@ export const Header = () => {
         <SearchBar />
 
         {media ? (
-          <Link to="#">
+          <button onClick={()=>{setActive(!mobileActive)}}>
             <Hamburguer />
-          </Link>
+            {mobileActive && <MenuSidebar />}
+          </button>
         ) : (
           /* criar um component e dentro do component verificar se ta logado */
           <div>
@@ -254,7 +263,7 @@ export const Header = () => {
       </HeaderContent>
 
       <Navbar>
-        {data?.allCategories.map((menu, index) => (
+        {category?.map((menu, index) => (
           <Link key={index} to={"categoria/" + menu.slug}>
             {menu.titleCategory}
           </Link>

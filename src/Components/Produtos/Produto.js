@@ -310,8 +310,6 @@ const Produto = () => {
 
     /* opcao e estilizacao de tamanho*/
     function handleClick(op, {target}) {
-
-    console.log(op, target);
       
       if (op === 1) {
         target.checked &&

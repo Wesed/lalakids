@@ -27,7 +27,8 @@ function App() {
                   <Route path="/" end element={<Main />}> </Route>
                   <Route path="/lista-de-favoritos" end element={<FavoriteContainer />}> </Route>
                   <Route path="/carrinho" end element={<CartContainer />}> </Route>
-                  {/* <Route path="/:id" element={<Produto />}> </Route> */}
+                  
+                  {/* essas rotas nao daria pra colocar no main? */}
                   <Route path="/:titleProd/:idProd" element={<Produto />}> </Route>
                   <Route path="login/*" element={<Login />}> </Route>
                   <Route path="categoria/:id" element={<Categoria />}> </Route>
