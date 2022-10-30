@@ -36,7 +36,6 @@ const Categories = styled.div`
   }
 `;
 
-
 // const Items = styled.section`
 //   background: white;
 //   max-width: 80%;

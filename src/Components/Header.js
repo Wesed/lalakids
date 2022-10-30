@@ -199,7 +199,7 @@ const UserDiv = styled.div`
 export const Header = () => {
 
   const media = UseMedia('(max-width: 30rem)');
-  const [mobileActive, setActive] = React.useState(true);
+  const [mobileActive, setActive] = React.useState(false);
   const {login, dataContext, userLogout, category, setCategory} = React.useContext(UserContext);
 
   const PROJECT_QUERY = gql`
@@ -231,12 +231,13 @@ export const Header = () => {
         <SearchBar />
 
         {media ? (
-          <button onClick={()=>{setActive(!mobileActive)}}>
-            <Hamburguer />
-            {mobileActive && <MenuSidebar />}
-          </button>
+          <>
+            <button onClick={()=>{setActive(!mobileActive)}}>
+              <Hamburguer />
+            </button>
+            {mobileActive && <MenuSidebar onClick={setActive}/>}
+          </>
         ) : (
-          /* criar um component e dentro do component verificar se ta logado */
           <div>
             {login ? (
               <UserDiv>

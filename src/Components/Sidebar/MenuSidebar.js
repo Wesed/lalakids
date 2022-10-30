@@ -58,9 +58,23 @@ const Header = styled.div`
       opacity: .8;
     }
   }
+
+button {
+  position: absolute;
+  right: 1rem;
+  color: ${props => props.theme.colors.text};
+  padding: .3rem .7rem;
+  font-size: 1.5rem;
+  width: min-content;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 1) !important;
+  box-shadow: 1px 3px 10px 1px rgba(0, 0, 0, 0.3);  
+}
 `;
 
 const ListCategory = styled.div`
+  overflow-y: scroll;
   text-align: left;
 
   p {
@@ -82,14 +96,14 @@ const ListCategory = styled.div`
     svg {
       position: relative;
       top: 0.5rem;
-      width: 12px;
-      height: 12px;
-      fill: transparent;
+      width: 12px !important;
+      height: 12px !important;
+      fill: transparent !important;
     }
     }
 `;
 
-const MenuSidebar = () => {
+const MenuSidebar = ({onClick}) => {
   const {login, category} = React.useContext(UserContext);
   return (
     <Container>
@@ -99,6 +113,7 @@ const MenuSidebar = () => {
           <div>
             <p> Entre ou cadastre-se</p>
             <p> pedidos, faturas, favoritos...</p>
+            <button onClick={()=>{onClick(false)}}> X </button>
           </div>
         </Header>
         <ListCategory>
