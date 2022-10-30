@@ -59,6 +59,7 @@ const Header = styled.div`
     }
   }
 
+  /* posicionamento muda qd ta logado, desce pq tem um P a menos*/
 button {
   position: absolute;
   right: 1rem;
@@ -71,6 +72,19 @@ button {
   background-color: rgba(255, 255, 255, 1) !important;
   box-shadow: 1px 3px 10px 1px rgba(0, 0, 0, 0.3);  
 }
+`;
+
+const ProfileImg = styled.div`
+  width: 62px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const ListCategory = styled.div`
@@ -100,19 +114,40 @@ const ListCategory = styled.div`
       height: 12px !important;
       fill: transparent !important;
     }
-    }
+  }
 `;
 
-const MenuSidebar = ({onClick}) => {
+const MenuSidebar = ({data, onClick}) => {
+
+
   const {login, category} = React.useContext(UserContext);
+
   return (
     <Container>
       <Menu>
         <Header> 
-          <div> <UserLogout viewBox="0 0 120 120" /> </div>
+          {
+            login ?
+            <ProfileImg>
+              <img src={data?.userClient.avatar.url} alt="foto do usuario" />
+            </ProfileImg>
+            :
+            <div>
+              <UserLogout viewBox="0 0 120 120" />
+            </div>
+          }
           <div>
-            <p> Entre ou cadastre-se</p>
-            <p> pedidos, faturas, favoritos...</p>
+            {
+              login ?
+              <>
+                <p> Olá, {data?.userClient.nameCli} </p>
+              </>
+              :
+              <>
+                <p> Entre ou cadastre-se</p>
+                <p> pedidos, faturas, favoritos...</p>
+              </>
+            }
             <button onClick={()=>{onClick(false)}}> X </button>
           </div>
         </Header>

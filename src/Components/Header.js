@@ -235,7 +235,7 @@ export const Header = () => {
             <button onClick={()=>{setActive(!mobileActive)}}>
               <Hamburguer />
             </button>
-            {mobileActive && <MenuSidebar onClick={setActive}/>}
+            {mobileActive && <MenuSidebar login={login} data={dataContext} onClick={setActive}/>}
           </>
         ) : (
           <div>

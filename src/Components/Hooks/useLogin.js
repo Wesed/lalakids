@@ -16,6 +16,9 @@ const useLogin = (tokenValue) => {
         nameCli
         emailCli
         favorite
+        avatar {
+          url
+        }
       }
     }
 `;
