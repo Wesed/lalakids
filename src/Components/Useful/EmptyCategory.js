@@ -2,13 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  position: absolute;
-  width: 500px;
-  top: 50%; 
-  right: 45%;
-  transform: translate(50%,-50%);
+  height: 80vh;
+  display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 30rem) {
+    display: flex;
+    height: 50vh;
+  }
 
   h1 {
     color: ${props => props.theme.colors.textDark};

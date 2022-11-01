@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {ReactComponent as UserLogout} from "../../Assets/userLogout.svg";
 import {ReactComponent as Arow} from "../../Assets/arow.svg";
 import { UserContext } from './../UserContext';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   z-index: 998;
@@ -114,6 +115,7 @@ const ListCategory = styled.div`
       height: 12px !important;
       fill: transparent !important;
     }
+
   }
 `;
 
@@ -125,46 +127,52 @@ const MenuSidebar = ({data, onClick}) => {
   return (
     <Container>
       <Menu>
-        <Header> 
-          {
-            login ?
-            <ProfileImg>
-              <img src={data?.userClient.avatar.url} alt="foto do usuario" />
-            </ProfileImg>
+        <Header>
+          {login ?
+            <>
+              <ProfileImg>
+                <img src={data?.userClient.avatar.url} alt="foto do usuario" />
+              </ProfileImg>
+
+              <div>
+                <p> Olá, {data?.userClient.nameCli} </p> 
+              </div>
+            </>
             :
-            <div>
-              <UserLogout viewBox="0 0 120 120" />
-            </div>
-          }
-          <div>
-            {
-              login ?
-              <>
-                <p> Olá, {data?.userClient.nameCli} </p>
-              </>
-              :
-              <>
+            <>
+              <div>
+                <UserLogout viewBox="0 0 120 120" />
+              </div>
+              <div>
                 <p> Entre ou cadastre-se</p>
                 <p> pedidos, faturas, favoritos...</p>
-              </>
-            }
-            <button onClick={()=>{onClick(false)}}> X </button>
-          </div>
+              </div>
+            </>
+        }
+          <button onClick={() => {onClick(false)}}> X </button>
         </Header>
         <ListCategory>
           <ul>
             <p> Categorias </p>
             {category?.map((category, index) => (
-              <li key={index}> 
-              {category.titleCategory} 
-              <Arow />
-              </li>
+              <Link
+                key={index}
+                to={"categoria/" + category.slug}
+                onClick={() => {
+                  onClick(false);
+                }}
+              >
+                <li>
+                  {category.titleCategory}
+                  <Arow />
+                </li>
+              </Link>
             ))}
           </ul>
         </ListCategory>
       </Menu>
     </Container>
-  )
+  );
 }
 
 export default MenuSidebar;
