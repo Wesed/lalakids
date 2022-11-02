@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {ReactComponent as ShowPassword} from "../../Assets/eye.svg";
 
 const InputField = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -17,7 +18,8 @@ const InputField = styled.div`
 
   input {
     width: 100%;
-    /* height: 40px; */
+    height: 40px;
+    align-self: center;
 
     padding: .8rem 1rem;
     border-radius: 4px;
@@ -77,6 +79,11 @@ const Error = styled.p`
     top: -2rem;
     color: red;
     font-size: 12px;
+
+    @media (max-width: 30rem) {
+      position: absolute;
+      top: 4.5rem;
+    }
 `;
 
 
@@ -118,7 +125,9 @@ export const Input = ({type, name, label, placeholder, value, onChange, onBlur, 
       {iconSvg && 
       <button onClick={handleClick}> {iconSvg} </button> }
 
-      { error && <Error> {error} </Error> }
+
+        { error && <Error> {error} </Error> }
+
     </InputField>
   )
 }

@@ -1,22 +1,43 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from './Button';
 
 const Container = styled.div`
   height: 60vh;
   width: 80vw;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  h1 {
+    color: ${props => props.theme.colors.textDark};
+    font-size: 1.25rem;
+  }
+
+  button {
+    margin-top: 2rem;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: ease-out .1s;
+    background: transparent;
+
+    :hover {
+      border: 2px solid ${props => props.theme.colors.blueBackground};
+    }
+  }
 
   @media (max-width: 30rem) {
     display: flex;
     height: 50vh;
     width: 100vw;
-  }
 
-  h1 {
-    color: ${props => props.theme.colors.textDark};
-    font-size: 1.25rem;
+    button {
+      margin-top: 1rem;
+    }
   }
   
 `;
@@ -25,6 +46,7 @@ const EmptyCategory = () => {
   return (
     <Container>
       <h1>Não temos produtos nessa categoria 🙁</h1>
+      <button onClick={()=>{window.history.back()}}> Voltar </button>
     </Container>
   )
 }
