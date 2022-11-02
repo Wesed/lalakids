@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  height: 80vh;
+  height: 60vh;
+  width: 80vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,6 +11,7 @@ const Container = styled.div`
   @media (max-width: 30rem) {
     display: flex;
     height: 50vh;
+    width: 100vw;
   }
 
   h1 {
