@@ -1,9 +1,9 @@
 import React from 'react';
 import { buildClient } from '@datocms/cma-client-browser';
+import { useNavigate } from 'react-router-dom';
 
-const useUpdate = (id) => {
-  const [dataUser, setData] = React.useState(null);
-  const [idUser, setID] = React.useState(id);
+const useUpdate = () => {
+  const navigate = useNavigate();
 
 
 const addFavorite = async (dataUser, idUser, id, setFavorite) => {
@@ -63,10 +63,20 @@ const removeFavorite = async (dataUser, idUser, id, setFavorite) => {
     }
 };
 
+const toLogin = (login) => {
+  if (!login) {
+    alert('Precisa estar logado para salvar como favorito 😃');
+    setTimeout(() => {
+      navigate('/login');
+    }, 1000);
+  }
+};
+
 
   return {
     addFavorite,
-    removeFavorite
+    removeFavorite,
+    toLogin
   }
 }
 

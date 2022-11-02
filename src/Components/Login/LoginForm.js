@@ -19,9 +19,12 @@ const DivPassword = styled.div`
   margin-bottom: 2.5rem;
 
   a {
+    position: absolute;
+    right: 0;
     display: block;
     font-size: 0.8rem;
-    margin-top: -2rem;
+    margin-top: -1.5rem;
+    cursor: pointer;
   }
 
   button {
@@ -62,6 +65,7 @@ return (
     </h2>
     <form onSubmit={handleSubmit}>
       <Input
+        label="Email"
         type="text"
         name="username"
         placeholder="Informe o email cadastrado"
@@ -69,6 +73,7 @@ return (
       />
       <DivPassword>
         <Input
+          label="Senha"
           type="password"
           name="password"
           placeholder="Informe a senha"

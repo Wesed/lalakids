@@ -29,9 +29,9 @@ function App() {
                   <Route path="/carrinho" end element={<CartContainer />}> </Route>
                   
                   {/* essas rotas nao daria pra colocar no main? */}
-                  <Route path="/:titleProd/:idProd" element={<Produto />}> </Route>
+                  <Route path="/:titleProd/:idProd/*" element={<Produto />}> </Route>
                   <Route path="login/*" element={<Login />}> </Route>
-                  <Route path="categoria/:id" element={<Categoria />}> </Route>
+                  <Route path="categoria/:id/" element={<Categoria />}> </Route>
                   <Route path="categoria/:id/*" element={<SubCategoria />}> </Route>
                 </Routes>
               </ThemeProvider>

@@ -2,18 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from './../Useful/Button';
 import UseMedia from './../Useful/UseMedia';
+import { UserContext } from './../UserContext';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { gql, useQuery } from '@apollo/client';
 
 import { ReactComponent as Like } from "../../Assets/heart.svg";
 
 import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
 import FormatPrice from '../Useful/FormatPrice';
+import useUpdate from './../Hooks/useUpdate';
 
 const Container = styled.section`
   display: grid;
@@ -278,6 +280,7 @@ const Produto = () => {
           size18
           size20
           size22
+          id
     }
   }
   `;
@@ -290,9 +293,10 @@ const Produto = () => {
 
   const [imgProd, setImgProd] = React.useState("");
   const [radio, setRadio] = React.useState(false);
-  const [favorite, setFavorite] = React.useState(false);
-
-  // FOCUS OUT NAO FUNCIONA NO OP 2 HANDLE CLICK  
+  const { removeFavorite, addFavorite, toLogin } = useUpdate();
+  const [favorite, setFavorite] = React.useState(JSON.parse(params['*']));
+  const {dataContext, login, loadingContext} = React.useContext(UserContext);
+  const navigate = useNavigate();
 
    /* muda a img ao clicar nas miniaturas */
     React.useEffect(() => {
@@ -457,10 +461,7 @@ const Produto = () => {
           )}
 
           <ProdInfo>
-            {/* <Ptitle>{produto.titleProd}</Ptitle> */}
-            <Ptitle>
-              Calça de pijama em viscose estampada xadrez com bolso
-            </Ptitle>
+            <Ptitle>{produto.titleProd}</Ptitle>
 
             <Pprice>
               por<span> R$ <FormatPrice getPrice={produto.priceProd}/> </span>
@@ -515,14 +516,20 @@ const Produto = () => {
 
             <DivBtn>
               <div>
-                <button
-                  onClick={() => {
-                    setFavorite(!favorite);
-                  }}
-                >
-                  {" "}
-                  {favorite ? <Liked /> : <Like />}{" "}
-                </button>
+              {
+                favorite ?
+                  <button onClick={()=>{removeFavorite(dataContext, dataContext.userClient.id, produto.id, setFavorite)}}><Liked/></button>
+              :
+
+              <>
+              {
+                login && !favorite ?
+                  <button onClick={()=>{addFavorite(dataContext, dataContext.userClient.id, produto.id, setFavorite)}}><Like/></button>
+                :
+                  <button onClick={()=>{toLogin(login)}}><Like/></button>
+              }
+              </>
+              }
               </div>
               <Button> comprar </Button>
             </DivBtn>

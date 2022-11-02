@@ -116,16 +116,14 @@ const Pcard = styled.div`
 
 const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
-  const [idUser, setID] = React.useState(null);
   const {dataContext, login, loadingContext} = React.useContext(UserContext);
-  const { update, removeFavorite, addFavorite } = useUpdate(idUser);
+  const { removeFavorite, addFavorite, toLogin } = useUpdate();
   const navigate = useNavigate();
 
   // dataContext && console.log('aa', dataContext.userClient.favorite);
 
   /* efeito ao passar o mouse sobre o iten*/
     React.useEffect(() => {
-        dataContext && setID(dataContext.userClient.id);
         const prodContent = document.querySelectorAll(".prod");
         let span = false;
 
@@ -166,35 +164,24 @@ const Item = ({ prod }) => {
 
     }, [dataContext, prod.id]);
 
-    const toLogin = () => {
-      if (!login) {
-        alert('Precisa estar logado para salvar como favorito 😃');
-        setTimeout(() => {
-          navigate('/login');
-        }, 1000);
-      }
-    };
-
   return (
     <Card>
-      
       {
         favorite ?
-        <button onClick={()=>{removeFavorite(dataContext, idUser, prod.id, setFavorite)}}><Liked/></button>
+        <button onClick={()=>{removeFavorite(dataContext, dataContext.userClient.id, prod.id, setFavorite)}}><Liked/></button>
         :
 
         <>
           {
             login && !favorite ?
-            <button onClick={()=>{addFavorite(dataContext, idUser, prod.id, setFavorite)}}><Like/></button>
+            <button onClick={()=>{addFavorite(dataContext, dataContext.userClient.id, prod.id, setFavorite)}}><Like/></button>
             :
-            <button onClick={toLogin}><Like/></button>
+            <button onClick={()=>{toLogin(login)}}><Like/></button>
           }
         </>
       }
-
-
-      <Link to={`/${prod.titleProd.toLowerCase().replace(" ", "-")}/${prod.id}`}>
+      
+      <Link to={`/${prod.titleProd.toLowerCase().replace(" ", "-")}/${prod.id}/${favorite}`}>
 
         <ImgProd className="prod">
           <span style={{'display':'none'}} value={prod.imgProd[0].url}></span>

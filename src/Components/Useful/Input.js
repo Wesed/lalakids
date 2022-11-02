@@ -5,12 +5,10 @@ import styled from 'styled-components';
 import {ReactComponent as ShowPassword} from "../../Assets/eye.svg";
 
 const InputField = styled.div`
-  /* border: 1px solid blue; */
-  position: relative;
-  display: flex !important;
+  display: flex;
   flex-direction: column;
   text-align: left;
-  /* flex-direction: row-reverse; */
+  height: 100px;
 
   label {
     font-size: 14px;
@@ -19,9 +17,9 @@ const InputField = styled.div`
 
   input {
     width: 100%;
-    height: 40px;
+    /* height: 40px; */
 
-    padding: 0 1rem;
+    padding: .8rem 1rem;
     border-radius: 4px;
     transition: 0.1s;
     background: ${(props) => props.theme.colors.grayBackground} !important;
@@ -38,16 +36,22 @@ const InputField = styled.div`
     }
   }
 
-  span {
+  button {
     position: absolute;
+    top: 35% !important;
+    transform: translateY(-40%) !important;
     right: .5rem;
     width: 24px;
+    height: 100%;
+    border: 1px solid transparent;
+    background: transparent;
+    cursor: pointer;
 
     svg {
       position: relative;
       width: 24px;
       padding: 0.3rem;
-      top: 1.2rem;
+      top: .5rem;
 
       path {
         fill: ${(props) => props.theme.colors.darkGray};
@@ -69,13 +73,24 @@ const InputField = styled.div`
 `;
 
 const Error = styled.p`
+    position: relative;
+    top: -2rem;
     color: red;
     font-size: 12px;
-    margin-top: .5rem;
 `;
 
 
 export const Input = ({type, name, label, placeholder, value, onChange, onBlur, error, icon}) => {
+
+  const handleClick = () => {
+    const input = document.querySelector('input[name=' + name + ']');
+
+    if (input.type === 'password') {
+      input.type = 'text';
+    } else {
+      input.type = 'password';
+    }
+  };
 
   let iconSvg = null;
 
@@ -101,7 +116,7 @@ export const Input = ({type, name, label, placeholder, value, onChange, onBlur, 
       </input>
 
       {iconSvg && 
-      <span> {iconSvg} </span> }
+      <button onClick={handleClick}> {iconSvg} </button> }
 
       { error && <Error> {error} </Error> }
     </InputField>
