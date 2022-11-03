@@ -254,10 +254,12 @@ export const Header = () => {
           </div>
         )}
 
+        {/* favoritos */}
         <DivIcons>
           <Link to="/lista-de-favoritos"> {login ? <Liked /> : <Like />} </Link>
         </DivIcons>
 
+        {/* carrinho */}
         <DivIcons>
           <Link to="/carrinho"> <BagIcon /> </Link>
         </DivIcons>

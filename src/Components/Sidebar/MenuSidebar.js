@@ -6,7 +6,7 @@ import { UserContext } from './../UserContext';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
-  z-index: 998;
+  z-index: 1000;
   position: absolute;
   top: 0; left: 0;
   width: 100vw;
@@ -18,7 +18,7 @@ const Menu = styled.div`
   z-index: 999;
   background: white;
   width: 80%;
-  height: 100vh;
+  height: 100%;
   box-shadow: 2px 0 15px 5px rgba(0, 0, 0, .2);
 `;
 
@@ -39,6 +39,12 @@ const Header = styled.div`
       width: 50px !important;
       height: 50px !important;
     }
+  }
+
+  a {
+    color: black;
+    font-weight: 700;
+    text-decoration: none;
   }
 
   div:nth-child(2) {
@@ -91,6 +97,7 @@ const ProfileImg = styled.div`
 const ListCategory = styled.div`
   overflow-y: scroll;
   text-align: left;
+  height: 100%;
 
   p {
     padding: .65rem;
@@ -115,14 +122,10 @@ const ListCategory = styled.div`
       height: 12px !important;
       fill: transparent !important;
     }
-
   }
 `;
 
 const MenuSidebar = ({data, onClick}) => {
-
-
-
 
   const {login, category} = React.useContext(UserContext);
 
@@ -146,7 +149,7 @@ const MenuSidebar = ({data, onClick}) => {
                 <UserLogout viewBox="0 0 120 120" />
               </div>
               <div>
-                <p> Entre ou cadastre-se</p>
+                <Link to="/login" onClick={()=>{onClick(false)}}> Entre ou cadastre-se </Link>
                 <p> pedidos, faturas, favoritos...</p>
               </div>
             </>
@@ -154,6 +157,24 @@ const MenuSidebar = ({data, onClick}) => {
           <button onClick={() => {onClick(false)}}> X </button>
         </Header>
         <ListCategory>
+          {/* principais  */}
+          {login &&
+          <ul>
+          <p> Principais </p>
+            <Link to="#" onClick={() => {onClick(false)}}>
+              <li> Dados pessoais </li>
+            </Link>
+            <Link to="#" onClick={() => {onClick(false)}}>
+              <li> Meus pedidos </li>
+            </Link>
+            <Link to="/lista-de-favoritos" onClick={() => {onClick(false)}}>
+              <li> Favoritos </li>
+            </Link>
+            <Link to="#" onClick={() => {onClick(false)}}>
+              <li> Faturas </li>
+            </Link>
+          </ul>}
+          {/* categorias  */}
           <ul>
             <p> Categorias </p>
             {category?.map((category, index) => (

@@ -38,15 +38,13 @@ const InputField = styled.div`
     }
   }
 
-  button {
+  span {
     position: absolute;
-    top: 35% !important;
+    display: block;
+    top: 40% !important;
     transform: translateY(-40%) !important;
     right: .5rem;
     width: 24px;
-    height: 100%;
-    border: 1px solid transparent;
-    background: transparent;
     cursor: pointer;
 
     svg {
@@ -61,17 +59,6 @@ const InputField = styled.div`
     }
   }
 
-  @media (max-width: 30rem) {
-      input {
-        order: 1;
-      }
-
-      span {
-        order: 2;
-        left: .5rem;
-        right: 0;
-      }
-    }
 `;
 
 const Error = styled.p`
@@ -123,7 +110,7 @@ export const Input = ({type, name, label, placeholder, value, onChange, onBlur, 
       </input>
 
       {iconSvg && 
-      <button onClick={handleClick}> {iconSvg} </button> }
+      <span onClick={handleClick}> {iconSvg} </span> }
 
 
         { error && <Error> {error} </Error> }

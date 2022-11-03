@@ -16,6 +16,8 @@ const Container = styled.div`
 
 const Title = styled.h1`
   margin-bottom: 1.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
 `;
 
 const CategoriaGeralCarousel = ({category, title}) => {
