@@ -114,7 +114,6 @@ const DivIcons = styled.div`
   }
 `;
 
-
 const Navbar = styled.nav`
   height: 40px;
   display: flex;

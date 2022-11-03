@@ -141,7 +141,7 @@ const Pcard = styled.p`
   }
 `;
 
-const DivSizes = styled.div`
+const DivSize = styled.div`
 
   p {
     font-size: 16px;
@@ -176,11 +176,8 @@ const DivSizes = styled.div`
         opacity: 0;
         position: absolute;
       };
-
-      /* 
-        Ao clicar nesse elemento, mudara o background pro azul bebe somente no item selecionado (add class active, por ex)
-      */
     }
+    
   }
 `;
 
@@ -198,25 +195,38 @@ const DivOrder = styled.div`
 
 const DivColors = styled.div`
   text-align: left;
+    div {
+      display: flex;
+      gap: 0 1rem;
+      margin-top: 1rem;
 
-  div {
-    display: flex;
-    width: 60px;
-    height: 60px;
-    gap: 0 1rem;
-    margin-top: 1rem; 
-
-    img {
-      max-width: 100%;
-      object-fit: cover;
-      transition: 0.1s;
-      cursor: pointer;
-
-      :hover {
-        transform: scale(1.1);
+      img {
+        height: 60px;
+        max-width: 100%;
+        object-fit: cover;
+        cursor: pointer;
+        border-radius: 4px;
       }
+
+      label {
+        border-radius: 4px;
+        background: transparent;
+        transition: .1s;
+        height: 60px;
+        overflow: hidden;
+
+        input[type="radio"] {
+          // o absolute e pra ele nao ocupar espaço
+          opacity: 0;
+          position: absolute;
+        };
+
+        :hover {
+          border: 1px solid ${(props) => props.theme.colors.blueBackground};
+          transform: scale(1.1);
+        }
     }
-  }
+    }
 `;
 
 const DivBtn = styled.div`
@@ -292,11 +302,14 @@ const Produto = () => {
   });
 
   const [imgProd, setImgProd] = React.useState("");
-  const [radio, setRadio] = React.useState(false);
+  const [radioSize, setRadioSize] = React.useState(false);
+  const [radioColor, setRadioColor] = React.useState(false);
   const { removeFavorite, addFavorite, toLogin } = useUpdate();
   const [favorite, setFavorite] = React.useState(JSON.parse(params['*']));
   const {dataContext, login, loadingContext} = React.useContext(UserContext);
   const navigate = useNavigate();
+
+  console.log('oq', radioSize, radioColor);
 
    /* muda a img ao clicar nas miniaturas */
     React.useEffect(() => {
@@ -314,35 +327,23 @@ const Produto = () => {
 
     /* opcao e estilizacao de tamanho*/
     function handleClick(op, {target}) {
-      
-      if (op === 1) {
-        target.checked &&
-          target
-            .closest('[name="label-radio-size"]')
-            .classList.add("radio-active");
-
-        target.addEventListener("focusout", () => {
-          target.checked &&
-            target
-              .closest('[name="label-radio-size"]')
-              .classList.remove("radio-active");
-        });
-
-        // vai armazenar o atual tam. selecionado
-        setRadio(target.innerText);
-      }
 
       if (op === 2) {
-        setImgProd(target.src);
-
-        target.classList.add('img-color-active');
-
+        target.checked && target.closest('label').classList.add("img-color-active");
 
         target.addEventListener("focusout", () => {
-            console.log('aaa');
-            target.classList.remove('img-color-active');
+          target.checked && target.closest('label').classList.remove("img-color-active");
         });
+        target.src && setRadioColor(target.src);
+      } else {
+        target.checked && target.closest('label').classList.add("radio-active");
+
+        target.addEventListener("focusout", () => {
+          target.checked && target.closest('label').classList.remove("radio-active");
+        });
+        target.innerText && setRadioSize(target.innerText);
       }
+
     }
   
     if (error) return 'Ops, algo deu errado!';
@@ -472,7 +473,7 @@ const Produto = () => {
               juros
             </Pcard>
 
-            <DivSizes>
+            <DivSize>
               <p>Tamanhos disponíveis:</p>
               <div>
                 {prodSize.map(
@@ -480,19 +481,18 @@ const Produto = () => {
                     // exibe apenas os tamanhos disponiveis. Evita que apareça varios tamanhos (1 ao 22)
                     size.qtd > 0 && (
                       <label
-                        name="label-radio-size"
+                        name="label-radio"
                         key={index}
                         onClick={(e) => {
                           handleClick(1, e);
-                        }}
-                      >
+                        }}>
                         {size.size}
-                        <input type="radio" name="input-radio-size" />
+                        <input type="radio" name="input-radio" />
                       </label>
                     )
                 )}
               </div>
-            </DivSizes>
+            </DivSize>
 
             <DivOrder>
               Não tem o seu tamanho? <span> Faça um pedido!</span>
@@ -501,16 +501,18 @@ const Produto = () => {
             <DivColors>
               <p>Cores:</p>
               <div>
-                {produto?.colors.map((prod, index) => (
-                  <img
-                    src={prod.url}
-                    key={index}
-                    alt="variação do produto"
-                    onClick={(e) => {
-                      handleClick(2, e);
-                    }}
-                  />
-                ))}
+                {produto?.colors.map((prod, index) =>
+                      <label
+                        name="label-radio"
+                        key={index}
+                        onClick={(e) => {
+                          handleClick(2, e);
+                        }}>
+                        <input type="radio" name="input-radio" />
+                        <img src={prod.url} alt="variação do produto"/>
+                        <input type="radio" name="input-radio" />
+                      </label>
+                )}
               </div>
             </DivColors>
 

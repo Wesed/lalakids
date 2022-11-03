@@ -28,6 +28,7 @@ body {
 
 .radio-active {
   background: rgba(14, 214, 229, .2) !important;
+  border: 2px solid #0ED6E5 !important;
 }
 
 .img-color-active {
