@@ -149,8 +149,8 @@ const Register = () => {
             {...password}
           />
         </DivPassword>
+        <Button> CRIAR CONTA </Button>
       </form>
-      <Button> CRIAR CONTA </Button>
 
       <GoLogin>
         Já tem uma conta?
