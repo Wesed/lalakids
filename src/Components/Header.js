@@ -154,6 +154,14 @@ const Navbar = styled.nav`
 
 const UserDiv = styled.div`
   padding: .5rem 0;
+  /* border: 1px solid red; */
+
+  p {
+    width: 10rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
   
   :hover {
     cursor: pointer;
@@ -165,10 +173,11 @@ const UserDiv = styled.div`
   }
 
   ul {
+    border: 1px solid blue;
     position: absolute;
     z-index: 998;
     top: 3rem;
-    right: 10rem;
+    right: 18.5rem;
     background: ${(props) => props.theme.colors.grayBackground};
     border: 1px solid green;
     padding: .5rem 1rem;

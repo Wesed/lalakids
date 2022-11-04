@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Mousewheel } from "swiper";
 import "swiper/css/navigation";
 import 'swiper/css';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import { gql, useQuery } from '@apollo/client';
 
 import { ReactComponent as Like } from "../../Assets/heart.svg";
@@ -316,9 +316,6 @@ const Produto = () => {
   const { removeFavorite, addFavorite, toLogin } = useUpdate();
   const [favorite, setFavorite] = React.useState(JSON.parse(params['*']));
   const {dataContext, login, loadingContext} = React.useContext(UserContext);
-  const navigate = useNavigate();
-
-  console.log('oq', radioSize, radioColor);
 
    /* muda a img ao clicar nas miniaturas */
     React.useEffect(() => {
@@ -481,6 +478,7 @@ const Produto = () => {
               Não tem o seu tamanho? <span> Faça um pedido!</span>
             </DivOrder>
 
+            {produto?.colors.length > 0 &&
             <DivColors>
               <p>Cores:</p>
               <div>
@@ -492,8 +490,9 @@ const Produto = () => {
                     </label> 
                   </div>  
                 )}
-              </div>
+            </div>
             </DivColors>
+            }
 
             <DivBtn>
               <div>

@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 const CartContainer = () => {
   /* se true = esta vazio */
-  const [empty, setEmpty] = React.useState(false);
+  const [empty, setEmpty] = React.useState(true);
 
   return (
     <Container>
