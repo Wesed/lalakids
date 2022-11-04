@@ -143,6 +143,16 @@ const Pcard = styled.p`
 
 const DivSize = styled.div`
 
+  input[type="radio"]:checked + label{
+    background: rgba(14, 214, 229, .2) 
+  }
+
+  input[type="radio"] {
+        // o absolute e pra ele nao ocupar espaço
+        opacity: 0;
+        position: absolute;
+  };
+
   p {
     font-size: 16px;
     margin: 1rem 0;
@@ -170,12 +180,6 @@ const DivSize = styled.div`
       :hover {
         border: 1px solid ${props => props.theme.colors.blueBackground};
       }
-
-      input[type="radio"] {
-        // o absolute e pra ele nao ocupar espaço
-        opacity: 0;
-        position: absolute;
-      };
     }
     
   }
@@ -195,6 +199,18 @@ const DivOrder = styled.div`
 
 const DivColors = styled.div`
   text-align: left;
+
+  input[type="radio"]:checked + label{
+    border: 2px solid ${props => props.theme.colors.blueBackground};
+  }
+
+  input[type="radio"] {
+        // o absolute e pra ele nao ocupar espaço
+        opacity: 0;
+        position: absolute;
+  };
+
+
     div {
       display: flex;
       gap: 0 1rem;
@@ -214,12 +230,6 @@ const DivColors = styled.div`
         transition: .1s;
         height: 60px;
         overflow: hidden;
-
-        input[type="radio"] {
-          // o absolute e pra ele nao ocupar espaço
-          opacity: 0;
-          position: absolute;
-        };
 
         :hover {
           border: 1px solid ${(props) => props.theme.colors.blueBackground};
@@ -259,7 +269,6 @@ const Produto = () => {
 
   const params = useParams();
 
-  //GRAPHQL query
   const PROJECT_QUERY = gql`
   query MyQuery {
     produto(filter: {id: {eq: "${params.idProd}"}}) {
@@ -325,27 +334,6 @@ const Produto = () => {
         });  
     }, [imgProd, data])
 
-    /* opcao e estilizacao de tamanho*/
-    function handleClick(op, {target}) {
-
-      if (op === 2) {
-        target.checked && target.closest('label').classList.add("img-color-active");
-
-        target.addEventListener("focusout", () => {
-          target.checked && target.closest('label').classList.remove("img-color-active");
-        });
-        target.src && setRadioColor(target.src);
-      } else {
-        target.checked && target.closest('label').classList.add("radio-active");
-
-        target.addEventListener("focusout", () => {
-          target.checked && target.closest('label').classList.remove("radio-active");
-        });
-        target.innerText && setRadioSize(target.innerText);
-      }
-
-    }
-  
     if (error) return 'Ops, algo deu errado!';
 
     if (data) {
@@ -476,20 +464,15 @@ const Produto = () => {
             <DivSize>
               <p>Tamanhos disponíveis:</p>
               <div>
-                {prodSize.map(
-                  (size, index) =>
-                    // exibe apenas os tamanhos disponiveis. Evita que apareça varios tamanhos (1 ao 22)
-                    size.qtd > 0 && (
-                      <label
-                        name="label-radio"
-                        key={index}
-                        onClick={(e) => {
-                          handleClick(1, e);
-                        }}>
+                {prodSize.map((size, index) =>
+                  // exibe apenas os tamanhos disponiveis. Evita que apareça varios tamanhos (1 ao 22)
+                  size.qtd > 0 && 
+                    <div key={index}>
+                      <input type="radio" id={"radio-size" + index} name="input-radio-size" />
+                      <label name="label-radio" htmlFor={"radio-size" + index} onClick={({target}) => {setRadioSize(target.innerText)}}>
                         {size.size}
-                        <input type="radio" name="input-radio" />
-                      </label>
-                    )
+                      </label> 
+                    </div> 
                 )}
               </div>
             </DivSize>
@@ -502,16 +485,12 @@ const Produto = () => {
               <p>Cores:</p>
               <div>
                 {produto?.colors.map((prod, index) =>
-                      <label
-                        name="label-radio"
-                        key={index}
-                        onClick={(e) => {
-                          handleClick(2, e);
-                        }}>
-                        <input type="radio" name="input-radio" />
-                        <img src={prod.url} alt="variação do produto"/>
-                        <input type="radio" name="input-radio" />
-                      </label>
+                  <div key={index}>
+                    <input type="radio" id={"radio-color" + index} name="input-radio-color" />
+                    <label name="label-radio" htmlFor={"radio-color" + index} onClick={({target}) => {setRadioColor(target.src)}}>
+                      <img src={prod.url} alt="variação do produto"/>
+                    </label> 
+                  </div>  
                 )}
               </div>
             </DivColors>
@@ -519,7 +498,7 @@ const Produto = () => {
             <DivBtn>
               <div>
               {
-                favorite ?
+                favorite && login?
                   <button onClick={()=>{removeFavorite(dataContext, dataContext.userClient.id, produto.id, setFavorite)}}><Liked/></button>
               :
 
