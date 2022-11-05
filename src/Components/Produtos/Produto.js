@@ -199,6 +199,7 @@ const DivOrder = styled.div`
 
 const DivColors = styled.div`
   text-align: left;
+  margin-bottom: 1rem;
 
   input[type="radio"]:checked + label{
     border: 2px solid ${props => props.theme.colors.blueBackground};
@@ -214,7 +215,7 @@ const DivColors = styled.div`
     div {
       display: flex;
       gap: 0 1rem;
-      margin-top: 1rem;
+      margin-top: .5rem;
 
       img {
         height: 60px;
