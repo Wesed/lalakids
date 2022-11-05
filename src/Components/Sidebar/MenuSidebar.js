@@ -10,7 +10,8 @@ const Container = styled.div`
   position: absolute;
   top: 0; left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
+  border: 1px solid red;
 `;
 
 const Background = styled.div`
@@ -18,7 +19,7 @@ const Background = styled.div`
   z-index: 998;
   top: 0; left: 0;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh + 100%);
   background: rgba(0, 0, 0, 0.4);
 `;
 
@@ -137,9 +138,36 @@ const ListCategory = styled.div`
 const MenuSidebar = ({data, onClick}) => {
 
   const {login, category} = React.useContext(UserContext);
+  const [height, setHeight] = React.useState('847px');
+
+  console.log(height);
+
+  const handleLoad = (target) => {
+    let height = window.innerHeight;
+    var lastScrollTop = 0;
+
+    window.addEventListener('scroll', function (e) {
+      console.log(window.innerHeight);
+    });
+
+    // window.addEventListener('scroll', function (e) {
+    //     // mesma posição
+    //     if (e.scrollY === lastScrollTop) return;
+    //     if (this.scrollY < lastScrollTop) {
+    //       height -= this.scrollY;
+    //     } else {
+    //       height += this.scrollY;
+    //     }
+    //     lastScrollTop = this.scrollY;
+    //     setHeight(height + 'px');
+    //     console.log('oq e', window.innerHeight);
+    //   });
+
+    // console.log('aa', scroll, height);
+  };
 
   return (
-    <Container>
+    <Container height={height} onLoad={handleLoad}>
       <Menu>
         <Header>
           {login ?
