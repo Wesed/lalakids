@@ -138,18 +138,7 @@ const ListCategory = styled.div`
 const MenuSidebar = ({data, onClick}) => {
 
   const {login, category, userLogout} = React.useContext(UserContext);
-  const [height, setHeight] = React.useState('847px');
 
-  console.log(height);
-
-  const handleLoad = (target) => {
-    let height = window.innerHeight;
-    var lastScrollTop = 0;
-
-    window.addEventListener('scroll', function (e) {
-      console.log(window.innerHeight);
-    });
-  };
 
   return (
     <Container>

@@ -10,12 +10,10 @@ const Container = styled.section`
   margin: 2.5rem auto;
   display: flex;
   flex-direction: column;
-  /* border-radius: 10px; */
 
   @media (max-width: 30rem) {
     max-width: 100%;
     padding: 1rem;
-    /* gap: 2rem 1rem; */
     margin: 1rem auto;
   }
 `;
