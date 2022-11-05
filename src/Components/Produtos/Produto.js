@@ -332,24 +332,24 @@ const Produto = () => {
         });  
     }, [imgProd, data])
 
-    console.log(order);
-
     /* 
       caso eu add isso em handleClick, a 1x nao funcionaria, ja que order ainda nao estava setado, assim
       o useEffect vai executar sempre que order alterar, ou seja, qd ja tiver um pedido
     */
 
     React.useEffect(()=>{
-      order && window.open('https://wa.me/5519992054089?text=' + order + '');
+      order && window.open("https://wa.me/553597069757?text=Olá! Estou interessado nesse produto! Poderia me dar mais informações? " + order + '  ' + window.location.href);
     }, [order]);
 
     const handleClick = () => {
-
-      if (data) {
-        const prod = data.produto.titleProd + ', preco: ' + data.produto.priceProd + ', tamanho: ' + radioSize + ', cor: ' + radioColor;
-        setOrder(prod);
+      if (radioSize) {
+        if (data) {
+          const prod = data.produto.titleProd + ', preco: ' + data.produto.priceProd + ', tamanho: ' + radioSize + ', cor: ' + radioColor;
+          setOrder(prod);
+        }
+      } else {
+        alert('Ops, esqueceu a numeração!');
       }
-
     };
 
     if (error) return 'Ops, algo deu errado!';
