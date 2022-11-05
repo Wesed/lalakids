@@ -4,7 +4,8 @@ import { UserContext } from './../UserContext';
 import { gql, useQuery } from '@apollo/client';
 import Error from './../Useful/Error';
 import Item from './../Categoria/Item';
-
+import styled from 'styled-components';
+import EmptyCategory from './../Useful/EmptyCategory';
 
 const FavoriteContainer = () => {
   const {dataContext, login, errorContext, loadingContext} = React.useContext(UserContext);
@@ -48,7 +49,7 @@ const FavoriteContainer = () => {
 
   if (loadingContext) return <p> Loading... </p>
 
-  if (!login) return <p> Você precisa estar logado para acessar sua lista de favoritos!</p>
+  if (!login) return <EmptyCategory> Você precisa estar logado para acessar sua lista de favoritos!</EmptyCategory>
 
   return (
     <Container>

@@ -42,10 +42,20 @@ const Container = styled.div`
   
 `;
 
-const EmptyCategory = () => {
+const EmptyCategory = ({children}) => {
+
+  /* 
+    por algum motivo, o children nao funciona no subcategoria, necessitando desse ajuste
+  */
+  
   return (
     <Container>
-      <h1>Não temos produtos nessa categoria 🙁</h1>
+      {
+        children ?
+        <h1> {children} </h1>
+        :
+        <h1> Não temos produtos nessa categoria 🙁 </h1>
+      }
       <button onClick={()=>{window.history.back()}}> Voltar </button>
     </Container>
   )

@@ -33,10 +33,11 @@ const SubCategoria = () => {
         limit: 100,
       },
     });
+
+    if (data?.allProdutos.length <= 0) return <EmptyCategory />
     
   return (
     <Container>
-      {data?.allProdutos.length <= 0 && <EmptyCategory /> }
       {data?.allProdutos.map((prod, index) => (
           <Item key={index} prod={prod} />
         ))}

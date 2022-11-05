@@ -11,7 +11,6 @@ const Container = styled.div`
   top: 0; left: 0;
   width: 100vw;
   height: 100%;
-  border: 1px solid red;
 `;
 
 const Background = styled.div`
@@ -43,6 +42,7 @@ const Header = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
   div {
+    
     svg {
       top: 1.6rem !important;
       position: relative;
@@ -76,8 +76,9 @@ const Header = styled.div`
     }
   }
 
-  /* posicionamento muda qd ta logado, desce pq tem um P a menos*/
-button {
+`;
+
+const ButtonLogout = styled.button`
   position: absolute;
   right: -3.5rem;
   color: ${props => props.theme.colors.text};
@@ -88,7 +89,6 @@ button {
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 1) !important;
   box-shadow: 1px 3px 10px 1px rgba(0, 0, 0, 0.3);  
-}
 `;
 
 const ProfileImg = styled.div`
@@ -137,7 +137,7 @@ const ListCategory = styled.div`
 
 const MenuSidebar = ({data, onClick}) => {
 
-  const {login, category} = React.useContext(UserContext);
+  const {login, category, userLogout} = React.useContext(UserContext);
   const [height, setHeight] = React.useState('847px');
 
   console.log(height);
@@ -149,25 +149,10 @@ const MenuSidebar = ({data, onClick}) => {
     window.addEventListener('scroll', function (e) {
       console.log(window.innerHeight);
     });
-
-    // window.addEventListener('scroll', function (e) {
-    //     // mesma posição
-    //     if (e.scrollY === lastScrollTop) return;
-    //     if (this.scrollY < lastScrollTop) {
-    //       height -= this.scrollY;
-    //     } else {
-    //       height += this.scrollY;
-    //     }
-    //     lastScrollTop = this.scrollY;
-    //     setHeight(height + 'px');
-    //     console.log('oq e', window.innerHeight);
-    //   });
-
-    // console.log('aa', scroll, height);
   };
 
   return (
-    <Container height={height} onLoad={handleLoad}>
+    <Container>
       <Menu>
         <Header>
           {login ?
@@ -178,6 +163,9 @@ const MenuSidebar = ({data, onClick}) => {
 
               <div>
                 <p> Olá, {data?.userClient.nameCli} </p> 
+                <span> 
+                  <button onClick={userLogout}> Sair </button> 
+                </span>
               </div>
             </>
             :
@@ -191,7 +179,7 @@ const MenuSidebar = ({data, onClick}) => {
               </div>
             </>
         }
-          <button onClick={() => {onClick(false)}}> X </button>
+          <ButtonLogout onClick={() => {onClick(false)}}> X </ButtonLogout>
         </Header>
         <ListCategory>
           {/* principais  */}
