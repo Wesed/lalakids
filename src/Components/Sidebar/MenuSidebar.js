@@ -11,10 +11,19 @@ const Container = styled.div`
   top: 0; left: 0;
   width: 100vw;
   height: 100vh;
+`;
+
+const Background = styled.div`
+  position: absolute;
+  z-index: 998;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.4);
 `;
 
 const Menu = styled.div`
+  position: relative;
   z-index: 999;
   background: white;
   width: 80%;
@@ -69,7 +78,7 @@ const Header = styled.div`
   /* posicionamento muda qd ta logado, desce pq tem um P a menos*/
 button {
   position: absolute;
-  right: 1rem;
+  right: -3.5rem;
   color: ${props => props.theme.colors.text};
   padding: .3rem .7rem;
   font-size: 1.5rem;
@@ -194,6 +203,7 @@ const MenuSidebar = ({data, onClick}) => {
           </ul>
         </ListCategory>
       </Menu>
+      <Background onClick={()=>{onClick(false)}}/>
     </Container>
   );
 }
