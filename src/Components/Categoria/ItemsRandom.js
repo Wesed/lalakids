@@ -9,8 +9,9 @@ import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
 import { Link } from 'react-router-dom';
 import FormatPrice from './../Useful/FormatPrice';
 import UseMedia from './../Useful/UseMedia';
+import useUpdate from './../Hooks/useUpdate';
+import { UserContext } from './../UserContext';
 
-// responsavel por cada item (produto) )
 
 const Card = styled.div`
   position: relative;
@@ -104,16 +105,38 @@ const Pcard = styled.div`
 
 const ItemRandom = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
-  const [formatUrl, setFormatUrl] = React.useState(prod.titleProd);
   const media = UseMedia('(max-width: 30rem)');
+  const {dataContext, login, loadingContext} = React.useContext(UserContext);
+  const { removeFavorite, addFavorite, toLogin } = useUpdate();
+
+  React.useEffect(()=>{
+    const favoriteFound = dataContext?.userClient.favorite.find((favorite) => {
+      return favorite.codeProd === prod.id;
+    });
+
+    favoriteFound && setFavorite(true);
+
+  }, [dataContext, prod.id]);
 
 
   return (
     <Card>
 
-      <button onClick={() => {setFavorite(!favorite)}}> {favorite ? <Liked/> : <Like/>} </button>
+      {
+        favorite ?
+        <button onClick={()=>{removeFavorite(dataContext, dataContext.userClient.id, prod.id, setFavorite)}}><Liked/></button>
+        :
+        <>
+          {
+            login && !favorite ?
+            <button onClick={()=>{addFavorite(dataContext, dataContext.userClient.id, prod.id, setFavorite)}}><Like/></button>
+            :
+            <button onClick={()=>{toLogin(login)}}><Like/></button>
+          }
+        </>
+      }
 
-      <Link to={`/${formatUrl}/${prod.id}`} onLoad={() => {setFormatUrl(formatUrl.toLowerCase().replace(" ", "-"))}}>
+      <Link to={`/${prod.titleProd.toLowerCase().replace(" ", "-")}/${prod.id}/${favorite}`}>
 
         <ImgProd className="prod">
           <span style={{'display':'none'}} value={prod.imgProd[0].url}></span>

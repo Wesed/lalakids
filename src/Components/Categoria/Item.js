@@ -3,10 +3,9 @@ import styled from "styled-components";
 import { UserContext } from './../UserContext';
 import { ReactComponent as Like } from "../../Assets/heart.svg";
 import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import FormatPrice from './../Useful/FormatPrice';
 import useUpdate from './../Hooks/useUpdate';
-import { gql, useLazyQuery } from '@apollo/client';
 
 const Card = styled.div`
   position: relative;
@@ -118,7 +117,6 @@ const Item = ({ prod }) => {
   const [favorite, setFavorite] = React.useState(false);
   const {dataContext, login, loadingContext} = React.useContext(UserContext);
   const { removeFavorite, addFavorite, toLogin } = useUpdate();
-  const navigate = useNavigate();
 
   // dataContext && console.log('aa', dataContext.userClient.favorite);
 
