@@ -506,8 +506,9 @@ const Produto = () => {
                 {produto?.colors.map((prod, index) =>
                   <div key={index}>
                     <input type="radio" id={"radio-color" + index} name="input-radio-color" />
-                    <label name="label-radio" htmlFor={"radio-color" + index} onClick={({target}) => {setRadioColor(target.src)}}>
-                      <img src={prod.url} alt="variação do produto"/>
+                    <label name="label-radio" htmlFor={"radio-color" + index} 
+                      onClick={({target}) => {setRadioColor(target.src); setImgProd(target.src)}}>
+                        <img src={prod.url} alt="variação do produto"/>
                     </label> 
                   </div>  
                 )}
