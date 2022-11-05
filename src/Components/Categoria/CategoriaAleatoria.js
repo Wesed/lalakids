@@ -31,7 +31,6 @@ const CategoriaAleatoria = () => {
 
   const media = UseMedia('(max-width: 30rem)');
 
-    //GRAPHQL query
     const PROJECT_QUERY = gql`
     query MyQuery {
       allProdutos {
@@ -57,7 +56,8 @@ const CategoriaAleatoria = () => {
     if (error) return 'Ops, algo deu errado!';
 
   return (
-    <Container>
+    <Container>  border: 1px solid red;
+
       <h3> Você vai amar! </h3>
       <Swiper 
       spaceBetween={media ? 20 : 40} 

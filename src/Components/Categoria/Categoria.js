@@ -18,7 +18,7 @@ import { Grid } from "swiper";
 import ItemCategory from './ItemCategory';
 import Container from './../Useful/Container';
 import UseMedia from '../Useful/UseMedia';
-import EmptyCategory from './../Useful/EmptyCategory';
+import EmptyAlert from './../Useful/EmptyAlert';
 
 SwiperCore.use([Navigation]);
 
@@ -92,13 +92,11 @@ const Categoria = ({option}) => {
     },
   });
 
-  // console.log(data);
-
   if (error) return 'Ops, algo deu errado!';
 
   if (data) {
     if (data.allProdutos.length === 0) {
-      return  <EmptyCategory />;
+      return  <EmptyAlert> Não temos produtos nessa categoria 🙁  </EmptyAlert>;
     }
   }
 

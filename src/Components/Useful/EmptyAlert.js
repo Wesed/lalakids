@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from './Button';
 
 const Container = styled.div`
   height: 60vh;
@@ -42,7 +41,7 @@ const Container = styled.div`
   
 `;
 
-const EmptyCategory = ({children}) => {
+const EmptyAlert = ({children}) => {
 
   /* 
     por algum motivo, o children nao funciona no subcategoria, necessitando desse ajuste
@@ -50,15 +49,10 @@ const EmptyCategory = ({children}) => {
   
   return (
     <Container>
-      {
-        children ?
         <h1> {children} </h1>
-        :
-        <h1> Não temos produtos nessa categoria 🙁 </h1>
-      }
       <button onClick={()=>{window.history.back()}}> Voltar </button>
     </Container>
   )
 }
 
-export default EmptyCategory;
+export default EmptyAlert;

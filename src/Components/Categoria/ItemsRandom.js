@@ -52,7 +52,7 @@ const ImgProd = styled.div`
   box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 30rem) {
-    height: 200px;
+    height: 150px;
   }
 
   img {

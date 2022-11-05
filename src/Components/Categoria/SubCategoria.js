@@ -2,9 +2,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { gql, useQuery } from '@apollo/client';
 import Item from './Item';
-import styled  from 'styled-components';
 import Container from './../Useful/Container';
-import EmptyCategory from './../Useful/EmptyCategory';
+import EmptyAlert from './../Useful/EmptyAlert';
 
 const SubCategoria = () => {
 
@@ -34,7 +33,7 @@ const SubCategoria = () => {
       },
     });
 
-    if (data?.allProdutos.length <= 0) return <EmptyCategory />
+    if (data?.allProdutos.length <= 0) return <EmptyAlert> Não temos produtos nessa categoria 🙁 </EmptyAlert>
     
   return (
     <Container>
