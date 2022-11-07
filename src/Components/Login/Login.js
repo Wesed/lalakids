@@ -7,6 +7,7 @@ import { Link, Routes, Route} from "react-router-dom";
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import ForgotForm from './ForgotForm';
+import Skeleton from "../Useful/Skeleton";
 
 const Body = styled.div`
   position: absolute;
@@ -96,7 +97,7 @@ const Login = () => {
       </InfoLogin>
 
       <BackgroundLogin>
-        <img src={backgroundLogin} alt="Background Login" />
+        <Skeleton src={backgroundLogin} alt="Background Login" />
       </BackgroundLogin>
     </LoginContainer>
     </Body>

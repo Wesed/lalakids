@@ -6,6 +6,7 @@ import { ReactComponent as Liked } from "../../Assets/heartLiked.svg";
 import { Link} from 'react-router-dom';
 import FormatPrice from './../Useful/FormatPrice';
 import useUpdate from './../Hooks/useUpdate';
+import Skeleton from "../Useful/Skeleton";
 
 const Card = styled.div`
   position: relative;
@@ -186,10 +187,10 @@ const Item = ({ prod }) => {
 
           {prod.imgBackground 
           ?
-            <img src={prod.imgProd[0].url} background={prod.imgBackground.url} alt="foto do produto" />
+            <Skeleton src={prod.imgProd[0].url} background={prod.imgBackground.url} alt="foto do produto"/>
           : 
-            <img src={prod.imgProd[0].url} alt="foto do produto" />
-          }
+            <Skeleton src={prod.imgProd[0].url} alt="foto do produto"/>
+        }
 
           <span> Mais Detalhes </span>
 

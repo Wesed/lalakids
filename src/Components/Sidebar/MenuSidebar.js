@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   z-index: 1000;
-  position: absolute;
+  position: fixed;
   top: 0; left: 0;
   width: 100vw;
   height: 100%;

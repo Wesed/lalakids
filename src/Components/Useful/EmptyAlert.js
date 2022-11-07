@@ -31,6 +31,7 @@ const Container = styled.div`
 
   @media (max-width: 30rem) {
     display: flex;
+    text-align: center;
     height: 50vh;
     width: 100vw;
 

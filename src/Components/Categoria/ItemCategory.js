@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Skeleton from '../Useful/Skeleton';
 
 const Card = styled.div`
   width: 120px;
@@ -36,8 +37,8 @@ const ItemCategory = ({category}) => {
   return (
     <Link to={subcategory.name.toLowerCase()}>
       <Card>
-      <img src={subcategory.img} alt="subcategory" />
-      <p>{subcategory.name}</p>
+        <Skeleton src={subcategory.img} alt="subcategory"/>
+        <p>{subcategory.name}</p>
     </Card>
     </Link>
   )

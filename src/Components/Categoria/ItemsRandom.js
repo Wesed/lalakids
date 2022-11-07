@@ -11,6 +11,7 @@ import FormatPrice from './../Useful/FormatPrice';
 import UseMedia from './../Useful/UseMedia';
 import useUpdate from './../Hooks/useUpdate';
 import { UserContext } from './../UserContext';
+import Skeleton from './../Useful/Skeleton';
 
 
 const Card = styled.div`
@@ -144,9 +145,9 @@ const ItemRandom = ({ prod }) => {
           {/* se for true, tem img de fundo, portanto cria-se o atributo background e realiza o efeito */}
           {prod.imgBackground 
           ?
-            <img src={prod.imgProd[0].url} background={prod.imgBackground.url} alt="foto do produto" />
+            <Skeleton src={prod.imgProd[0].url} background={prod.imgBackground.url} alt="foto do produto"/>
           : 
-            <img src={prod.imgProd[0].url} alt="foto do produto" />
+            <Skeleton src={prod.imgProd[0].url}  alt="foto do produto"/>
           }
 
           <span> Mais Detalhes </span>
