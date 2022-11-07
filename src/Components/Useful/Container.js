@@ -12,10 +12,9 @@ const ContainerSection = styled.section`
 
   @media (max-width: 30rem) {
     max-width: 100%;
-    display: flex;
-    justify-content: space-around;
-    gap: 0;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(2, minmax(150px, auto));
+    gap: 2rem 1rem !important;
+    padding: 0 1rem;
   }
 `;
 
