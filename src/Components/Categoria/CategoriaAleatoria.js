@@ -56,8 +56,7 @@ const CategoriaAleatoria = () => {
     if (error) return 'Ops, algo deu errado!';
 
   return (
-    <Container>  border: 1px solid red;
-
+    <Container>
       <h3> Você vai amar! </h3>
       <Swiper 
       spaceBetween={media ? 20 : 40} 

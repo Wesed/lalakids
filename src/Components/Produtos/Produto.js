@@ -437,7 +437,7 @@ const Produto = () => {
               <Swiper spaceBetween={1} slidesPerView={1}>
                 {produto.imgProd.map((prod, index) => (
                   <SwiperSlide key={index}>
-                    <img src={prod.url} alt={"produto" + index} />
+                    <img src={imgProd} alt={"produto" + index} />
                   </SwiperSlide>
                 ))}
               </Swiper>

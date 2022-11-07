@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   height: 60vh;
-  width: 80vw;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -33,7 +33,6 @@ const Container = styled.div`
     display: flex;
     text-align: center;
     height: 50vh;
-    width: 100vw;
 
     button {
       margin-top: 1rem;

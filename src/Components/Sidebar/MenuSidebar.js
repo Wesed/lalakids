@@ -6,19 +6,20 @@ import { UserContext } from './../UserContext';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
-  z-index: 1000;
+  border: 1px solid red;
   position: fixed;
-  top: 0; left: 0;
+  z-index: 1000;
+  top: 0; right: 0; bottom: 0; left: 0;
   width: 100vw;
   height: 100%;
 `;
 
 const Background = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 998;
-  top: 0; left: 0;
+  top: 0; right: 0; bottom: 0; left: 0;
   width: 100vw;
-  height: calc(100vh + 100%);
+  height: 100%;
   background: rgba(0, 0, 0, 0.4);
 `;
 
@@ -135,10 +136,10 @@ const ListCategory = styled.div`
   }
 `;
 
-const MenuSidebar = ({data, onClick}) => {
+const MenuSidebar = ({data, setActive}) => {
+
 
   const {login, category, userLogout} = React.useContext(UserContext);
-
 
   return (
     <Container>
@@ -163,28 +164,28 @@ const MenuSidebar = ({data, onClick}) => {
                 <UserLogout viewBox="0 0 120 120" />
               </div>
               <div>
-                <Link to="/login" onClick={()=>{onClick(false)}}> Entre ou cadastre-se </Link>
+                <Link to="/login" onClick={()=>{setActive(false)}}> Entre ou cadastre-se </Link>
                 <p> pedidos, faturas, favoritos...</p>
               </div>
             </>
         }
-          <ButtonLogout onClick={() => {onClick(false)}}> X </ButtonLogout>
+          <ButtonLogout onClick={() => {setActive(false)}}> X </ButtonLogout>
         </Header>
         <ListCategory>
           {/* principais  */}
           {login &&
           <ul>
           <p> Principais </p>
-            <Link to="#" onClick={() => {onClick(false)}}>
+            <Link to="#" onClick={() => {setActive(false)}}>
               <li> Dados pessoais </li>
             </Link>
-            <Link to="#" onClick={() => {onClick(false)}}>
+            <Link to="#" onClick={() => {setActive(false)}}>
               <li> Meus pedidos </li>
             </Link>
-            <Link to="/lista-de-favoritos" onClick={() => {onClick(false)}}>
+            <Link to="/lista-de-favoritos" onClick={() => {setActive(false)}}>
               <li> Favoritos </li>
             </Link>
-            <Link to="#" onClick={() => {onClick(false)}}>
+            <Link to="#" onClick={() => {setActive(false)}}>
               <li> Faturas </li>
             </Link>
           </ul>}
@@ -196,7 +197,7 @@ const MenuSidebar = ({data, onClick}) => {
                 key={index}
                 to={"categoria/" + category.slug}
                 onClick={() => {
-                  onClick(false);
+                  setActive(false);
                 }}
               >
                 <li>
@@ -208,7 +209,8 @@ const MenuSidebar = ({data, onClick}) => {
           </ul>
         </ListCategory>
       </Menu>
-      <Background onClick={()=>{onClick(false)}}/>
+      <Background id="background" onClick={()=>{setActive(false)}}/>
+      {/* <Background onClick={()=>{onClick(false)}}/> */}
     </Container>
   );
 }
