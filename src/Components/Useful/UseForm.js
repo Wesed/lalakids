@@ -21,6 +21,7 @@ const useForm = (type) => {
   const [error, setError] = React.useState('');
 
   function validate(value) {  
+    console.log(value);
     // se passar 'false' no campo, significa q nao e pra validar
     if(type === false) return true;
     // se o campo estiver vazio
