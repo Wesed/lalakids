@@ -275,7 +275,7 @@ export const Header = () => {
 
       <Navbar>
         {category?.map((menu, index) => (
-          <Link key={index} to={"categoria/" + menu.slug}>
+          <Link key={index} to={menu.slug}>
             {menu.titleCategory}
           </Link>
         ))}

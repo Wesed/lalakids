@@ -180,7 +180,7 @@ const Item = ({ prod }) => {
         </>
       }
       
-      <Link to={`/${prod.titleProd.toLowerCase().replace(" ", "-")}/${prod.id}/${favorite}`}>
+      <Link to={`/produto/${prod.titleProd.toLowerCase().replace(" ", "-")}/${prod.id}/${favorite}`}>
 
         <ImgProd className="prod">
           <span style={{'display':'none'}} value={prod.imgProd[0].url}></span>

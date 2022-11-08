@@ -270,6 +270,8 @@ const Produto = () => {
 
   const params = useParams();
 
+  console.log('q', params);
+
   const PROJECT_QUERY = gql`
   query MyQuery {
     produto(filter: {id: {eq: "${params.idProd}"}}) {
@@ -310,6 +312,8 @@ const Produto = () => {
       limit: 100,
     },
   });
+
+  console.log(params);
 
   const [imgProd, setImgProd] = React.useState("");
   const [radioSize, setRadioSize] = React.useState();

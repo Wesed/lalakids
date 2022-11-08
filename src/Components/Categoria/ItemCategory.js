@@ -31,6 +31,8 @@ const Card = styled.div`
 
 const ItemCategory = ({category}) => {
 
+  console.log(category);
+
   /* pq precisa desestruturar 2x?*/
   const subcategory = category.category;
 

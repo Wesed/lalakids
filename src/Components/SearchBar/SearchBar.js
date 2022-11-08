@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import {ReactComponent as Search} from "../../Assets/search.svg";
+import { gql, useQuery } from '@apollo/client';
+
+
 
 const Input = styled.div`
   position: relative;
@@ -52,13 +55,43 @@ const Input = styled.div`
 
 const SearchBar = () => {
 
+  const [search, setSearch] = React.useState('');
+
+  const PROJECT_QUERY = gql `
+  query MyQuery {
+    allProdutos(filter: {categoryProd: {eq: ""}}) {
+      id
+      imgBackground {
+        url
+      }
+      imgProd {
+        url
+      }
+      priceProd
+      titleProd
+      subcategoryProd
+    }
+  }
+  `;
+
+  const {error, data } = useQuery(PROJECT_QUERY, {
+    variables: {
+      limit: 100,
+    },
+  });
+
+  console.log('aa', data);
+
+
 return (
   <>
     <Input type="type">
 
-    <input name="searchBar" 
+    <input name="searchBar" value={search} 
       type="text" 
       placeholder='O que procura?'
+      onChange={(e)=>{setSearch(e.target.value);
+      }}
       />
 
       <span> <Search /> </span>

@@ -60,10 +60,6 @@ const Categoria = ({option}) => {
   const params = p.id[0].toUpperCase() + p.id.substr(1);
   const media = UseMedia('(max-width: 30rem)');
 
-
-
-
-  //GRAPHQL query
   const PROJECT_QUERY = gql `
   query MyQuery {
     allProdutos(filter: {categoryProd: {eq: "${params}"}}) {

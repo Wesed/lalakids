@@ -7,6 +7,7 @@ import EmptyAlert from './../Useful/EmptyAlert';
 
 const SubCategoria = () => {
 
+
   const params = useParams();
   const p1 = params.id[0].toUpperCase() + params.id.substr(1);
   const p2 = params['*'];
