@@ -102,11 +102,11 @@ export const Input = ({type, name, label, placeholder, value, onChange, onBlur, 
     <InputField>
       <label> {label} </label>
       <input name={name} 
-      type={type} 
-      placeholder={placeholder} 
-      value={value} 
-      onChange={onChange}
-      onBlur={onBlur}>
+        type={type} 
+        placeholder={placeholder} 
+        value={value} 
+        onChange={onChange}
+        onBlur={onBlur}>
       </input>
 
       {iconSvg && 

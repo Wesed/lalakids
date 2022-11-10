@@ -173,13 +173,11 @@ const UserDiv = styled.div`
   }
 
   ul {
-    border: 1px solid blue;
     position: absolute;
     z-index: 998;
     top: 3rem;
     right: 18.5rem;
     background: ${(props) => props.theme.colors.grayBackground};
-    border: 1px solid green;
     padding: .5rem 1rem;
     text-align: left;
     border: 1px solid transparent;

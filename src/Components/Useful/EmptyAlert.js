@@ -14,6 +14,10 @@ const Container = styled.div`
     font-size: 1.25rem;
   }
 
+  span {
+    margin-top: .5rem;
+  }
+
   button {
     margin-top: 2rem;
     padding: .5rem 1rem;
@@ -41,7 +45,7 @@ const Container = styled.div`
   
 `;
 
-const EmptyAlert = ({children}) => {
+const EmptyAlert = ({tip, children}) => {
 
   /* 
     por algum motivo, o children nao funciona no subcategoria, necessitando desse ajuste
@@ -50,6 +54,7 @@ const EmptyAlert = ({children}) => {
   return (
     <Container>
         <h1> {children} </h1>
+        { tip && <span> {tip} </span>}
       <button onClick={()=>{window.history.back()}}> Voltar </button>
     </Container>
   )

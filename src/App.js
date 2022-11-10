@@ -13,6 +13,7 @@ import CartContainer from './Components/Cart/CartContainer';
 import { UserStorage } from './Components/UserContext';
 import SubCategoria from './Components/Categoria/SubCategoria';
 import FavoriteContainer from './Components/Favorite/FavoriteContainer';
+import SearchContainer from './Components/SearchBar/SearchContainer';
 
 
 
@@ -28,6 +29,7 @@ function App() {
                   {/* criar uma rota 'header' pra configurar tds as rotas superiores? */}
                   <Route path="/lista-de-favoritos" end element={<FavoriteContainer />}> </Route>
                   <Route path="/carrinho" end element={<CartContainer />}> </Route>
+                  <Route path="/search/*" end element={<SearchContainer />}> </Route>
                   
                   {/* essas rotas nao daria pra colocar no main? */}
                   <Route path="/:titleProd/:idProd/*" element={<Produto />}> </Route>

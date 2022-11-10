@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import {ReactComponent as Search} from "../../Assets/search.svg";
-import { gql, useQuery } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+import useForm from './../Useful/UseForm';
 
 
 
@@ -12,6 +13,10 @@ const Input = styled.div`
   label {
     font-size: 14px;
     margin-bottom: 0.5rem;
+  }
+
+  form {
+    width: 100%;
   }
 
   input {
@@ -53,48 +58,58 @@ const Input = styled.div`
   }
 `;
 
+const ResultContainer = styled.div`
+  position: absolute;
+  z-index: 1000;
+  height: 10rem;
+  width: 100%;
+  top: 3rem;
+
+  background: ${(props) => props.theme.colors.grayBackground};
+  text-align: left;
+  border: 1px solid transparent;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  transition: .1s;
+
+  ul {
+    background: white;
+  }
+
+  li {
+    border: 1px solid slategray;
+  }
+`;
+
 const SearchBar = () => {
 
   const [search, setSearch] = React.useState('');
+  const navigate = useNavigate(); 
 
-  const PROJECT_QUERY = gql `
-  query MyQuery {
-    allProdutos(filter: {categoryProd: {eq: ""}}) {
-      id
-      imgBackground {
-        url
-      }
-      imgProd {
-        url
-      }
-      priceProd
-      titleProd
-      subcategoryProd
-    }
-  }
-  `;
-
-  const {error, data } = useQuery(PROJECT_QUERY, {
-    variables: {
-      limit: 100,
-    },
-  });
-
-  console.log('aa', data);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(search);
+    navigate(`/search/${search}`);
+  };
 
 
 return (
   <>
-    <Input type="type">
+    <Input>
+      <form onSubmit={handleSubmit}>
+        <input 
+          name="searchBar" 
+          id="inputSearch"
+          type="text" 
+          placeholder='O que procura?'
+          value={search}
+          onChange={(e)=>{setSearch(e.target.value)}}
+          onBlur={()=>{setSearch('')}}
+        />
 
-    <input name="searchBar" value={search} 
-      type="text" 
-      placeholder='O que procura?'
-      onChange={(e)=>{setSearch(e.target.value);
-      }}
-      />
-
-      <span> <Search /> </span>
+        <span> <Search /> </span>
+      </form>
 
     </Input>
   </>
